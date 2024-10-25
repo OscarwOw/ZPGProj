@@ -69,6 +69,12 @@ unsigned int ShaderProgram::compileShader(const std::string& shaderSource, unsig
 
 ShaderProgramSourceStrings ShaderProgram::parseShaders(const std::string& file) {
     std::ifstream stream(file);
+
+    if (!stream.is_open()) {
+        std::cerr << "Error: Could not open shader file: " << file << std::endl;
+        return { "", "" };  // Return empty sources if the file can't be opened
+    }
+
     std::string line;
     std::stringstream ss[2];
     ShaderType type = ShaderType::NONE;
