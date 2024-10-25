@@ -17,6 +17,8 @@ private:
 
     //added for testing
     glm::mat4 _transformationMatrix;
+    bool _isTransformationDirty;
+    
     float _scaleFactor;
     GLuint _transformationUniformLocation;
 
@@ -26,7 +28,6 @@ public:
     DrawableObject();
     ~DrawableObject();
     TransformationComposite transformationComposite;
-    // Add a mesh to the object
     void addMesh(Mesh* mesh);
 
     void loadFromRawData(const float* rawData, int vertexCount, int stride);
@@ -35,6 +36,8 @@ public:
     void Draw();
 
     void setShaderProgram(ShaderProgram* shaderProgram);
+
+    glm::mat4 GetCurrentTransformation();
 
     // Optional: Apply transformations to the entire object
     void translate(float x, float y, float z);

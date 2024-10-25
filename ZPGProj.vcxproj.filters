@@ -66,6 +66,18 @@
     <ClCompile Include="TransformationTranslate.cpp">
       <Filter>Source Files\Transformations</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgramManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StartupManager.hpp">
@@ -125,6 +137,18 @@
     <ClInclude Include="TransformationTranslate.h">
       <Filter>Header Files\Transformations</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgramManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.shader">
@@ -133,5 +157,6 @@
     <None Include="ColorShader.shader">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="readmePipeline.md" />
   </ItemGroup>
 </Project>

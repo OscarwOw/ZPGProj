@@ -22,6 +22,9 @@
 #include "Mesh.h"
 #include "ErrorHandler.h"
 #include "DrawableObject.h"
+#include "SceneManager.h"
+#include "SceneGenerator.h"
+#include "ShaderProgramManager.h"
 
 
 static void error_callback(int error, const char* description) { fputs(description, stderr); }
@@ -68,6 +71,9 @@ unsigned int indices[] = {
 };
 
 
+
+
+
 int main(void)
 {
     glfwSetErrorCallback(error_callback);
@@ -86,66 +92,34 @@ int main(void)
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
+    //END OF OPENGL INIT
 
-    //todo initialize
-    ShaderProgram *shaderProgram = new ShaderProgram();
+    ShaderProgramManager& shaderProgramManager = ShaderProgramManager::getInstance();
+    SceneManager& sceneManager = SceneManager::getInstance();
+    SceneGenerator& generator = SceneGenerator::getInstance();
 
-    ShaderProgramSourceStrings source = shaderProgram->parseShaders("ColorShader.shader");
-    unsigned int shader = shaderProgram->attachShader(source.VertexSource, source.FragmentSource);
+    shaderProgramManager.loadShader("treeShader", "ColorShader.shader");
+    ShaderProgram* shaderProgram = shaderProgramManager.getShader("treeShader");
 
-    //Mesh basicMesh(points, sizeof(points)/sizeof(float) , indices, sizeof(indices) / sizeof(unsigned int), GL_TRIANGLES);
+    Scene* forestScene = new Scene();
+    sceneManager.addScene(forestScene);
+    
+    DrawableObject* treeObject = generator.generateTree(0.05f, 145.0f, 0.0f, 0.0f);
 
-    DrawableObject treeObject;
-    treeObject.setShaderProgram(shaderProgram);
-    treeObject.loadFromRawData(tree, 92814, 6);
+    forestScene->addObject(treeObject);
 
-    /*GLuint VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    
+    DrawableObject* treeObject2 = generator.generateTree(0.50f, 45.0f, 2.0f, -1.0f);
 
-    VertexBuffer vertexBuffer(points, sizeof(points));
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, NULL);
-
-    IndexBuffer indexBuffer(indices, sizeof(indices) / sizeof(unsigned int));
-
-
-
-
-    glBindVertexArray(0);*/
-
-    //VertexBuffer treeVBO(plain, sizeof(plain));
-    //treeVBO.Bind();
+    forestScene->addObject(treeObject2);
 
     float scale = 0.05;
     float rotationAngle = 0.0f;
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glUseProgram(shader);
-        treeObject.transformationComposite.removeTransformations();
-
-        rotationAngle += 0.05f;
-        if (rotationAngle >= 360.0f) rotationAngle = 0.0f;
-
-        // Apply the rotation to the object (around Y-axis)
-        treeObject.rotate(rotationAngle, 0.0f, 1.0f, 0.0f);
-
-        if (scale > 0.3) {
-            scale = 0.05;
-        }
-        scale = scale * 1.0001000;
-        treeObject.scale(scale);
-        treeObject.Draw();
-
-        /*glBindVertexArray(VAO);
-        indexBuffer.Bind();*/
-
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
         
-        //basicMesh.DrawMesh();
-        
+        sceneManager.getCurrentScene()->drawScene();
+
         glfwPollEvents();
 
         glfwSwapBuffers(window);
