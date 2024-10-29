@@ -130,10 +130,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Drawableobject.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
-    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MatrixHelper.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGenerator.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -150,11 +151,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bushes.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="gift.h" />
     <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MatrixHelper.h" />
     <ClInclude Include="plain.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGenerator.h" />

@@ -7,22 +7,20 @@
 
 DrawableObject::DrawableObject() : _vertexBuffer(nullptr), _indexBuffer(nullptr), _isTransformationDirty(false) {
     _transformationMatrix = glm::mat4(1.0f);
+    _translationMatrix = glm::mat4(1.0f);
+    _rotationMatrix = glm::mat4(1.0f);
+    _scaleMatrix = glm::mat4(1.0f);
+   //_matrixHelperInstance = MatrixHelper::getInstance();
+  
 }
 
 DrawableObject::~DrawableObject() {
     delete _vertexBuffer;
     delete _indexBuffer;
 
-    for (Mesh* mesh : meshes) {
-        delete mesh;
-    }
 }
 
-void DrawableObject::addMesh(Mesh* mesh) {
-    meshes.push_back(mesh);
-}
-
-void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int floatsPerVertex)
+void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int floatsPerVertex) //TODO RawDataLoader
 {
     _vertexCount = vertexCount;
 
@@ -45,23 +43,38 @@ void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int 
 void DrawableObject::Draw() {
     if (_shaderProgram) {
         updateTransformation();
+        _shaderProgram->use();
     }
     
     glBindVertexArray(_VAO);
     glDrawElements(GL_TRIANGLES, _vertexCount, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
-
-
 }
 
-void DrawableObject::setShaderProgram(ShaderProgram* shaderProgram) {
+void DrawableObject::setShaderProgram(ShaderProgram* shaderProgram) { 
     _shaderProgram = shaderProgram;
+}
+
+void DrawableObject::setShaderProgram(ShaderProgram* shaderProgram, std::string shaderProgramManagerString) {
+    _shaderProgram = shaderProgram;
+    _shaderProgramManagerString = shaderProgramManagerString;
+}
+
+ShaderProgram* DrawableObject::getSaherProgram()
+{
+    if (_shaderProgram) {
+        return _shaderProgram;
+    }
+    return nullptr;
 }
 
 glm::mat4 DrawableObject::GetCurrentTransformation() {
     return this->_transformationMatrix;
 }
 
+TransformationData DrawableObject::GetCurrentTransformationData() {
+    return transformationData;
+}
 
 unsigned int* DrawableObject::generateIndices(int vertexCount) {
     unsigned int* indices = new unsigned int[vertexCount];
@@ -72,33 +85,134 @@ unsigned int* DrawableObject::generateIndices(int vertexCount) {
 }
 
 void DrawableObject::translate(float x, float y, float z) {
-    Transformation* translation = new TransformationTranslate(glm::vec3(x, y, z));
+    /*Transformation* translation = new TransformationTranslate(glm::vec3(x, y, z));
     transformationComposite.addTransformation(translation);
+    _curentTranslation = translation;*/
+
+    _translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
+
+    
+    transformationData.TranslationX = x;
+    transformationData.TranslationY = y;
+    transformationData.TranslationZ = z;
+
+
+    _isTranslateTransformationDirty = true;
     _isTransformationDirty = true;
 }
 
 void DrawableObject::rotate(float angle, float x, float y, float z) {
-    Transformation* rotation = new TransformationRotate(angle, glm::vec3(x, y, z));
-    transformationComposite.addTransformation(rotation);
+    /*Transformation* rotation = new TransformationRotate(angle, glm::vec3(x, y, z));
+    transformationComposite.addTransformation(rotation);*/
+    //_curentRotation = rotation;
+
+    _rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x, y, z));
+
+
+
+    transformationData.RotationAngle = angle;
+    transformationData.RotationX = x;
+    transformationData.RotationY = y;
+    transformationData.RotationZ = z;
+
+    _isRotationTransformationDirty = true;
     _isTransformationDirty = true;
 }
 
 void DrawableObject::scale(float scaleFactor) {    
-    Transformation* scale = new TransformationScale(glm::vec3(scaleFactor, scaleFactor, scaleFactor));
-    transformationComposite.addTransformation(scale);
+    //Transformation* scale = new TransformationScale(glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+    //transformationComposite.addTransformation(scale);
+    //_curentScale = scale;
+
+    _scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+
+    transformationData.Scale = scaleFactor;
+
+    _isScaleTransformationDirty = true;
     _isTransformationDirty = true;
 }
 
 void DrawableObject::updateTransformation() {
-    if (_isTransformationDirty) {
-        transformationComposite.calculateTransformations();
-        _transformationMatrix = transformationComposite.getResultMatrix();
-        _isTransformationDirty = false;  
+    
+    //printf("translation matrix:\n");
+    //printMatrix(_translationMatrix);
+    //printf("rotation matrix:\n");
+    //printMatrix(_rotationMatrix);
+    //printf("scale matrix:\n");
+    //printMatrix(_scaleMatrix);
+    MatrixHelper& matrixHelper = MatrixHelper::getInstance();
+
+    glm::mat4 modelMatrix = _translationMatrix * _rotationMatrix * _scaleMatrix;
+
+    glm::mat4 viewMatrix = glm::mat4(1.0);
+    glm::mat4 perspectiveMatrix = glm::mat4(1.0);
+
+    glm::mat4 CompareViewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.0f, -12.0f));
+    //perspectiveMatrix = glm::perspective(glm::radians(45.0f), (float)(1500/ 1200), 0.1f, 100.0f);
+
+    //printf("camera matrix:\n");
+    //printMatrix(viewMatrix);
+
+    if (_shaderProgram) {
+        _shaderProgram->use();
+        _shaderProgram->setUniformMat4("u_TransformationMatrix", modelMatrix);
     }
 
     if (_shaderProgram) {
         _shaderProgram->use();
+        viewMatrix = _shaderProgram->getViewMatrix();
+        
+        printf("view matrix woooooo: \n");
+
+
+
+        matrixHelper.printMatrix(viewMatrix);
+
+
+        _shaderProgram->setUniformMat4("u_ViewMatrix", viewMatrix);
+    }
+    if (_shaderProgram) {
+        _shaderProgram->use();
+        perspectiveMatrix = _shaderProgram->getViewMatrix();
+
+        _shaderProgram->setUniformMat4("u_Perspective", perspectiveMatrix);
+    }
+
+    
+    
+    /*if (_isTransformationDirty) {
+        if (!_isScaleTransformationDirty) {
+            transformationComposite.addTransformation(_curentScale);
+        }
+        if (!_isRotationTransformationDirty) {
+            transformationComposite.addTransformation(_curentRotation);
+        }
+        if (!_isTranslateTransformationDirty) {
+            transformationComposite.addTransformation(_curentTranslation);
+        }
+        transformationComposite.calculateTransformations();
+        _transformationMatrix = transformationComposite.getResultMatrix();
+    if (_shaderProgram) {
+        _shaderProgram->use();
         _shaderProgram->setUniformMat4("u_TransformationMatrix", _transformationMatrix);
     }
+        else {
+            printf("shaderProgram missing");
+        }
+        _isScaleTransformationDirty = false;
+        _isTranslateTransformationDirty = false;
+        _isRotationTransformationDirty = false;
+        _isTransformationDirty = false;
+    }*/
 }
+
+//void DrawableObject::printMatrix(const glm::mat4& matrix) {
+//    // Loop through the columns and rows to print each element
+//    for (int i = 0; i < 4; ++i) {
+//        for (int j = 0; j < 4; ++j) {
+//            std::cout << matrix[j][i] << "\t";  // Access element at (j, i) because glm::mat4 is column-major
+//        }
+//        std::cout << std::endl;
+//    }
+//}
 

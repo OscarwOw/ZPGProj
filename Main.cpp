@@ -1,5 +1,4 @@
 ﻿#include <GL/glew.h>
-
 #include <GLFW/glfw3.h>  
 
 #include <glm/vec3.hpp>
@@ -16,10 +15,11 @@
 #include "ShaderProgram.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include <chrono>
+
 
 #include "plain.h"
 #include "tree.h"
-#include "Mesh.h"
 #include "ErrorHandler.h"
 #include "DrawableObject.h"
 #include "SceneManager.h"
@@ -27,12 +27,33 @@
 #include "ShaderProgramManager.h"
 
 
+
+
 static void error_callback(int error, const char* description) { fputs(description, stderr); }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
+    Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
+
+    if (camera) {
+        // Handle camera movement based on key input
+        if (key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+            printf("W pressed");
+            camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  // Move forward
+        }
+        if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+            camera->processKeyboard(Camera_Movement::BACKWARD, 0.1f);  // Move backward
+        }
+        if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+            camera->processKeyboard(Camera_Movement::LEFT, 0.1f);  // Move left
+        }
+        if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+            camera->processKeyboard(Camera_Movement::RIGHT, 0.1f);  // Move right
+        }
+    }
+
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
 	printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
 }
 
@@ -70,13 +91,30 @@ unsigned int indices[] = {
     2, 3, 0
 };
 
+int counter=0;
 
+
+void tick(GLFWwindow* window, SceneManager& sceneManager) {
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Get and draw the current scene
+    Scene* currentScene = sceneManager.getCurrentScene();
+    if (currentScene) {
+        // Example of scene-specific transformation
+        currentScene->circusTransform();
+        currentScene->drawScene();
+    }
+    glfwSwapBuffers(window);
+
+}
 
 
 
 int main(void)
 {
     glfwSetErrorCallback(error_callback);
+    
 
     StartupManager::InitializeGLFW();
     StartupManager::SetWindowHints();
@@ -89,44 +127,91 @@ int main(void)
     StartupManager::ViewPortSetup(window);
 
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double mouseXPos, double mouseYPos)-> void {cursor_pos_callback(window, mouseXPos, mouseYPos); });
+    
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     //END OF OPENGL INIT
 
+
+    Camera* camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+    glfwSetWindowUserPointer(window, camera);
+    glfwSetKeyCallback(window, key_callback);
+
     ShaderProgramManager& shaderProgramManager = ShaderProgramManager::getInstance();
     SceneManager& sceneManager = SceneManager::getInstance();
-    SceneGenerator& generator = SceneGenerator::getInstance();
-
-    shaderProgramManager.loadShader("treeShader", "ColorShader.shader");
-    ShaderProgram* shaderProgram = shaderProgramManager.getShader("treeShader");
+    SceneGenerator& sceneGenerator = SceneGenerator::getInstance();
 
     Scene* forestScene = new Scene();
-    sceneManager.addScene(forestScene);
+    sceneGenerator.generateForest(forestScene, 50, 25, camera);
     
-    DrawableObject* treeObject = generator.generateTree(0.05f, 145.0f, 0.0f, 0.0f);
+    sceneManager.addScene("Forest", forestScene);
+    sceneManager.switchScene("Forest");
 
-    forestScene->addObject(treeObject);
+
+    Scene* testscene = new Scene();
+    DrawableObject* treeobj = sceneGenerator.generateTree(0.2f, 0.0f, 0.0f, 0.0f);
+    //DrawableObject* treeobj1 = sceneGenerator.generateTree(0.1f, 45.0f, 0.5f, 3.0f);
+
+
+    testscene->addObject(treeobj);
+    //testscene->addObject(treeobj1);
+
+
+    sceneManager.addScene("cirkus", testscene);
+    sceneManager.switchScene("cirkus");
+
+    camera->attachObserver(treeobj->getSaherProgram());
+
 
     
-    DrawableObject* treeObject2 = generator.generateTree(0.50f, 45.0f, 2.0f, -1.0f);
+    //camera->processKeyboard(Camera_Movement::BACKWARD, 0.1f);
 
-    forestScene->addObject(treeObject2);
+    auto lastTickTime = std::chrono::steady_clock::now();
+    auto lastPollEventTickTime = std::chrono::steady_clock::now();
+    const std::chrono::milliseconds tickInterval(2500);
+    const std::chrono::milliseconds pollEventTickInterval(10);
+    
 
-    float scale = 0.05;
-    float rotationAngle = 0.0f;
+
     while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        /*glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        sceneManager.getCurrentScene()->drawScene();
+        Scene* currentScene = sceneManager.getCurrentScene();
+        if (currentScene) {
+            
+            //TODO some more logic
+            currentScene->circusTransform();
+            currentScene->drawScene();
+        }
 
         glfwPollEvents();
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window);*/
+
+
+        auto currentTime = std::chrono::steady_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTickTime);
+        auto pollElapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastPollEventTickTime);
+
+        // Check if 60 milliseconds have passed since the last tick
+        if (elapsedTime >= tickInterval) {
+            // Execute the tick function
+            tick(window, sceneManager);
+
+            // Update the last tick time
+            lastTickTime = currentTime;
+        }
+        if (elapsedTime >= pollEventTickInterval) {
+            glfwPollEvents();
+            lastPollEventTickTime = currentTime;
+        }
+        
+
     }
 
     glfwDestroyWindow(window);
-    shaderProgram->~ShaderProgram();
+    //shaderProgram->~ShaderProgram();
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }

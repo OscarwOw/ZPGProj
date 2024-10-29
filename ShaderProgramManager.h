@@ -8,8 +8,8 @@ public:
 
     static ShaderProgramManager& getInstance();
 
-    void loadShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
-    void loadShader(const std::string& name, const std::string& shaderPath);
+    std::string CreateShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
+    std::string CreateShader(const std::string& name, const std::string& shaderPath);
 
     ShaderProgram* getShader(const std::string& name);
 
@@ -17,9 +17,17 @@ public:
     ShaderProgram* activeShader;
 
 private:
+
     ShaderProgramManager() {}
     ShaderProgramManager(const ShaderProgramManager&) = delete;
     ShaderProgramManager& operator=(const ShaderProgramManager&) = delete;
 
-    std::map<std::string, ShaderProgram*> shaders; 
+
+    std::map<std::string, ShaderProgram*> _shaders;
+    std::map<std::string, unsigned int> _namesIndexHolder;
+
+    std::string CreateShader(ShaderProgramSourceStrings source, ShaderProgram* shaderProgram, const std::string& name);
+    std::string CreateShaderID(std::string shaderType);
+
+
 };

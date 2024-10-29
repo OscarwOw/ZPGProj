@@ -9,6 +9,7 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Camera.h"
 
 struct ShaderProgramSourceStrings
 {
@@ -17,7 +18,7 @@ struct ShaderProgramSourceStrings
 };
 
 
-class ShaderProgram {
+class ShaderProgram : public ICameraObserver {
 public:
     ShaderProgram();
     ~ShaderProgram();
@@ -30,9 +31,18 @@ public:
     GLuint getProgramID() const;
     
     void setUniformMat4(const std::string& name, const glm::mat4& matrix);
+    void updateViewMatrix(const glm::mat4& viewMatrix) override;
+    void updatePerspectiveMatrix(const glm::mat4& viewMatrix) override;
+
+    glm::mat4 getPerspectiveMatrix();
+    glm::mat4 getViewMatrix();
 
 private:
     GLuint programID;
+
+    float _perspective = 45.0f;
+    glm::mat4 _viewMatrix;
+    glm::mat4 _perspectiveMatrix;
 
     // Helper functions to compile individual shaders
     GLuint compileShader(const std::string& shaderSource, GLenum shaderType);
