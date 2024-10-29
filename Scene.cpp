@@ -16,3 +16,25 @@ void Scene::clearScene() {
     }
     objects.clear(); 
 }
+
+void Scene::circusTransform()
+{
+    TransformationData transformationdata = objects[0]->GetCurrentTransformationData();
+
+    //objects[0]->getSaherProgram()->updatePerspective();
+
+
+    if (transformationdata.RotationAngle < 360) {//(transformationdata.RotationAngle < 360.0f) {
+        objects[0]->rotate(transformationdata.RotationAngle + 5.0f, transformationdata.RotationX,
+                           transformationdata.RotationY, transformationdata.RotationZ);
+        //objects[0]->translate(transformationdata.TranslationX + 0.005f, transformationdata.TranslationY , transformationdata.TranslationZ );
+        //objects[0]->scale(0.3f );
+    }
+    else {
+        objects[0]->rotate(0, transformationdata.RotationX,
+                           transformationdata.RotationY, transformationdata.RotationZ);
+        /*objects[0]->translate( 0, transformationdata.TranslationY, transformationdata.TranslationZ);*/
+
+    }
+
+}

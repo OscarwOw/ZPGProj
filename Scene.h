@@ -3,10 +3,10 @@
 
 class Scene {
 private:
-    std::vector<DrawableObject*> objects;  
-    
+    std::vector<DrawableObject*> objects;
 public:
     void addObject(DrawableObject* obj);
     void drawScene();
-    void clearScene();  
+    void clearScene();
+    void circusTransform();
 };

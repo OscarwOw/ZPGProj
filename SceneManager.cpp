@@ -8,22 +8,20 @@ SceneManager& SceneManager::getInstance()
 	return instance;
 }
 
-void SceneManager::addScene(Scene* scene)
-{
-	scenes.push_back(scene);
+void SceneManager::addScene(const std::string& name, Scene* scene) {
+	scenes[name] = scene;
 }
 
-void SceneManager::switchScene(int index)
-{
-	if (index >= 0 && index < scenes.size()) {
-		currentSceneIndex = index;
+void SceneManager::switchScene(const std::string& name) {
+	if (scenes.find(name) != scenes.end()) {
+		currentSceneName = name;
 	}
 }
 
-Scene* SceneManager::getCurrentScene()
-{
-	if (currentSceneIndex >= 0 && currentSceneIndex < scenes.size()) {
-		return scenes.at(currentSceneIndex);
+Scene* SceneManager::getCurrentScene() {
+	auto it = scenes.find(currentSceneName);
+	if (it != scenes.end()) {
+		return it->second;
 	}
 	return nullptr;
 }
