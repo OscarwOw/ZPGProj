@@ -147,11 +147,9 @@ void DrawableObject::updateTransformation() {
     glm::mat4 viewMatrix = glm::mat4(1.0);
     glm::mat4 perspectiveMatrix = glm::mat4(1.0);
 
-    glm::mat4 CompareViewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.0f, -12.0f));
+    glm::mat4 CompareViewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.0f, 0.0f));
     //perspectiveMatrix = glm::perspective(glm::radians(45.0f), (float)(1500/ 1200), 0.1f, 100.0f);
 
-    //printf("camera matrix:\n");
-    //printMatrix(viewMatrix);
 
     if (_shaderProgram) {
         _shaderProgram->use();
@@ -162,18 +160,28 @@ void DrawableObject::updateTransformation() {
         _shaderProgram->use();
         viewMatrix = _shaderProgram->getViewMatrix();
         
-        printf("view matrix woooooo: \n");
 
-
-
+        printf("camera matrix comparison:\n");
+        matrixHelper.printMatrix(CompareViewMatrix);
+        printf("camera real:\n");
         matrixHelper.printMatrix(viewMatrix);
 
+        
+        
+        /*
+        printf("view matrix woooooo: \n");
+
+        matrixHelper.printMatrix(viewMatrix);*/
 
         _shaderProgram->setUniformMat4("u_ViewMatrix", viewMatrix);
     }
     if (_shaderProgram) {
         _shaderProgram->use();
-        perspectiveMatrix = _shaderProgram->getViewMatrix();
+
+        /*printf("perspective matrix woooooo: \n");*/
+
+        perspectiveMatrix = _shaderProgram->getPerspectiveMatrix();
+        /*matrixHelper.printMatrix(perspectiveMatrix);*/
 
         _shaderProgram->setUniformMat4("u_Perspective", perspectiveMatrix);
     }

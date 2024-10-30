@@ -117,9 +117,9 @@ void ShaderProgram::updateViewMatrix(const glm::mat4& viewMatrix)
     //setUniformMat4("u_ViewMatrix", _viewMatrix);
 }
 
-void ShaderProgram::updatePerspectiveMatrix(const glm::mat4& viewMatrix)
+void ShaderProgram::updatePerspectiveMatrix(const glm::mat4& perspectiveMatrix)
 {
-    _perspectiveMatrix = viewMatrix;
+    _perspectiveMatrix = perspectiveMatrix;
     //setUniformMat4("u_Perspective", viewMatrix);
 }
 

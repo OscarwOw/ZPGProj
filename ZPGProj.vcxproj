@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Downloads\ShaderLoader\ShaderLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Drawableobject.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Downloads\ShaderLoader\ShaderLoader.h" />
     <ClInclude Include="bushes.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableObject.h" />
@@ -178,6 +180,7 @@
   <ItemGroup>
     <None Include="Basic.shader" />
     <None Include="ColorShader.shader" />
+    <None Include="Readme.md" />
     <None Include="readmePipeline.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

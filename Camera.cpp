@@ -87,11 +87,11 @@ void Camera::notifyObservers() {
 
     MatrixHelper& matrixHelper = MatrixHelper::getInstance();
 
-    printf("perspective matrix: \n");
+    /* printf("perspective matrix: \n");
     matrixHelper.printMatrix(perspectiveMatrix);
 
     printf("view matrix: \n");
-    matrixHelper.printMatrix(viewMatrix);
+    matrixHelper.printMatrix(viewMatrix);*/
 
     for (auto* observer : observers) {
         observer->updateViewMatrix(viewMatrix);

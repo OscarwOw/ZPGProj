@@ -169,7 +169,7 @@ int main(void)
 
     auto lastTickTime = std::chrono::steady_clock::now();
     auto lastPollEventTickTime = std::chrono::steady_clock::now();
-    const std::chrono::milliseconds tickInterval(2500);
+    const std::chrono::milliseconds tickInterval(16);
     const std::chrono::milliseconds pollEventTickInterval(10);
     
 
