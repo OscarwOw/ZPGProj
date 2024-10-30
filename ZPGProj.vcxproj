@@ -130,7 +130,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\ShaderLoader\ShaderLoader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Drawableobject.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
@@ -139,6 +138,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGenerator.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ShaderProgramManager.cpp" />
     <ClCompile Include="StartupManager.cpp" />
@@ -151,7 +151,6 @@
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Downloads\ShaderLoader\ShaderLoader.h" />
     <ClInclude Include="bushes.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawableObject.h" />
@@ -163,6 +162,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGenerator.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgramManager.h" />
     <ClInclude Include="TransformationRotate.h" />
     <ClInclude Include="TransformationScale.h" />

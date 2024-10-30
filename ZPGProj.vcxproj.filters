@@ -81,6 +81,9 @@
     <ClCompile Include="MatrixHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StartupManager.hpp">
@@ -155,6 +158,9 @@
     <ClInclude Include="MatrixHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.shader">
@@ -164,5 +170,6 @@
       <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="readmePipeline.md" />
+    <None Include="Readme.md" />
   </ItemGroup>
 </Project>
