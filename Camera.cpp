@@ -4,7 +4,7 @@
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
 const float SPEED = 2.5f;
-const float SENSITIVITY = 0.1f;
+const float SENSITIVITY = 0.06f;
 const float ZOOM = 45.0f;
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
@@ -32,7 +32,6 @@ glm::mat4 Camera::getPerspectiveMatrix() const {
     return glm::perspective(glm::radians(45.0f), (float)(1500 / 1200), 0.1f, 100.0f);
 }
 
-
 void Camera::processKeyboard(Camera_Movement direction, float deltaTime) {
     float velocity = movementSpeed * deltaTime;
     if (direction == Camera_Movement::FORWARD)
@@ -52,7 +51,7 @@ void Camera::processMouseMovement(float xoffset, float yoffset, bool constrainPi
     xoffset *= mouseSensitivity;
     yoffset *= mouseSensitivity;
 
-    yaw += xoffset;
+    yaw -= xoffset;
     pitch += yoffset;
 
     if (constrainPitch) {
@@ -84,22 +83,15 @@ void Camera::updateCameraVectors() {
 void Camera::notifyObservers() {
     glm::mat4 viewMatrix = getViewMatrix();
     glm::mat4 perspectiveMatrix = getPerspectiveMatrix();
-
-    MatrixHelper& matrixHelper = MatrixHelper::getInstance();
-
-    /* printf("perspective matrix: \n");
-    matrixHelper.printMatrix(perspectiveMatrix);
-
-    printf("view matrix: \n");
-    matrixHelper.printMatrix(viewMatrix);*/
-
     for (auto* observer : observers) {
-        observer->updateViewMatrix(viewMatrix);
-        observer->updatePerspectiveMatrix(perspectiveMatrix);
+        observer->setViewMatrix(viewMatrix);
+        observer->setPerspectiveMatrix(perspectiveMatrix);
     }
 }
 
 void Camera::attachObserver(ICameraObserver* observer) {
+    observer->setPerspectiveMatrix(getPerspectiveMatrix());
+    observer->setViewMatrix(getViewMatrix());
     observers.push_back(observer);
 }
 

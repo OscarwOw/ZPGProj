@@ -27,6 +27,10 @@
 #include "ShaderProgramManager.h"
 
 
+bool mousePressed = false;
+double lastMouseX = 0;
+double lastMouseY = 0;
+
 static void error_callback(int error, const char* description) { fputs(description, stderr); }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -37,22 +41,33 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         // Handle camera movement based on key input
         if (key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
             printf("W pressed");
-            camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  // Move forward
+            camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
         }
         if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-            camera->processKeyboard(Camera_Movement::BACKWARD, 0.1f);  // Move backward
+            camera->processKeyboard(Camera_Movement::BACKWARD, 0.1f); 
         }
         if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-            camera->processKeyboard(Camera_Movement::LEFT, 0.1f);  // Move left
+            camera->processKeyboard(Camera_Movement::LEFT, 0.1f); 
         }
         if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
-            camera->processKeyboard(Camera_Movement::RIGHT, 0.1f);  // Move right
+            camera->processKeyboard(Camera_Movement::RIGHT, 0.1f);
         }
     }
 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 	printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
+}
+
+static void mouse_button_pressed_callback(GLFWwindow* window, int button, int action, int mods) {
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+        mousePressed = true;
+        printf("mouse pressed\n");
+    }
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
+        printf("mouse released\n");
+        mousePressed = false;
+    }
 }
 
 static void window_focus_callback(GLFWwindow* window, int focused) { printf("window_focus_callback \n"); }
@@ -70,8 +85,13 @@ static void button_callback(GLFWwindow* window, int button, int action, int mode
 	if (action == GLFW_PRESS) printf("button_callback [%d,%d,%d]\n", button, action, mode);
 }
 
-static void cursor_pos_callback(GLFWwindow* window, double mouseX, double mouseY) {
-    //printf("cursor_pos_callback %d, %d;\n", (int)mouseX, (int)mouseY);
+static void cursor_pos_callback(GLFWwindow* window, double mouseX, double mouseY) {    
+    Camera* camera = static_cast<Camera*>(glfwGetWindowUserPointer(window));
+    if (mousePressed) {
+        camera->processMouseMovement(mouseX - lastMouseX, mouseY - lastMouseY, false);
+    }
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
 }
 
 
@@ -90,6 +110,7 @@ unsigned int indices[] = {
 };
 
 int counter=0;
+
 
 
 void tick(GLFWwindow* window, SceneManager& sceneManager) {
@@ -113,6 +134,7 @@ int main(void)
 {
     glfwSetErrorCallback(error_callback);
     
+    
 
     StartupManager::InitializeGLFW();
     StartupManager::SetWindowHints();
@@ -125,7 +147,8 @@ int main(void)
     StartupManager::ViewPortSetup(window);
 
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double mouseXPos, double mouseYPos)-> void {cursor_pos_callback(window, mouseXPos, mouseYPos); });
-    
+
+    glfwSetMouseButtonCallback(window, mouse_button_pressed_callback);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -166,9 +189,7 @@ int main(void)
     //camera->processKeyboard(Camera_Movement::BACKWARD, 0.1f);
 
     auto lastTickTime = std::chrono::steady_clock::now();
-    auto lastPollEventTickTime = std::chrono::steady_clock::now();
     const std::chrono::milliseconds tickInterval(16);
-    const std::chrono::milliseconds pollEventTickInterval(10);
     
 
 
@@ -190,7 +211,6 @@ int main(void)
 
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTickTime);
-        auto pollElapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastPollEventTickTime);
 
         // Check if 60 milliseconds have passed since the last tick
         if (elapsedTime >= tickInterval) {
@@ -200,10 +220,9 @@ int main(void)
             // Update the last tick time
             lastTickTime = currentTime;
         }
-        if (elapsedTime >= pollEventTickInterval) {
-            glfwPollEvents();
-            lastPollEventTickTime = currentTime;
-        }
+
+        glfwPollEvents();
+
         
 
     }

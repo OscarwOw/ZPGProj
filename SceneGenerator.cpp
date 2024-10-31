@@ -23,7 +23,7 @@ void SceneGenerator::generateForest(Scene* scene, int numTrees, int numBushes, C
             0.0f, 0.0f, 1.0f, 0.0f,
             0.0f, 0.0f, 0.0f, 1.0f
         );
-        treeobject->getSaherProgram()->updateViewMatrix(camera);
+        treeobject->getSaherProgram()->setViewMatrix(camera);
     }
 }
 
