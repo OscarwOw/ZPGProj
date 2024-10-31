@@ -6,11 +6,15 @@
 
 
 ShaderProgram::ShaderProgram() {
-    programID = glCreateProgram();
+    _programID = glCreateProgram();
+}
+
+ShaderProgram::ShaderProgram(unsigned int programID) {
+    _programID = programID;
 }
 
 ShaderProgram::~ShaderProgram() {
-    glDeleteProgram(programID);
+    glDeleteProgram(_programID);
 }
 
 enum class ShaderType {
@@ -22,27 +26,27 @@ unsigned int ShaderProgram::attachShader(const std::string& vertexShaderSource, 
     unsigned int vertexShader = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
     unsigned int fragmentShader = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
-    glAttachShader(programID, vertexShader);
-    glAttachShader(programID, fragmentShader);
+    glAttachShader(_programID, vertexShader);
+    glAttachShader(_programID, fragmentShader);
 
-    glLinkProgram(programID);
+    glLinkProgram(_programID);
 
     ShaderProgram::setViewMatrix(glm::mat4(1.0f));
     ShaderProgram::setPerspectiveMatrix(glm::perspective(glm::radians(45.0f), (float)(1500 / 1200), 0.1f, 100.0f));
 
     int isLinked;
-    glGetProgramiv(programID, GL_LINK_STATUS, &isLinked);
+    glGetProgramiv(_programID, GL_LINK_STATUS, &isLinked);
     if (!isLinked) {
         GLint maxLength;
-        glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &maxLength);
+        glGetProgramiv(_programID, GL_INFO_LOG_LENGTH, &maxLength);
         std::string infoLog(maxLength, ' ');
-        glGetProgramInfoLog(programID, maxLength, &maxLength, &infoLog[0]);
+        glGetProgramInfoLog(_programID, maxLength, &maxLength, &infoLog[0]);
         std::cerr << "Shader linking failed: " << infoLog << std::endl;
     }
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-    return programID;
+    return _programID;
 }
 
 unsigned int ShaderProgram::compileShader(const std::string& shaderSource, unsigned int shaderType) {
@@ -106,7 +110,7 @@ std::string ShaderProgram::parseShader(const std::string& file)
 }
 
 void ShaderProgram::setUniformMat4(const std::string& name, const glm::mat4& matrix) {
-    GLuint location = glGetUniformLocation(programID, name.c_str());
+    GLuint location = glGetUniformLocation(_programID, name.c_str());
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
@@ -131,9 +135,9 @@ glm::mat4 ShaderProgram::getViewMatrix()
 }
 
 void ShaderProgram::use() {
-    glUseProgram(programID);
+    glUseProgram(_programID);
 }
 
 GLuint ShaderProgram::getProgramID() const {
-    return programID;
+    return _programID;
 }

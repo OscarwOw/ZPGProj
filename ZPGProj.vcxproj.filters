@@ -177,5 +177,11 @@
     <None Include="FragmentShaderFirstLight.shader">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="ColorVertexShader.shader">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="ColorFragmentShader.shader">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

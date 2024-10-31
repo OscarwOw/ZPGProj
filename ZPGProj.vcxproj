@@ -179,7 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.shader" />
+    <None Include="ColorFragmentShader.shader" />
     <None Include="ColorShader.shader" />
+    <None Include="ColorVertexShader.shader" />
     <None Include="FragmentShaderFirstLight.shader" />
     <None Include="Readme.md" />
     <None Include="readmePipeline.md" />

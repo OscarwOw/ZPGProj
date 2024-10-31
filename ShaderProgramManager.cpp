@@ -1,6 +1,8 @@
 #include "ShaderProgramManager.h"
 #include <cstdlib>
 
+ShaderLoader* ShaderProgramManager::_shaderLoader = new ShaderLoader();
+
 ShaderProgramManager& ShaderProgramManager::getInstance() {
     static ShaderProgramManager instance;
     return instance;
@@ -8,7 +10,7 @@ ShaderProgramManager& ShaderProgramManager::getInstance() {
 
 //TODO Code Organization consistency
 #pragma region Create Shader
-std::string ShaderProgramManager::CreateShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
+std::string ShaderProgramManager::CreateShader( const std::string& vertexPath, const std::string& fragmentPath, const std::string& name ) //TODO changed sequence
 {
     ShaderProgram* shaderProgram = new ShaderProgram();
     ShaderProgramSourceStrings source = {
@@ -18,7 +20,7 @@ std::string ShaderProgramManager::CreateShader(const std::string& name, const st
     return CreateShader(source, shaderProgram, name);
 }
 
-std::string ShaderProgramManager::CreateShader(const std::string& name, const std::string& shaderPath)
+std::string ShaderProgramManager::CreateShader( const std::string& shaderPath, const std::string& name ) //TODO changed sequence
 {
     ShaderProgram* shaderProgram = new ShaderProgram();
     ShaderProgramSourceStrings source = shaderProgram->parseShaders(shaderPath);
@@ -41,6 +43,16 @@ std::string ShaderProgramManager::CreateShaderID(std::string shaderType)
         _namesIndexHolder[shaderType]++;
     }
     return shaderType + "_" + std::to_string(_namesIndexHolder[shaderType]);
+}
+#pragma endregion
+
+#pragma region Create Shader Nemec
+std::string ShaderProgramManager::CreateShaderNemec(const char* vertexFile, const char* fragmentFile, std::string name) {
+    GLuint shader = _shaderLoader->loadShader(vertexFile, fragmentFile);
+    ShaderProgram* shaderProgram = new ShaderProgram(shader);
+    std::string accessString = CreateShaderID(name);
+    _shaders[accessString] = shaderProgram;
+    return accessString;
 }
 #pragma endregion
 

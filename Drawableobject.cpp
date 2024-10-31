@@ -11,7 +11,6 @@ DrawableObject::DrawableObject() : _vertexBuffer(nullptr), _indexBuffer(nullptr)
     _rotationMatrix = glm::mat4(1.0f);
     _scaleMatrix = glm::mat4(1.0f);
    //_matrixHelperInstance = MatrixHelper::getInstance();
-  
 }
 
 DrawableObject::~DrawableObject() {
