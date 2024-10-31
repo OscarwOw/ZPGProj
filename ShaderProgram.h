@@ -21,6 +21,7 @@ struct ShaderProgramSourceStrings
 class ShaderProgram : public ICameraObserver {
 public:
     ShaderProgram();
+    ShaderProgram(GLuint programID);
     ~ShaderProgram();
 
     // Method to load, compile and link shaders
@@ -38,7 +39,7 @@ public:
     glm::mat4 getViewMatrix();
 
 private:
-    GLuint programID;
+    GLuint _programID;
 
     float _perspective = 45.0f;
     glm::mat4 _viewMatrix;
