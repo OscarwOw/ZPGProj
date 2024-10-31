@@ -161,40 +161,7 @@ void DrawableObject::updateTransformation() {
     }
 
     
-    
-    /*if (_isTransformationDirty) {
-        if (!_isScaleTransformationDirty) {
-            transformationComposite.addTransformation(_curentScale);
-        }
-        if (!_isRotationTransformationDirty) {
-            transformationComposite.addTransformation(_curentRotation);
-        }
-        if (!_isTranslateTransformationDirty) {
-            transformationComposite.addTransformation(_curentTranslation);
-        }
-        transformationComposite.calculateTransformations();
-        _transformationMatrix = transformationComposite.getResultMatrix();
-    if (_shaderProgram) {
-        _shaderProgram->use();
-        _shaderProgram->setUniformMat4("u_TransformationMatrix", _transformationMatrix);
-    }
-        else {
-            printf("shaderProgram missing");
-        }
-        _isScaleTransformationDirty = false;
-        _isTranslateTransformationDirty = false;
-        _isRotationTransformationDirty = false;
-        _isTransformationDirty = false;
-    }*/
+   
 }
 
-//void DrawableObject::printMatrix(const glm::mat4& matrix) {
-//    // Loop through the columns and rows to print each element
-//    for (int i = 0; i < 4; ++i) {
-//        for (int j = 0; j < 4; ++j) {
-//            std::cout << matrix[j][i] << "\t";  // Access element at (j, i) because glm::mat4 is column-major
-//        }
-//        std::cout << std::endl;
-//    }
-//}
 
