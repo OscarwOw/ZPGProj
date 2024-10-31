@@ -171,5 +171,11 @@
     </None>
     <None Include="readmePipeline.md" />
     <None Include="Readme.md" />
+    <None Include="VertexShaderFirstLight.shader">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="FragmentShaderFirstLight.shader">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

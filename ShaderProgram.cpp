@@ -27,8 +27,8 @@ unsigned int ShaderProgram::attachShader(const std::string& vertexShaderSource, 
 
     glLinkProgram(programID);
 
-    ShaderProgram::updateViewMatrix(glm::mat4(1.0f));
-    ShaderProgram::updatePerspectiveMatrix(glm::perspective(glm::radians(45.0f), (float)(1500 / 1200), 0.1f, 100.0f));
+    ShaderProgram::setViewMatrix(glm::mat4(1.0f));
+    ShaderProgram::setPerspectiveMatrix(glm::perspective(glm::radians(45.0f), (float)(1500 / 1200), 0.1f, 100.0f));
 
     int isLinked;
     glGetProgramiv(programID, GL_LINK_STATUS, &isLinked);
@@ -110,17 +110,14 @@ void ShaderProgram::setUniformMat4(const std::string& name, const glm::mat4& mat
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void ShaderProgram::updateViewMatrix(const glm::mat4& viewMatrix)
+void ShaderProgram::setViewMatrix(const glm::mat4& viewMatrix)
 {
-
     _viewMatrix = viewMatrix;
-    //setUniformMat4("u_ViewMatrix", _viewMatrix);
 }
 
-void ShaderProgram::updatePerspectiveMatrix(const glm::mat4& perspectiveMatrix)
+void ShaderProgram::setPerspectiveMatrix(const glm::mat4& perspectiveMatrix)
 {
     _perspectiveMatrix = perspectiveMatrix;
-    //setUniformMat4("u_Perspective", viewMatrix);
 }
 
 glm::mat4 ShaderProgram::getPerspectiveMatrix()
@@ -132,20 +129,6 @@ glm::mat4 ShaderProgram::getViewMatrix()
 {
     return _viewMatrix;
 }
-
-//void ShaderProgram::updatePerspectiveMatrix() {
-//    
-//    glm::mat4 proj = glm::mat4(1.0f);
-//    glm::mat4 view = glm::mat4(1.0f);
-//    
-//    view = glm::translate(view, glm::vec3(0.0f, 0.0f, 0.0f));
-//    proj = glm::perspective(glm::radians(_perspective), (float)(1500/1200), 0.1f, 100.0f);
-//
-//
-//    
-//    setUniformMat4("u_Perspective", _perspective);
-//    //updateViewMatrix(view);
-//}
 
 void ShaderProgram::use() {
     glUseProgram(programID);

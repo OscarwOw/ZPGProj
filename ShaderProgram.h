@@ -31,8 +31,8 @@ public:
     GLuint getProgramID() const;
     
     void setUniformMat4(const std::string& name, const glm::mat4& matrix);
-    void updateViewMatrix(const glm::mat4& viewMatrix) override;
-    void updatePerspectiveMatrix(const glm::mat4& viewMatrix) override;
+    void setViewMatrix(const glm::mat4& viewMatrix) override;
+    void setPerspectiveMatrix(const glm::mat4& viewMatrix) override;
 
     glm::mat4 getPerspectiveMatrix();
     glm::mat4 getViewMatrix();

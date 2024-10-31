@@ -180,8 +180,10 @@
   <ItemGroup>
     <None Include="Basic.shader" />
     <None Include="ColorShader.shader" />
+    <None Include="FragmentShaderFirstLight.shader" />
     <None Include="Readme.md" />
     <None Include="readmePipeline.md" />
+    <None Include="VertexShaderFirstLight.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

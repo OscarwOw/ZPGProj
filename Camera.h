@@ -18,8 +18,8 @@ enum class Camera_Movement {
 
 class ICameraObserver {
 public:
-    virtual void updateViewMatrix(const glm::mat4& viewMatrix) = 0;
-    virtual void updatePerspectiveMatrix(const glm::mat4& viewMatrix) = 0;
+    virtual void setViewMatrix(const glm::mat4& viewMatrix) = 0;
+    virtual void setPerspectiveMatrix(const glm::mat4& viewMatrix) = 0;
 };
 
 // Camera class definition
