@@ -136,7 +136,7 @@ void DrawableObject::updateTransformation() {
 
     if (_shaderProgram) {
         _shaderProgram->use();
-        _shaderProgram->setUniformMat4("u_TransformationMatrix", modelMatrix);
+        _shaderProgram->setUniformMat4("modelMatrix", modelMatrix);
     }
 
     if (_shaderProgram) {
@@ -150,14 +150,14 @@ void DrawableObject::updateTransformation() {
 
         matrixHelper.printMatrix(viewMatrix);*/
 
-        _shaderProgram->setUniformMat4("u_ViewMatrix", viewMatrix);
+        _shaderProgram->setUniformMat4("viewMatrix", viewMatrix);
     }
     if (_shaderProgram) {
         _shaderProgram->use();
 
         perspectiveMatrix = _shaderProgram->getPerspectiveMatrix();
 
-        _shaderProgram->setUniformMat4("u_Perspective", perspectiveMatrix);
+        _shaderProgram->setUniformMat4("projectionMatrix", perspectiveMatrix);
     }
 
     
