@@ -10,9 +10,6 @@ uniform mat4 u_Perspective;
 out vec3 fragColor;
 void main() {
 
-
-    //gl_Position = u_ViewMatrix * u_TransformationMatrix * vec4(vp, 1.0);
-    //gl_Position =  u_TransformationMatrix * vec4(vp, 1.0);
     gl_Position =   u_Perspective * u_ViewMatrix * u_TransformationMatrix * vec4(vp, 1.0);
 
 
