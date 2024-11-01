@@ -126,7 +126,7 @@ void DrawableObject::updateTransformation() {
     glm::mat4 perspectiveMatrix = glm::mat4(1.0);
 
     glm::vec3 lightPosition = glm::vec3(10.0f, 5.0f, 5.0f);
-    glm::vec3 cameraPosition = _shaderProgram->getCameraPosition();
+    
 
     if (_shaderProgram) {
         _shaderProgram->use();
@@ -149,6 +149,10 @@ void DrawableObject::updateTransformation() {
     if (_shaderProgram) {
         _shaderProgram->use();
         _shaderProgram->setUniformVec3("lightPosition", lightPosition);
+    }
+    if (_shaderProgram) {
+        _shaderProgram->use();
+        _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
     }
 
     
