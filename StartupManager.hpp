@@ -12,7 +12,15 @@
 #include <glm/gtc/type_ptr.hpp>
 
 class StartupManager {
+private:
+    StartupManager() {}
+
+    StartupManager(const StartupManager&) = delete;
+    StartupManager& operator=(const StartupManager&) = delete;
+
 public:
+    static StartupManager& getInstance();
+
     static void InitializeGLFW();
     static int InitializeGLEW(GLFWwindow* window);
     static void SetWindowHints();

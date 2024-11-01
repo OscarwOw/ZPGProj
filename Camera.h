@@ -26,16 +26,18 @@ public:
 // Camera class definition
 class Camera {
 public:
-    // Constructor with vectors
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
-        float yaw = -90.0f,
-        float pitch = 0.0f);
+    static Camera& getInstance() {
+        static Camera instance; // Guaranteed to be destroyed and instantiated on first use
+        return instance;
+    }
 
-    // Constructor with scalar values
-    Camera(float posX, float posY, float posZ,
-        float upX, float upY, float upZ,
-        float yaw, float pitch);
+    // Delete copy constructor and assignment operator to prevent copies
+    Camera(const Camera&) = delete;
+    Camera& operator=(const Camera&) = delete;
+
+
+    // Constructor with vectors
+
 
     // Get the view matrix
     glm::mat4 getViewMatrix() const;
@@ -58,6 +60,18 @@ public:
     void detachObserver(ICameraObserver* observer);
 
 private:
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
+        float yaw = -90.0f,
+        float pitch = 0.0f);
+
+    // Constructor with scalar values
+    Camera(float posX, float posY, float posZ,
+        float upX, float upY, float upZ,
+        float yaw, float pitch);
+
+
+
     // Update the camera vectors based on yaw and pitch
     void updateCameraVectors();
 

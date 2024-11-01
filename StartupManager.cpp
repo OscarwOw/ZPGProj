@@ -1,6 +1,12 @@
 #include "StartupManager.hpp"
 #include <iostream>
 
+StartupManager& StartupManager::getInstance()
+{
+    static StartupManager instance;
+    return instance;
+}
+
 void StartupManager::InitializeGLFW() {
     if (!glfwInit()) {
         fprintf(stderr, "ERROR: could not start GLFW3\n");
