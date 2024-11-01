@@ -53,6 +53,8 @@ private:
 
     unsigned int* generateIndices(int vertexCount);
 
+    std::vector<glm::vec3> calculateNormals(const float* rawData, int vertexCount, int floatsPerVertex);
+
 public:
     DrawableObject();
     ~DrawableObject();

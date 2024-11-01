@@ -114,6 +114,12 @@ void ShaderProgram::setUniformMat4(const std::string& name, const glm::mat4& mat
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void ShaderProgram::setUniformVec3(const std::string& name, const glm::vec3& vector) {
+    GLuint location = glGetUniformLocation(_programID, name.c_str());
+    glUniform3fv(location, 1, glm::value_ptr(vector));
+}
+
+
 void ShaderProgram::setViewMatrix(const glm::mat4& viewMatrix)
 {
     _viewMatrix = viewMatrix;

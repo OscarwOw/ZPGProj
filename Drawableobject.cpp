@@ -30,6 +30,8 @@ void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int 
     _vertexBuffer = new VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
     _indexBuffer = new IndexBuffer(generateIndices(vertexCount), vertexCount);
 
+    std::vector<glm::vec3> normals = calculateNormals(rawData, vertexCount, floatsPerVertex);
+
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)0);
 
@@ -37,6 +39,37 @@ void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(3 * sizeof(float)));   
 
     glBindVertexArray(0);
+}
+
+unsigned int* DrawableObject::generateIndices(int vertexCount) {
+    unsigned int* indices = new unsigned int[vertexCount];
+    for (int i = 0; i < vertexCount; ++i) {
+        indices[i] = i;
+    }
+    return indices;
+}
+
+std::vector<glm::vec3> DrawableObject::calculateNormals(const float* rawData, int vertexCount, int floatsPerVertex) {
+    std::vector<glm::vec3> normals(vertexCount, glm::vec3(0.0f));
+
+    // Loop through vertices assuming each group of 3 is a triangle
+    for (int i = 0; i < vertexCount; i += 3) {
+        glm::vec3 v0(rawData[i * floatsPerVertex], rawData[i * floatsPerVertex + 1], rawData[i * floatsPerVertex + 2]);
+        glm::vec3 v1(rawData[(i + 1) * floatsPerVertex], rawData[(i + 1) * floatsPerVertex + 1], rawData[(i + 1) * floatsPerVertex + 2]);
+        glm::vec3 v2(rawData[(i + 2) * floatsPerVertex], rawData[(i + 2) * floatsPerVertex + 1], rawData[(i + 2) * floatsPerVertex + 2]);
+
+        // Calculate two edges and the normal
+        glm::vec3 edge1 = v1 - v0;
+        glm::vec3 edge2 = v2 - v0;
+        glm::vec3 normal = glm::normalize(glm::cross(edge1, edge2));
+
+        // Assign the calculated normal to each vertex of the triangle
+        normals[i] = normal;
+        normals[i + 1] = normal;
+        normals[i + 2] = normal;
+    }
+
+    return normals;
 }
 
 void DrawableObject::Draw() {
@@ -75,13 +108,7 @@ TransformationData DrawableObject::GetCurrentTransformationData() {
     return transformationData;
 }
 
-unsigned int* DrawableObject::generateIndices(int vertexCount) {
-    unsigned int* indices = new unsigned int[vertexCount];
-    for (int i = 0; i < vertexCount; ++i) {
-        indices[i] = i;  
-    }
-    return indices;
-}
+
 
 void DrawableObject::translate(float x, float y, float z) {
     _translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
@@ -129,6 +156,10 @@ void DrawableObject::updateTransformation() {
     glm::mat4 viewMatrix = glm::mat4(1.0);
     glm::mat4 perspectiveMatrix = glm::mat4(1.0);
 
+    glm::vec3 lightPosition = glm::vec3(10.0f, 5.0f, 5.0f);
+
+
+
     //glm::mat4 CompareViewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, -0.0f, 0.0f));
     //perspectiveMatrix = glm::perspective(glm::radians(45.0f), (float)(1500/ 1200), 0.1f, 100.0f);
 
@@ -151,12 +182,16 @@ void DrawableObject::updateTransformation() {
 
         _shaderProgram->setUniformMat4("viewMatrix", viewMatrix);
     }
-    if (_shaderProgram) {
+    if (_shaderProgram) { //TODO inside one if
         _shaderProgram->use();
 
         perspectiveMatrix = _shaderProgram->getPerspectiveMatrix();
 
         _shaderProgram->setUniformMat4("projectionMatrix", perspectiveMatrix);
+    }
+    if (_shaderProgram) {
+        _shaderProgram->use();
+        _shaderProgram->setUniformVec3("lightPosition", lightPosition);
     }
 
     
