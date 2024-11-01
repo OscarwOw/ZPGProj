@@ -157,6 +157,7 @@
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="gift.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="LightSource.h" />
     <ClInclude Include="MatrixHelper.h" />
     <ClInclude Include="plain.h" />
     <ClInclude Include="Scene.h" />
@@ -182,10 +183,12 @@
     <None Include="ColorFragmentShader.shader" />
     <None Include="ColorShader.shader" />
     <None Include="ColorVertexShader.shader" />
+    <None Include="FragLight.shader" />
     <None Include="FragmentShaderFirstLight.shader" />
     <None Include="Readme.md" />
     <None Include="readmePipeline.md" />
     <None Include="VertexShaderFirstLight.shader" />
+    <None Include="VertLight.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

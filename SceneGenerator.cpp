@@ -40,7 +40,8 @@ DrawableObject* SceneGenerator::generateTree()
 }
 
 DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float x, float z) {    
-    std::string accessString = shaderProgramManager.CreateShaderNemec( "ColorVertexShader.shader", "ColorFragmentShader.shader", "tree");
+    //std::string accessString = shaderProgramManager.CreateShaderNemec( "ColorVertexShader.shader", "ColorFragmentShader.shader", "tree");
+    std::string accessString = shaderProgramManager.CreateShaderNemec( "VertLight.shader", "FragLight.shader", "tree");
     //std::string accessString = shaderProgramManager.CreateShaderNemec( "VertexShaderFirstLight.shader", "FragmentShaderFirstLight.shader", "tree");
     ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
     DrawableObject* treeObject = new DrawableObject();
