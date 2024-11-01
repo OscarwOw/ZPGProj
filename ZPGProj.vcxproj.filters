@@ -25,27 +25,27 @@
     <Filter Include="Source Files\Transformations">
       <UniqueIdentifier>{7f8be80a-07a0-4c11-a0a1-f6d7fb086783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{748b0e7d-2482-4f8d-bd5a-0e663d574410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{964c7104-8286-4bc7-83c4-e7d413eac9f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DrawableObjects">
+      <UniqueIdentifier>{38399467-711c-4f4e-9be7-588ee44e21ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ShaderClasses">
+      <UniqueIdentifier>{fd751780-3161-4a38-9e00-38586acd2764}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StartupManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ErrorHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Drawableobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Transformation.cpp">
@@ -66,33 +66,42 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MatrixHelper.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorHandler.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawableobject.cpp">
+      <Filter>Source Files\DrawableObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
+      <Filter>Source Files\ShaderClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLoader.cpp">
+      <Filter>Source Files\ShaderClasses</Filter>
     </ClCompile>
     <ClCompile Include="SceneGenerator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="StartupManager.cpp">
+      <Filter>Source Files\Common</Filter>
     </ClCompile>
     <ClCompile Include="ShaderProgramManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Common</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderLoader.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="StartupManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ErrorHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VertexBuffer.h">
@@ -143,25 +152,34 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderProgramManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MatrixHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShaderLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LightSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandler.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixHelper.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="StartupManager.hpp">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgramManager.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGenerator.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
