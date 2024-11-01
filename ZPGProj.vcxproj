@@ -135,6 +135,7 @@
     <ClCompile Include="Drawableobject.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="MatrixHelper.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGenerator.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="gift.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="MatrixHelper.h" />
     <ClInclude Include="plain.h" />
