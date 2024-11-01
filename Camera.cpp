@@ -92,6 +92,7 @@ void Camera::notifyObservers() {
 void Camera::attachObserver(ICameraObserver* observer) {
     observer->setPerspectiveMatrix(getPerspectiveMatrix());
     observer->setViewMatrix(getViewMatrix());
+    observer->setCameraPosition(position);
     observers.push_back(observer);
 }
 

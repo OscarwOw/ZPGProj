@@ -35,9 +35,11 @@ public:
     void setUniformVec3(const std::string& name, const glm::vec3& vector);
     void setViewMatrix(const glm::mat4& viewMatrix) override;
     void setPerspectiveMatrix(const glm::mat4& viewMatrix) override;
+    void setCameraPosition(const glm::vec3& cameraPosition) override;
 
     glm::mat4 getPerspectiveMatrix();
     glm::mat4 getViewMatrix();
+    glm::vec3 getCameraPosition();
 
 private:
     GLuint _programID;
@@ -45,6 +47,7 @@ private:
     float _perspective = 45.0f;
     glm::mat4 _viewMatrix;
     glm::mat4 _perspectiveMatrix;
+    glm::vec3 _cameraPosition;
 
     // Helper functions to compile individual shaders
     GLuint compileShader(const std::string& shaderSource, GLenum shaderType);

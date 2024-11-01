@@ -130,6 +130,11 @@ void ShaderProgram::setPerspectiveMatrix(const glm::mat4& perspectiveMatrix)
     _perspectiveMatrix = perspectiveMatrix;
 }
 
+void ShaderProgram::setCameraPosition(const glm::vec3& cameraPosition)
+{
+    _cameraPosition = cameraPosition;
+}
+
 glm::mat4 ShaderProgram::getPerspectiveMatrix()
 {
     return _perspectiveMatrix;
@@ -138,6 +143,11 @@ glm::mat4 ShaderProgram::getPerspectiveMatrix()
 glm::mat4 ShaderProgram::getViewMatrix()
 {
     return _viewMatrix;
+}
+
+glm::vec3 ShaderProgram::getCameraPosition()
+{
+    return _cameraPosition;
 }
 
 void ShaderProgram::use() {
