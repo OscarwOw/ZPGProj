@@ -18,8 +18,12 @@ private:
     StartupManager(const StartupManager&) = delete;
     StartupManager& operator=(const StartupManager&) = delete;
 
+    GLFWwindow* _window;
+
 public:
     static StartupManager& getInstance();
+
+    int initializeProgram(GLFWwindow** window, int width, int height, const char* title);
 
     static void InitializeGLFW();
     static int InitializeGLEW(GLFWwindow* window);
@@ -28,6 +32,8 @@ public:
     static void DrawLegacyTriangles();
     static void PrintInfo();
     static void ViewPortSetup(GLFWwindow* window);
+
+    GLFWwindow* getWindow();
 };
 
 #endif 

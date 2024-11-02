@@ -4,11 +4,11 @@
 #include "ShaderProgramManager.h"
 #include "StartupManager.hpp"
 #include "Camera.h"
+#include "InputManager.h"
 
 class Application {
 public:
-    static Application& getInstance();
-    
+    static Application& getInstance();    
     
     void cursor_callback(GLFWwindow* window, double x, double y);
     void button_callback(GLFWwindow* window, int button, int action, int mode);
@@ -16,14 +16,18 @@ public:
     void movement_callback(GLFWwindow* window, float time);
     int startApplication();
 
+    GLFWwindow* getWindow() { return _window; }
+    Camera& getCamera() { return _camera; }
 
 private:    
-    Application() {};
+    Application() {    }
  
 
     Application(const Application&) = delete;
     Application& operator=(const Application&) = delete;
 
+
+    GLFWwindow* _window = nullptr;
 
     //singleton instances
     
@@ -31,5 +35,6 @@ private:
     SceneGenerator& _sceneGenerator = SceneGenerator::getInstance(); 
     SceneManager& _sceneManager = SceneManager::getInstance();
     StartupManager& _startupManager = StartupManager::getInstance();
-    Camera& _camera = Camera::getInstance();    
+    Camera& _camera = Camera::getInstance();
+    InputManager& _inputManager = InputManager::getInstance();
 };

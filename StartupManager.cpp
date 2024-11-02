@@ -7,6 +7,25 @@ StartupManager& StartupManager::getInstance()
     return instance;
 }
 
+int StartupManager::initializeProgram(GLFWwindow** window, int width, int height, const char* title)
+{
+    InitializeGLFW();
+    SetWindowHints();
+    *window = CreateWindow(width, height, title);
+    _window = *window;
+    if (*window == nullptr) return -1;
+
+    if (InitializeGLEW(*window) == -1)  return -1;
+
+    PrintInfo();
+
+    ViewPortSetup(*window);
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    return 0;
+}
+
 void StartupManager::InitializeGLFW() {
     if (!glfwInit()) {
         fprintf(stderr, "ERROR: could not start GLFW3\n");
@@ -65,6 +84,11 @@ void StartupManager::ViewPortSetup(GLFWwindow* window) {
     glfwGetFramebufferSize(window, &width, &height);
     float ratio = width / (float)height;
     glViewport(0, 0, width, height);
+}
+
+GLFWwindow* StartupManager::getWindow()
+{
+    return _window;
 }
 
 
