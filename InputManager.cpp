@@ -50,6 +50,10 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
         inputManager._rightMovement = false;
     }
 
+    if (key == GLFW_KEY_N && (action == GLFW_PRESS)) {
+        SceneManager::getInstance().switchToNextScene();
+    }
+
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
     printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);

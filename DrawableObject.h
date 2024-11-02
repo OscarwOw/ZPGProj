@@ -6,17 +6,10 @@
 #include "IndexBuffer.h"
 #include <iostream>
 #include "MatrixHelper.h"
+#include "TransformationData.h"
 
-struct TransformationData{
-    float TranslationX;
-    float TranslationY;
-    float TranslationZ;
-    float RotationAngle;
-    float RotationX;
-    float RotationY;
-    float RotationZ;
-    float Scale;
-};
+
+
 
 class DrawableObject {
 private:

@@ -1,7 +1,6 @@
+#pragma once
 #include "SceneGenerator.h"
-#include <cstdlib>
-#include <ctime> 
-#include "tree.h"
+
 
 SceneGenerator& SceneGenerator::getInstance()
 {
@@ -9,23 +8,39 @@ SceneGenerator& SceneGenerator::getInstance()
     return instance;
 }
 
-void SceneGenerator::generateForest(Scene* scene, int numTrees, int numBushes, Camera* camera) //TODO rework camera
-{
-    DrawableObject* treeobject;
 
-    for (int i = 0; i < numTrees; i++) {
-        treeobject = generateTree();
-        scene->addObject(treeobject);
-        //camera->attachObserver(treeobject->getSaherProgram());
-        glm::mat4 camera(
-            1.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 10.0f,
-            0.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f
-        );
-        treeobject->getSaherProgram()->setViewMatrix(camera);
-    }
+
+Scene* SceneGenerator::generateTraingleScene() {
+    Scene* scene = new Scene(); 
+    TransformationData transformationData;
+    DrawableObject* triangle = generateTriangle(transformationData);
+    scene->addObject(triangle);
+    return scene;
 }
+
+Scene* SceneGenerator::generateTestTreeScene()
+{
+    Scene* scene = new Scene();
+    TransformationData transformationData;
+    DrawableObject* tree = generateTree();
+    scene->addObject(tree);
+    return scene;
+}
+
+DrawableObject* SceneGenerator::generateTriangle(TransformationData transformationData) {
+    std::string accessString = shaderProgramManager.CreateShaderNemec("VertLight.shader", "FragLight.shader", "plain");
+    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
+    DrawableObject* triangle = new DrawableObject();
+    triangle->setShaderProgram(shaderProgram, accessString);
+    triangle->loadFromRawData(plain, 36, 6);
+    triangle->scale(transformationData.Scale);
+    triangle->rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
+    triangle->translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
+    triangle->updateTransformation();
+    Camera::getInstance().attachObserver(shaderProgram);
+    return triangle;
+}
+
 
 DrawableObject* SceneGenerator::generateTree()
 {
@@ -59,6 +74,18 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
     treeObject->updateTransformation();
 
     return treeObject;
+}
+
+
+Scene* SceneGenerator::generateForestScene(int numTrees, int numBushes)
+{
+    Scene* scene = new Scene();
+
+    for (int i = 0; i < numTrees; i++) {
+        DrawableObject* treeobject = generateTree();
+        scene->addObject(treeobject);
+    }
+    return scene;
 }
 
 

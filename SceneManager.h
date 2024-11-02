@@ -2,6 +2,7 @@
 #include <map>
 #include <string>
 #include "Scene.h"
+#include "SceneGenerator.h"
 
 class SceneManager {
 private:
@@ -17,6 +18,11 @@ public:
     static SceneManager& getInstance();
 
     void addScene(const std::string& name, Scene* scene);
+    Scene* generateTraingleScene(std::string name);
+    Scene* generateTestTreeScene(std::string name);
+    Scene* generateForestScene(std::string name);
     void switchScene(const std::string& name);
+    void switchToNextScene();
+    std::string getNextScene();
     Scene* getCurrentScene();
 };

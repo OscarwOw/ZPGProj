@@ -18,8 +18,6 @@
 #include <chrono>
 
 
-#include "plain.h"
-#include "tree.h"
 #include "ErrorHandler.h"
 #include "DrawableObject.h"
 #include "SceneManager.h"
