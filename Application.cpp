@@ -11,8 +11,6 @@ Application& Application::getInstance()
 static void error_callback(int error, const char* description) { fputs(description, stderr); }
 
 
-
-
 bool mousePressed = false;
 double lastMouseX = 0;
 double lastMouseY = 0;
@@ -23,48 +21,38 @@ bool wPressed, aPressed, sPressed, dPressed = false;
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-
-        // Handle camera movement based on key input
         if (key == GLFW_KEY_W && (action == GLFW_PRESS)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             wPressed = true;
         }
         if (key == GLFW_KEY_W && (action == GLFW_RELEASE)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             wPressed = false;
         }
 
         if (key == GLFW_KEY_A && (action == GLFW_PRESS)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             aPressed = true;
         }
         if (key == GLFW_KEY_A && (action == GLFW_RELEASE)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             aPressed = false;
         }
 
         if (key == GLFW_KEY_S && (action == GLFW_PRESS)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             sPressed = true;
         }
         if (key == GLFW_KEY_S && (action == GLFW_RELEASE)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             sPressed = false;
         }
 
         if (key == GLFW_KEY_D && (action == GLFW_PRESS)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
             dPressed = true;
         }
-        if (key == GLFW_KEY_D && (action == GLFW_RELEASE)) {
-            //camera->processKeyboard(Camera_Movement::FORWARD, 0.1f);  
+        if (key == GLFW_KEY_D && (action == GLFW_RELEASE)) { 
             dPressed = false;
         }
     
 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
-    printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
+    //printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
 }
 
 static void mouse_button_pressed_callback(GLFWwindow* window, int button, int action, int mods) {
@@ -119,19 +107,19 @@ void Application::movement_callback(GLFWwindow* window, float time) {
 
 
 //vertex buffer
-float points[] = {
-     -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.5f, 0.5f, 0.0f,
-    -0.5f, 0.5f, 0.0f
-};
-
-unsigned int indices[] = {
-    0, 1, 2,
-    2, 3, 0
-};
-
-int counter = 0;
+//float points[] = {
+//     -0.5f, -0.5f, 0.0f,
+//     0.5f, -0.5f, 0.0f,
+//     0.5f, 0.5f, 0.0f,
+//    -0.5f, 0.5f, 0.0f
+//};
+//
+//unsigned int indices[] = {
+//    0, 1, 2,
+//    2, 3, 0
+//};
+//
+//int counter = 0;
 
 
 
@@ -155,26 +143,17 @@ int Application::startApplication()
 {
     glfwSetErrorCallback(error_callback);
 
-    _startupManager.InitializeGLFW();
-    _startupManager.SetWindowHints();
-    GLFWwindow* window = _startupManager.CreateWindow(1500, 1200, "My OpenGL Window");
+    _startupManager.initializeProgram(&_window, 1500, 1200, "My OpenGL Window");
 
-    if (_startupManager.InitializeGLEW(window) == -1)  return -1;
+    _inputManager.initializeEvents();
 
-    _startupManager.PrintInfo();
 
-    _startupManager.ViewPortSetup(window);
+    //glfwSetCursorPosCallback(_window, [](GLFWwindow* window, double mouseXPos, double mouseYPos)-> void {cursor_pos_callback(window, mouseXPos, mouseYPos); });
 
-    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double mouseXPos, double mouseYPos)-> void {cursor_pos_callback(window, mouseXPos, mouseYPos); });
+    //glfwSetMouseButtonCallback(_window, mouse_button_pressed_callback);
 
-    glfwSetMouseButtonCallback(window, mouse_button_pressed_callback);
-
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    //END OF OPENGL INIT
-
-    glfwSetWindowUserPointer(window, &_camera);
-    glfwSetKeyCallback(window, key_callback);
+    //glfwSetWindowUserPointer(_window, &_camera);
+    //glfwSetKeyCallback(_window, key_callback);
 
     ShaderProgramManager& shaderProgramManager = ShaderProgramManager::getInstance();
     SceneManager& sceneManager = SceneManager::getInstance();
@@ -207,7 +186,7 @@ int Application::startApplication()
     auto movementCallbackTime = std::chrono::steady_clock::now();
 
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(_window)) {
 
 
         auto currentTime = std::chrono::steady_clock::now();
@@ -217,22 +196,21 @@ int Application::startApplication()
         // Check if 60 milliseconds have passed since the last tick
         if (elapsedTime >= tickInterval) {
             // Execute the tick function
-            tick(window, sceneManager);
+            tick(_window, sceneManager);
 
             // Update the last tick time
             lastTickTime = currentTime;
         }
         currentTime = std::chrono::steady_clock::now();
 
-        movement_callback(window, std::chrono::duration<float>(currentTime - movementCallbackTime).count());
+        _inputManager.handleMovement(std::chrono::duration<float>(currentTime - movementCallbackTime).count());
+
+        //movement_callback(_window, std::chrono::duration<float>(currentTime - movementCallbackTime).count());
         movementCallbackTime = currentTime;
         glfwPollEvents();
-
-
-
     }
 
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(_window);
     //shaderProgram->~ShaderProgram();
     glfwTerminate();
     exit(EXIT_SUCCESS);

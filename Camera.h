@@ -44,19 +44,10 @@ public:
 
     glm::mat4 getPerspectiveMatrix() const;
 
-    // Process keyboard input
     void processKeyboard(Camera_Movement direction, float deltaTime);
-
-    // Process mouse movement
     void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
-
-    // Process mouse scroll
     void processMouseScroll(float yoffset);
-
-    // Attach observer
     void attachObserver(ICameraObserver* observer);
-
-    // Detach observer
     void detachObserver(ICameraObserver* observer);
 
 private:
@@ -65,17 +56,12 @@ private:
         float yaw = -90.0f,
         float pitch = 0.0f);
 
-    // Constructor with scalar values
     Camera(float posX, float posY, float posZ,
         float upX, float upY, float upZ,
         float yaw, float pitch);
 
 
-
-    // Update the camera vectors based on yaw and pitch
     void updateCameraVectors();
-
-    // Notify observers about the view matrix update
     void notifyObservers();
 
     // Camera attributes
