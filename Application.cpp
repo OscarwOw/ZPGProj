@@ -10,62 +10,6 @@ Application& Application::getInstance()
 
 static void error_callback(int error, const char* description) { fputs(description, stderr); }
 
-
-bool mousePressed = false;
-double lastMouseX = 0;
-double lastMouseY = 0;
-
-bool wPressed, aPressed, sPressed, dPressed = false;
-
-
-
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-        if (key == GLFW_KEY_W && (action == GLFW_PRESS)) {
-            wPressed = true;
-        }
-        if (key == GLFW_KEY_W && (action == GLFW_RELEASE)) {
-            wPressed = false;
-        }
-
-        if (key == GLFW_KEY_A && (action == GLFW_PRESS)) {
-            aPressed = true;
-        }
-        if (key == GLFW_KEY_A && (action == GLFW_RELEASE)) {
-            aPressed = false;
-        }
-
-        if (key == GLFW_KEY_S && (action == GLFW_PRESS)) {
-            sPressed = true;
-        }
-        if (key == GLFW_KEY_S && (action == GLFW_RELEASE)) {
-            sPressed = false;
-        }
-
-        if (key == GLFW_KEY_D && (action == GLFW_PRESS)) {
-            dPressed = true;
-        }
-        if (key == GLFW_KEY_D && (action == GLFW_RELEASE)) { 
-            dPressed = false;
-        }
-    
-
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    //printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
-}
-
-static void mouse_button_pressed_callback(GLFWwindow* window, int button, int action, int mods) {
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
-        mousePressed = true;
-        printf("mouse pressed\n");
-    }
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
-        printf("mouse released\n");
-        mousePressed = false;
-    }
-}
-
 static void window_focus_callback(GLFWwindow* window, int focused) { printf("window_focus_callback \n"); }
 
 static void window_iconify_callback(GLFWwindow* window, int iconified) { printf("window_iconify_callback \n"); }
@@ -80,47 +24,6 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y) { prin
 void Application::button_callback(GLFWwindow* window, int button, int action, int mode) {
     if (action == GLFW_PRESS) printf("button_callback [%d,%d,%d]\n", button, action, mode);
 }
-
-void Application::cursor_pos_callback(GLFWwindow* window, double mouseX, double mouseY) {
-    if (mousePressed) {
-        Application::getInstance()._camera.processMouseMovement(mouseX - lastMouseX, mouseY - lastMouseY, false);
-    }
-    lastMouseX = mouseX;
-    lastMouseY = mouseY;
-}
-
-void Application::movement_callback(GLFWwindow* window, float time) {
-    if (wPressed) {
-        _camera.processKeyboard(Camera_Movement::FORWARD, time);
-    }
-    if (aPressed) {
-        _camera.processKeyboard(Camera_Movement::LEFT, time);
-    }
-    if (sPressed) {
-        _camera.processKeyboard(Camera_Movement::BACKWARD, time);
-    }
-    if (dPressed) {
-        _camera.processKeyboard(Camera_Movement::RIGHT, time);
-    }
-}
-
-
-
-//vertex buffer
-//float points[] = {
-//     -0.5f, -0.5f, 0.0f,
-//     0.5f, -0.5f, 0.0f,
-//     0.5f, 0.5f, 0.0f,
-//    -0.5f, 0.5f, 0.0f
-//};
-//
-//unsigned int indices[] = {
-//    0, 1, 2,
-//    2, 3, 0
-//};
-//
-//int counter = 0;
-
 
 
 void tick(GLFWwindow* window, SceneManager& sceneManager) {
@@ -146,14 +49,6 @@ int Application::startApplication()
     _startupManager.initializeProgram(&_window, 1500, 1200, "My OpenGL Window");
 
     _inputManager.initializeEvents();
-
-
-    //glfwSetCursorPosCallback(_window, [](GLFWwindow* window, double mouseXPos, double mouseYPos)-> void {cursor_pos_callback(window, mouseXPos, mouseYPos); });
-
-    //glfwSetMouseButtonCallback(_window, mouse_button_pressed_callback);
-
-    //glfwSetWindowUserPointer(_window, &_camera);
-    //glfwSetKeyCallback(_window, key_callback);
 
     ShaderProgramManager& shaderProgramManager = ShaderProgramManager::getInstance();
     SceneManager& sceneManager = SceneManager::getInstance();
@@ -205,13 +100,11 @@ int Application::startApplication()
 
         _inputManager.handleMovement(std::chrono::duration<float>(currentTime - movementCallbackTime).count());
 
-        //movement_callback(_window, std::chrono::duration<float>(currentTime - movementCallbackTime).count());
         movementCallbackTime = currentTime;
         glfwPollEvents();
     }
 
     glfwDestroyWindow(_window);
-    //shaderProgram->~ShaderProgram();
     glfwTerminate();
     exit(EXIT_SUCCESS);
     return 0;
