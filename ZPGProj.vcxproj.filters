@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Structures">
       <UniqueIdentifier>{73504aef-1687-4cb8-87da-645a60d40651}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Enums">
+      <UniqueIdentifier>{515e132d-6ef1-4a1b-80d5-18dc8b8db108}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -193,6 +196,18 @@
     </ClInclude>
     <ClInclude Include="TransformationData.h">
       <Filter>Header Files\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderType.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderKind.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelMapping.h">
+      <Filter>Header Files\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelType.h">
+      <Filter>Header Files\Enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -163,10 +163,14 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="MatrixHelper.h" />
+    <ClInclude Include="ModelMapping.h" />
+    <ClInclude Include="ModelType.h" />
     <ClInclude Include="plain.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGenerator.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ShaderKind.h" />
+    <ClInclude Include="ShaderType.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgramManager.h" />
     <ClInclude Include="TransformationData.h" />

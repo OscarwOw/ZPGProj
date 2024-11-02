@@ -2,6 +2,8 @@
 #include "SceneGenerator.h"
 
 
+
+
 SceneGenerator& SceneGenerator::getInstance()
 {
     static SceneGenerator instance;
@@ -9,7 +11,7 @@ SceneGenerator& SceneGenerator::getInstance()
 }
 
 
-
+#pragma region scene generation functions 
 Scene* SceneGenerator::generateTraingleScene() {
     Scene* scene = new Scene(); 
     TransformationData transformationData;
@@ -22,10 +24,29 @@ Scene* SceneGenerator::generateTestTreeScene()
 {
     Scene* scene = new Scene();
     TransformationData transformationData;
-    DrawableObject* tree = generateTree();
+    //DrawableObject* tree = generateTree();
+    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Test, ModelType::TREE);
+
     scene->addObject(tree);
     return scene;
 }
+
+Scene* SceneGenerator::generateForestScene(int numTrees, int numBushes)
+{
+    Scene* scene = new Scene();
+
+    for (int i = 0; i < numTrees; i++) {
+        DrawableObject* treeobject = generateTree();
+        scene->addObject(treeobject);
+    }
+    return scene;
+}
+
+Scene* SceneGenerator::generateSphereScene() {
+    Scene* scene = new Scene();
+    return scene;
+}
+#pragma endregion
 
 DrawableObject* SceneGenerator::generateTriangle(TransformationData transformationData) {
     std::string accessString = shaderProgramManager.CreateShaderNemec("VertLight.shader", "FragLight.shader", "plain");
@@ -37,7 +58,7 @@ DrawableObject* SceneGenerator::generateTriangle(TransformationData transformati
     triangle->rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
     triangle->translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
     triangle->updateTransformation();
-    Camera::getInstance().attachObserver(shaderProgram);
+    //Camera::getInstance().attachObserver(shaderProgram);
     return triangle;
 }
 
@@ -55,9 +76,7 @@ DrawableObject* SceneGenerator::generateTree()
 }
 
 DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float x, float z) {    
-    //std::string accessString = shaderProgramManager.CreateShaderNemec( "ColorVertexShader.shader", "ColorFragmentShader.shader", "tree");
     std::string accessString = shaderProgramManager.CreateShaderNemec( "VertLight.shader", "FragLight.shader", "tree");
-    //std::string accessString = shaderProgramManager.CreateShaderNemec( "VertexShaderFirstLight.shader", "FragmentShaderFirstLight.shader", "tree");
     ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
     DrawableObject* treeObject = new DrawableObject();
     treeObject->setShaderProgram(shaderProgram, accessString);
@@ -76,18 +95,48 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
     return treeObject;
 }
 
-
-Scene* SceneGenerator::generateForestScene(int numTrees, int numBushes)
+DrawableObject* SceneGenerator::generateSphere(TransformationData transformationData)
 {
-    Scene* scene = new Scene();
+    std::string accessString = shaderProgramManager.CreateShaderNemec("VertLight.shader", "FragLight.shader", "tree");
+    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
+    DrawableObject* sphereObject = new DrawableObject();
+    sphereObject->setShaderProgram(shaderProgram, accessString);
 
-    for (int i = 0; i < numTrees; i++) {
-        DrawableObject* treeobject = generateTree();
-        scene->addObject(treeobject);
-    }
-    return scene;
+    sphereObject->loadFromRawData(sphere, 17280, 6);
+
+    return sphereObject;
 }
 
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType) {
+    DrawableObject* object = new DrawableObject();
+    auto it = ShaderMappings.find(shaderType); //ShaderType handle
+    ShaderProgram* shaderProgram = nullptr;    
+    if (it == ShaderMappings.end()) {
+        std::cerr << "Invalid ShaderType specified. Assigning default shader." << std::endl;
+        it = ShaderMappings.find(ShaderType::Test);
+    }
+    ShaderInfo shaderInfo = it->second;
+    std::string accessString = shaderProgramManager.CreateShaderNemec(shaderInfo.vertexPath.c_str(), shaderInfo.fragmentPath.c_str(), "generatedObject");
+    shaderProgram = shaderProgramManager.getShader(accessString);
+    if (shaderProgram) {
+        object->setShaderProgram(shaderProgram);
+    }
+    auto modelIt = ModelMappings.find(modelType); //ModelType handle    
+    if (modelIt != ModelMappings.end()) {
+        const ModelData& modelData = modelIt->second;
+        object->loadFromRawData(modelData.data, modelData.vertexCount, 6);
+    }
+    else {
+        std::cerr << "Invalid ModelType specified. Assigning default model." << std::endl;
+        const ModelData& modelData = ModelMappings.at(ModelType::PLAIN);
+        object->loadFromRawData(modelData.data, modelData.vertexCount, 6);
+    }
+    object->scale(transformationData.Scale);
+    object->rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
+    object->translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
+    object->updateTransformation();
+    return object;
+}
 
 
 void SceneGenerator::loadAndAttachTreeShader(DrawableObject* treeObject) { //posibly deprecated
