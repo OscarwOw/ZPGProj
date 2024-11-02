@@ -37,6 +37,9 @@
     <Filter Include="Source Files\ShaderClasses">
       <UniqueIdentifier>{fd751780-3161-4a38-9e00-38586acd2764}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Structures">
+      <UniqueIdentifier>{73504aef-1687-4cb8-87da-645a60d40651}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationData.h">
+      <Filter>Header Files\Structures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

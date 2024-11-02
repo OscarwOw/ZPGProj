@@ -16,6 +16,7 @@ public:
     void movement_callback(GLFWwindow* window, float time);
     int startApplication();
 
+
     GLFWwindow* getWindow() { return _window; }
     Camera& getCamera() { return _camera; }
 

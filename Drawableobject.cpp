@@ -97,6 +97,10 @@ void DrawableObject::translate(float x, float y, float z) {
 }
 
 void DrawableObject::rotate(float angle, float x, float y, float z) {
+    if (x == 0.0f && y == 0.0f && z == 0.0f) {
+        y = 1.0f;
+    }
+    
     _rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x, y, z));
 
     transformationData.RotationAngle = angle;

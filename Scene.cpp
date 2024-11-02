@@ -38,3 +38,8 @@ void Scene::circusTransform()
     }
 
 }
+
+std::vector<DrawableObject*> Scene::getObjects()
+{
+    return objects;
+}

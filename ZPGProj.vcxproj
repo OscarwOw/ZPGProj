@@ -169,6 +169,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgramManager.h" />
+    <ClInclude Include="TransformationData.h" />
     <ClInclude Include="TransformationRotate.h" />
     <ClInclude Include="TransformationScale.h" />
     <ClInclude Include="ShaderProgram.h" />

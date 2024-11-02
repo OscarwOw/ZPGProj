@@ -34,7 +34,7 @@ void tick(GLFWwindow* window, SceneManager& sceneManager) {
     Scene* currentScene = sceneManager.getCurrentScene();
     if (currentScene) {
         // Example of scene-specific transformation
-        currentScene->circusTransform();
+        //currentScene->circusTransform();
         currentScene->drawScene();
     }
     glfwSwapBuffers(window);
@@ -50,9 +50,6 @@ int Application::startApplication()
 
     _inputManager.initializeEvents();
 
-    ShaderProgramManager& shaderProgramManager = ShaderProgramManager::getInstance();
-    SceneManager& sceneManager = SceneManager::getInstance();
-    SceneGenerator& sceneGenerator = SceneGenerator::getInstance();
 
     /*Scene* forestScene = new Scene();
     sceneGenerator.generateForest(forestScene, 50, 25, &_camera);
@@ -60,21 +57,22 @@ int Application::startApplication()
     sceneManager.addScene("Forest", forestScene);
     sceneManager.switchScene("Forest");*/
 
-
-    Scene* testscene = new Scene();
-    DrawableObject* treeobj = sceneGenerator.generateTree(0.2f, 0.0f, 0.0f, 0.0f);
-    //DrawableObject* treeobj1 = sceneGenerator.generateTree(0.1f, 45.0f, 0.5f, 3.0f);
-
-
-    testscene->addObject(treeobj);
-    //testscene->addObject(treeobj1);
+     
+    //Scene* testscene = new Scene();
+    //DrawableObject* treeobj = sceneGenerator.generateTree(0.2f, 0.0f, 0.0f, 0.0f);
 
 
-    sceneManager.addScene("cirkus", testscene);
-    sceneManager.switchScene("cirkus");
+    //testscene->addObject(treeobj);
 
-    //_camera->attachObserver(treeobj->getSaherProgram());
-    _camera.attachObserver(treeobj->getSaherProgram());
+
+    //sceneManager.addScene("cirkus", testscene);
+    //sceneManager.switchScene("cirkus");
+
+    _sceneManager.generateTraingleScene("triangleScene");
+    _sceneManager.generateTestTreeScene("treeScene");
+    _sceneManager.generateForestScene("forestScene");
+
+    _sceneManager.switchScene("triangleScene");
 
     auto lastTickTime = std::chrono::steady_clock::now();
     const std::chrono::milliseconds tickInterval(16);
@@ -91,7 +89,7 @@ int Application::startApplication()
         // Check if 60 milliseconds have passed since the last tick
         if (elapsedTime >= tickInterval) {
             // Execute the tick function
-            tick(_window, sceneManager);
+            tick(_window, _sceneManager);
 
             // Update the last tick time
             lastTickTime = currentTime;
@@ -109,6 +107,8 @@ int Application::startApplication()
     exit(EXIT_SUCCESS);
     return 0;
 }
+
+
 
 
 

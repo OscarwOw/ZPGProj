@@ -9,4 +9,5 @@ public:
     void drawScene();
     void clearScene();
     void circusTransform();
+    std::vector<DrawableObject*> getObjects();
 };
