@@ -32,7 +32,4 @@ private:
     std::string CreateShader(ShaderProgramSourceStrings source, ShaderProgram* shaderProgram, const std::string& name);
     std::string CreateShaderID(std::string shaderType);
 
-    
-
-
 };

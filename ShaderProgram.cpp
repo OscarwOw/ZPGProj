@@ -17,10 +17,6 @@ ShaderProgram::~ShaderProgram() {
     glDeleteProgram(_programID);
 }
 
-enum class ShaderType {
-    NONE = -1, VERTEX = 0, FRAGMENT = 1
-};
-
 
 unsigned int ShaderProgram::attachShader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource) {
     unsigned int vertexShader = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
@@ -49,8 +45,8 @@ unsigned int ShaderProgram::attachShader(const std::string& vertexShaderSource, 
     return _programID;
 }
 
-unsigned int ShaderProgram::compileShader(const std::string& shaderSource, unsigned int shaderType) {
-    unsigned int shader = glCreateShader(shaderType);
+unsigned int ShaderProgram::compileShader(const std::string& shaderSource, unsigned int shaderKind) {
+    unsigned int shader = glCreateShader(shaderKind);
     const char* src = shaderSource.c_str();
     glShaderSource(shader, 1, &src, NULL);
     glCompileShader(shader);
@@ -80,15 +76,15 @@ ShaderProgramSourceStrings ShaderProgram::parseShaders(const std::string& file) 
 
     std::string line;
     std::stringstream ss[2];
-    ShaderType type = ShaderType::NONE;
+    ShaderKind type = ShaderKind::NONE;
 
     while (getline(stream, line)) {
         if (line.find("#shader") != std::string::npos) {
             if (line.find("vertex") != std::string::npos) {
-                type = ShaderType::VERTEX;
+                type = ShaderKind::VERTEX;
             }
             else if (line.find("fragment") != std::string::npos) {
-                type = ShaderType::FRAGMENT;
+                type = ShaderKind::FRAGMENT;
             }
         }
         else {

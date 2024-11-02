@@ -4,24 +4,29 @@
 #include "TransformationData.h"
 #include <cstdlib>
 #include <ctime> 
-#include "tree.h"
-#include "plain.h"
+
+#include "ShaderType.h"
+
+#include "ModelMapping.h"
+
 
 class SceneGenerator {
 public:
     static SceneGenerator& getInstance();
 
-    //void generateForest(Scene* scene, int numTrees, int numBushes, Camera* camera);
     Scene* generateTraingleScene();
     Scene* generateTestTreeScene();
     Scene* generateForestScene(int numTrees, int numBushes);
+    Scene* generateSphereScene();
 
     DrawableObject* generateTriangle(TransformationData transformationData);
 
     DrawableObject* generateTree();
     DrawableObject* generateTree(float scale, float rotation, float x, float z);
 
-    
+    DrawableObject* generateSphere(TransformationData transformationData);
+
+    DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType);
 
     DrawableObject* generateBush();
 

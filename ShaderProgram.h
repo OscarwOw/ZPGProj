@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Camera.h"
+#include "ShaderKind.h"
 
 struct ShaderProgramSourceStrings
 {
@@ -50,7 +51,7 @@ private:
     glm::vec3 _cameraPosition;
 
     // Helper functions to compile individual shaders
-    GLuint compileShader(const std::string& shaderSource, GLenum shaderType);
+    GLuint compileShader(const std::string& shaderSource, GLenum shaderKind);
 };
 
 #endif
