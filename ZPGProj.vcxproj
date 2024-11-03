@@ -198,12 +198,18 @@
     <None Include="ColorFragmentShader.shader" />
     <None Include="ColorShader.shader" />
     <None Include="ColorVertexShader.shader" />
+    <None Include="frag_blinn.shader" />
+    <None Include="frag_constant.shader" />
     <None Include="FragLight.shader" />
-    <None Include="FragmentShaderFirstLight.shader" />
+    <None Include="frag_lambert.shader" />
+    <None Include="frag_phong.shader" />
     <None Include="Readme.md" />
     <None Include="readmePipeline.md" />
-    <None Include="VertexShaderFirstLight.shader" />
     <None Include="VertLight.shader" />
+    <None Include="vert_blinn.shader" />
+    <None Include="vert_constant.shader" />
+    <None Include="vert_lambert.shader" />
+    <None Include="vert_phong.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

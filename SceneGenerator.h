@@ -21,6 +21,8 @@ public:
     Scene* generateForestScene(int numTrees, int numBushes);
     Scene* generateSphereScene();
 
+    Scene* generateShadersSphereScene();
+
     DrawableObject* generateTree();
     DrawableObject* generateTree(float scale, float rotation, float x, float z);
 

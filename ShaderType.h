@@ -3,7 +3,7 @@
 #include <unordered_map>
 
 enum class ShaderType {
-    Konstantni,
+    CONSTANT,
     Lambert,
     Phong,
     Blinn,
@@ -16,9 +16,9 @@ struct ShaderInfo {
 };
 
 const std::unordered_map<ShaderType, ShaderInfo> ShaderMappings = {
-    { ShaderType::Konstantni, { "shaders/konstantni.vert", "shaders/konstantni.frag" } },
-    { ShaderType::Lambert, { "shaders/lambert.vert", "shaders/lambert.frag" } },
-    { ShaderType::Phong, { "shaders/phong.vert", "shaders/phong.frag" } },
-    { ShaderType::Blinn, { "shaders/blinn.vert", "shaders/blinn.frag" } },
+    { ShaderType::CONSTANT, { "vert_constant.shader", "frag_constant.shader" } },
+    { ShaderType::Lambert, { "vert_lambert.shader", "frag_lambert.shader" } },
+    { ShaderType::Phong, { "vert_phong.shader", "frag_phong.shader" } },
+    { ShaderType::Blinn, { "vert_blinn.shader", "frag_blinn.shader" } },
     { ShaderType::Test, { "VertLight.shader", "FragLight.shader" } }
 };
