@@ -7,6 +7,8 @@ enum class ModelType {
     SUZI_FLAT = 3,
     GIFT = 4,
     PLAIN = 5,
-    SPHERE = 6
+    SPHERE = 6,
+    CUBE = 7,
+    TRIANGLE = 8,
 };
 

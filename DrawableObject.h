@@ -10,9 +10,9 @@
 
 
 
-
+//TODO this whole class is one big mess... should i call it mastershit?
 class DrawableObject {
-private:
+protected:
     VertexBuffer* _vertexBuffer;
     IndexBuffer* _indexBuffer;
     GLuint _VAO;

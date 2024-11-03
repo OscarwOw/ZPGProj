@@ -2,21 +2,28 @@
 #include "SceneGenerator.h"
 
 
-
-
 SceneGenerator& SceneGenerator::getInstance()
 {
     static SceneGenerator instance;
     return instance;
 }
 
-
 #pragma region scene generation functions 
-Scene* SceneGenerator::generateTraingleScene() {
+Scene* SceneGenerator::generateDefaultScene() {
     Scene* scene = new Scene(); 
     TransformationData transformationData;
-    DrawableObject* triangle = generateTriangle(transformationData);
+    //transformationData.TranslationX = -2.0f;
+    transformationData.TranslationZ = -2.0f;
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Test, ModelType::TRIANGLE);
     scene->addObject(triangle);
+
+
+    transformationData.TranslationX = -2.0f;
+    transformationData.TranslationY = 2.0f;
+    transformationData.TranslationZ = 0.0f;
+    DrawableObject* light = generateLightSource(transformationData, ShaderType::Test, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
+    scene->addObject(light);
+
     return scene;
 }
 
@@ -24,45 +31,111 @@ Scene* SceneGenerator::generateTestTreeScene()
 {
     Scene* scene = new Scene();
     TransformationData transformationData;
-    //DrawableObject* tree = generateTree();
     DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Test, ModelType::TREE);
 
     scene->addObject(tree);
     return scene;
 }
 
-Scene* SceneGenerator::generateForestScene(int numTrees, int numBushes)
-{
-    Scene* scene = new Scene();
+Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float minDistance) {
+    Scene* forestScene = new Scene();
 
-    for (int i = 0; i < numTrees; i++) {
-        DrawableObject* treeobject = generateTree();
-        scene->addObject(treeobject);
+    std::vector<glm::vec3> treePositions;
+
+    for (int i = 0; i < numTrees; ++i) {
+        glm::vec3 position;
+
+        bool validPosition = false;
+
+        int currentDepth = 0;
+        int stackOverflowDepth = 128;
+        while (!validPosition && currentDepth < stackOverflowDepth) {
+            float x = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / areaSize) - (areaSize / 2);
+            float z = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / areaSize) - (areaSize / 2);
+            float y = 0.0f; 
+
+            position = glm::vec3(x, y, z);
+            validPosition = true;
+            currentDepth++;
+            for (const auto& existingPosition : treePositions) {
+                if (glm::distance(existingPosition, position) < minDistance) {
+                    validPosition = false;
+                    break;
+                }
+            }
+        }
+
+        treePositions.push_back(position);
+
+        TransformationData treeTransformationData;
+        treeTransformationData.TranslationX = position.x;
+        treeTransformationData.TranslationY = position.y;
+        treeTransformationData.TranslationZ = position.z;
+        treeTransformationData.Scale = 1.0f;
+        treeTransformationData.RotationAngle = 0.0f; 
+
+        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Test, ModelType::TREE);
+
+        forestScene->addObject(tree);
+
+        int numBushes = rand() % 3;
+        for (int j = 0; j < numBushes; ++j) {
+            float bushOffsetX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / minDistance) - (minDistance / 2);
+            float bushOffsetZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / minDistance) - (minDistance / 2);
+
+            glm::vec3 bushPosition = position + glm::vec3(bushOffsetX, 0.0f, bushOffsetZ);
+
+            TransformationData bushTransformationData;
+            bushTransformationData.TranslationX = bushPosition.x;
+            bushTransformationData.TranslationY = bushPosition.y;
+            bushTransformationData.TranslationZ = bushPosition.z;
+            bushTransformationData.Scale = 0.5f; 
+            bushTransformationData.RotationAngle = 0.0f; 
+
+            DrawableObject* bush = generateDrawableObject(bushTransformationData, ShaderType::Test, ModelType::BUSH);
+
+            forestScene->addObject(bush);
+        }
     }
-    return scene;
+    return forestScene;
 }
+
 
 Scene* SceneGenerator::generateSphereScene() {
     Scene* scene = new Scene();
+    TransformationData transformationData;
+    transformationData.TranslationZ = -8.0f;
+    transformationData.TranslationX = 3.0f;
+    transformationData.TranslationY = 3.0f;
+    DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+
+    transformationData.TranslationX = -3.0f;
+    transformationData.TranslationY = 3.0f;
+    DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+
+    transformationData.TranslationX = 3.0f;
+    transformationData.TranslationY = -3.0f;
+    DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+
+    transformationData.TranslationX = -3.0f;
+    transformationData.TranslationY = -3.0f;
+    DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationY = 0.0f;
+    transformationData.Scale = 0.1f;
+    DrawableObject* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    scene->addObject(light);
+
+    scene->addObject(sphere1);
+    scene->addObject(sphere2);
+    scene->addObject(sphere3);
+    scene->addObject(sphere4);
     return scene;
 }
 #pragma endregion
 
-DrawableObject* SceneGenerator::generateTriangle(TransformationData transformationData) {
-    std::string accessString = shaderProgramManager.CreateShaderNemec("VertLight.shader", "FragLight.shader", "plain");
-    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
-    DrawableObject* triangle = new DrawableObject();
-    triangle->setShaderProgram(shaderProgram, accessString);
-    triangle->loadFromRawData(plain, 36, 6);
-    triangle->scale(transformationData.Scale);
-    triangle->rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
-    triangle->translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
-    triangle->updateTransformation();
-    //Camera::getInstance().attachObserver(shaderProgram);
-    return triangle;
-}
-
-
+#pragma region object generation
 DrawableObject* SceneGenerator::generateTree()
 {
     //srand(static_cast<unsigned int>(time(0)));
@@ -95,19 +168,8 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
     return treeObject;
 }
 
-DrawableObject* SceneGenerator::generateSphere(TransformationData transformationData)
-{
-    std::string accessString = shaderProgramManager.CreateShaderNemec("VertLight.shader", "FragLight.shader", "tree");
-    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
-    DrawableObject* sphereObject = new DrawableObject();
-    sphereObject->setShaderProgram(shaderProgram, accessString);
-
-    sphereObject->loadFromRawData(sphere, 17280, 6);
-
-    return sphereObject;
-}
-
-DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType) {
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType) { //TODO since we need to use deep cloneing its 
+                                                                                                                                            //much better to move this to contructor and use base class contructor
     DrawableObject* object = new DrawableObject();
     auto it = ShaderMappings.find(shaderType); //ShaderType handle
     ShaderProgram* shaderProgram = nullptr;    
@@ -137,23 +199,16 @@ DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transf
     object->updateTransformation();
     return object;
 }
+#pragma endregion
 
-
-void SceneGenerator::loadAndAttachTreeShader(DrawableObject* treeObject) { //posibly deprecated
-    if (shaderProgramManager.getShader("treeShader") == nullptr) {
-        shaderProgramManager.CreateShader("treeShader", "tree.h");
-    }
-
-    ShaderProgram* shader = shaderProgramManager.getShader("treeShader");
-    if (shader) {
-        treeObject->setShaderProgram(shader);
-    }
+#pragma region light generation
+LightSource* SceneGenerator::generateLightSource(TransformationData transformationData, ShaderType shaderType, ModelType modelType, const glm::vec4& lightColor, float lightIntensity) {
+    DrawableObject* baseObject = generateDrawableObject(transformationData, shaderType, modelType);
+    LightSource* lightSource = new LightSource(*baseObject, lightColor, lightIntensity);
+    delete baseObject;
+    return lightSource;
 }
 
 
-
-DrawableObject* SceneGenerator::generateBush()
-{
-    return nullptr;
-}
+#pragma endregion
 

@@ -71,6 +71,7 @@ int Application::startApplication()
     _sceneManager.generateTraingleScene("triangleScene");
     _sceneManager.generateTestTreeScene("treeScene");
     _sceneManager.generateForestScene("forestScene");
+    _sceneManager.generateSphereScene("sphereScene");
 
     _sceneManager.switchScene("triangleScene");
 

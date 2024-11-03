@@ -21,6 +21,7 @@ public:
     Scene* generateTraingleScene(std::string name);
     Scene* generateTestTreeScene(std::string name);
     Scene* generateForestScene(std::string name);
+    Scene* generateSphereScene(std::string name);
     void switchScene(const std::string& name);
     void switchToNextScene();
     std::string getNextScene();

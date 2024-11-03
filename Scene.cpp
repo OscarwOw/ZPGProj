@@ -1,23 +1,37 @@
 #include "Scene.h"
 
-void Scene::addObject(DrawableObject* obj) {
-    objects.push_back(obj);
+void Scene::addObject(DrawableObject* object) {
+    objects.push_back(object);
 }
 
 void Scene::drawScene() {
-    for (auto& obj : objects) {
-        obj->Draw(); 
+    for (auto& object : objects) {
+        object->Draw(); 
     }
 }
 
 void Scene::clearScene() {
-    for (auto& obj : objects) {
-        delete obj;  
+    for (auto& object : objects) {
+        delete object;  
     }
     objects.clear(); 
 }
 
-void Scene::circusTransform()
+void Scene::addLightSource(LightSource* lightSource) {//TODO multiple light sources
+    _lightSource = lightSource;
+    _hasLightSource = true;
+}
+
+LightSource* Scene::addLightSource() {
+    return _lightSource;
+}
+bool Scene::hasLightSource() {
+    return _hasLightSource;
+}
+
+
+
+void Scene::circusTransform()//deprecated
 {
     TransformationData transformationdata = objects[0]->GetCurrentTransformationData();
 
