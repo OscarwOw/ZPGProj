@@ -115,7 +115,7 @@ void ShaderProgram::setUniformVec3(const std::string& name, const glm::vec3& vec
     glUniform3fv(location, 1, glm::value_ptr(vector));
 }
 
-
+#pragma region ICameraObserver overrides
 void ShaderProgram::setViewMatrix(const glm::mat4& viewMatrix)
 {
     _viewMatrix = viewMatrix;
@@ -145,6 +145,41 @@ glm::vec3 ShaderProgram::getCameraPosition()
 {
     return _cameraPosition;
 }
+#pragma endregion
+
+#pragma region ILightObserver overrides
+void ShaderProgram::setLightColor(const glm::vec4& color)
+{
+    _lightColor = color;
+}
+
+void ShaderProgram::setLightIntensity(float intensity)
+{
+    _lightIntensity = intensity;
+}
+
+void ShaderProgram::setLightPosition(const glm::vec3& position)
+{
+    _lightPosition = position;
+}
+
+
+glm::vec4 ShaderProgram::getLightColor()
+{
+    return _lightColor;
+}
+
+float ShaderProgram::getLightIntensity()
+{
+    return _lightIntensity;
+}
+
+glm::vec3 ShaderProgram::getLightPosition()
+{
+    return _lightPosition;
+}
+#pragma endregion
+
 
 void ShaderProgram::use() {
     glUseProgram(_programID);

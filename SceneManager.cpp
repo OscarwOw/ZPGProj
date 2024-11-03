@@ -12,7 +12,7 @@ void SceneManager::addScene(const std::string& name, Scene* scene) {
 }
 
 Scene* SceneManager::generateTraingleScene(std::string name) {
-	Scene* scene = SceneGenerator::getInstance().generateTraingleScene();
+	Scene* scene = SceneGenerator::getInstance().generateDefaultScene();
 	addScene(name, scene);
 	return scene;
 }
@@ -25,11 +25,16 @@ Scene* SceneManager::generateTestTreeScene(std::string name)
 }
 
 Scene* SceneManager::generateForestScene(std::string name) {
-	Scene* scene = SceneGenerator::getInstance().generateForestScene(50, 50);
+	Scene* scene = SceneGenerator::getInstance().generateForestScene(50, 100.0f, 1.5f);		//.generateForestScene(50, 50);
 	addScene(name, scene);
 	return scene;
 }
 
+Scene* SceneManager::generateSphereScene(std::string name) {
+	Scene* scene = SceneGenerator::getInstance().generateSphereScene();
+	addScene(name, scene);
+	return scene;
+}
 
 void SceneManager::switchScene(const std::string& name) { //optimized switch scene
 	auto scene = scenes.find(name);

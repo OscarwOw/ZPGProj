@@ -43,6 +43,21 @@
     <Filter Include="Header Files\Enums">
       <UniqueIdentifier>{515e132d-6ef1-4a1b-80d5-18dc8b8db108}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\shaders\fragmentShaders">
+      <UniqueIdentifier>{aa626768-7fa3-4ccc-9590-5cb721061600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\shaders\vertexShaders">
+      <UniqueIdentifier>{bb80019c-6f36-4859-8b5e-44827c329eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\shaders\mixedShaders">
+      <UniqueIdentifier>{10c41fea-3d14-4d87-aa46-686aa95861a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\shaders\testShaders">
+      <UniqueIdentifier>{393d6de2-c3d4-40be-a2f0-3e244aa03e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\interfaces">
+      <UniqueIdentifier>{21086489-21b1-4d4a-807f-21e1ac1bd683}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -107,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="LightSource.cpp">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +226,21 @@
     </ClInclude>
     <ClInclude Include="ModelType.h">
       <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>Resource Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="ILightObserver.h">
+      <Filter>Header Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ICameraObserver.h">
+      <Filter>Header Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgramSourceStrings.h">
+      <Filter>Header Files\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="triangle.h">
+      <Filter>Resource Files\models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
