@@ -51,6 +51,10 @@ public:
     glm::vec4 getLightColor();
     float getLightIntensity();
     glm::vec3 getLightPosition();
+
+    bool hasLightColor();
+    bool hasLightIntensity();
+    bool hasLightPosition();
 #pragma endregion
 
 private:
@@ -64,6 +68,8 @@ private:
     glm::vec4 _lightColor;
     float _lightIntensity;
     glm::vec3 _lightPosition;
+
+    bool _hasLightColor, _hasLightIntensity, _hasLightPosition = false;
 
     // Helper functions to compile individual shaders
     GLuint compileShader(const std::string& shaderSource, GLenum shaderKind);

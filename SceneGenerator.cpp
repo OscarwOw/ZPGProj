@@ -21,8 +21,9 @@ Scene* SceneGenerator::generateDefaultScene() {
     transformationData.TranslationX = -2.0f;
     transformationData.TranslationY = 2.0f;
     transformationData.TranslationZ = 0.0f;
-    DrawableObject* light = generateLightSource(transformationData, ShaderType::Test, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
-    scene->addObject(light);
+    transformationData.Scale = 0.1f;
+    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    scene->addLightSource(light);
 
     return scene;
 }
@@ -97,6 +98,14 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
             forestScene->addObject(bush);
         }
     }
+    TransformationData transformationData;
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationY = 0.0f;
+    transformationData.TranslationZ = -8.0f;
+    transformationData.Scale = 0.1f;
+    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    forestScene->addLightSource(light);
+    forestScene->addObject(light);
     return forestScene;
 }
 
@@ -104,28 +113,29 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 Scene* SceneGenerator::generateSphereScene() {
     Scene* scene = new Scene();
     TransformationData transformationData;
-    transformationData.TranslationZ = -8.0f;
-    transformationData.TranslationX = 3.0f;
-    transformationData.TranslationY = 3.0f;
+    transformationData.TranslationX = 1.5f;
+    transformationData.TranslationY = 1.5f;
     DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
 
-    transformationData.TranslationX = -3.0f;
-    transformationData.TranslationY = 3.0f;
+    transformationData.TranslationX = -1.5f;
+    transformationData.TranslationY = 1.5f;
     DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
 
-    transformationData.TranslationX = 3.0f;
-    transformationData.TranslationY = -3.0f;
+    transformationData.TranslationX = 1.5f;
+    transformationData.TranslationY = -1.5f;
     DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
 
-    transformationData.TranslationX = -3.0f;
-    transformationData.TranslationY = -3.0f;
+    transformationData.TranslationX = -1.5f;
+    transformationData.TranslationY = -1.5f;
     DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
 
     transformationData.TranslationX = 0.0f;
     transformationData.TranslationY = 0.0f;
+    transformationData.TranslationZ = 0.0f;
     transformationData.Scale = 0.1f;
-    DrawableObject* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     scene->addObject(light);
+    scene->addLightSource(light);
 
     scene->addObject(sphere1);
     scene->addObject(sphere2);

@@ -32,4 +32,5 @@ public:
     void detachObserver(ILightObserver* observer);
     void notifyObservers();
     void updateObserver(ILightObserver* observer);
+    std::vector<ILightObserver*> getObservers();
 };
