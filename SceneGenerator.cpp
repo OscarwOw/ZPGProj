@@ -158,11 +158,11 @@ Scene* SceneGenerator::generateShadersSphereScene() {
 
     transformationData.TranslationX = 1.5f;
     transformationData.TranslationY = -1.5f;
-    DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+    DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::SPHERE);
 
     transformationData.TranslationX = -1.5f;
     transformationData.TranslationY = -1.5f;
-    DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::CONSTANT, ModelType::SPHERE);
+    DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Lambert, ModelType::SPHERE);
 
     transformationData.TranslationX = 0.0f;
     transformationData.TranslationY = 0.0f;
