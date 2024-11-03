@@ -36,8 +36,13 @@ void LightSource::notifyObservers() {
 
 void LightSource::updateObserver(ILightObserver* observer) {
     if (observer) {
-        observer->updateLightColor(_lightColor);
-        observer->updateLightIntensity(_lightIntensity);
-        observer->updateLightPosition(glm::vec3(_transformationMatrix[3]));
+        observer->setLightColor(_lightColor);
+        observer->setLightIntensity(_lightIntensity);
+        observer->setLightPosition(glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ));
     }
+}
+
+std::vector<ILightObserver*> LightSource::getObservers()
+{
+    return _observers;
 }

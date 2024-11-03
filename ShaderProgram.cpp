@@ -150,16 +150,19 @@ glm::vec3 ShaderProgram::getCameraPosition()
 #pragma region ILightObserver overrides
 void ShaderProgram::setLightColor(const glm::vec4& color)
 {
+    _hasLightColor = true;
     _lightColor = color;
 }
 
 void ShaderProgram::setLightIntensity(float intensity)
 {
+    _hasLightIntensity = true;
     _lightIntensity = intensity;
 }
 
 void ShaderProgram::setLightPosition(const glm::vec3& position)
 {
+    _hasLightPosition = true;
     _lightPosition = position;
 }
 
@@ -177,6 +180,18 @@ float ShaderProgram::getLightIntensity()
 glm::vec3 ShaderProgram::getLightPosition()
 {
     return _lightPosition;
+}
+
+bool ShaderProgram::hasLightColor() {
+    return _hasLightColor;
+}
+
+bool ShaderProgram::hasLightIntensity() {
+    return _hasLightIntensity;
+}
+
+bool ShaderProgram::hasLightPosition() {
+    return _hasLightPosition;
 }
 #pragma endregion
 

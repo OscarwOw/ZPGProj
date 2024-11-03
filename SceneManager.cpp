@@ -36,7 +36,7 @@ Scene* SceneManager::generateSphereScene(std::string name) {
 	return scene;
 }
 
-void SceneManager::switchScene(const std::string& name) { //optimized switch scene
+void SceneManager::switchScene(const std::string& name) { //TODO debug shows that current scene is not properly cleared!!! objects from current scene display newscene objects for no reason
 	auto scene = scenes.find(name);
 
 	if (scene != scenes.end()) {
@@ -44,27 +44,41 @@ void SceneManager::switchScene(const std::string& name) { //optimized switch sce
 
 		Scene* currentscene = getCurrentScene();
 		if (currentscene == nullptr) {
-			for (DrawableObject* obj : newObjects) {
-				Camera::getInstance().attachObserver(obj->getSaherProgram());
+			for (DrawableObject* object : newObjects) {
+				Camera::getInstance().attachObserver(object->getSaherProgram());
 			}
 			currentSceneName = name;
 			return;
 		}
 
 		std::vector<DrawableObject*> objects = getCurrentScene()->getObjects();
+
 		for (int i=0; i<objects.size(); i++)
 		{			
 			Camera::getInstance().detachObserver(objects[i]->getSaherProgram());
 		}
 		
-		
-		for (DrawableObject* obj : newObjects) {
-			Camera::getInstance().attachObserver(obj->getSaherProgram());
+		if (scene->second->hasLightSource()) { //wierd looking strcture but its optimized 
+			LightSource* lightSource = scene->second->getLightSource();
+			std::vector<ILightObserver*> lightObservers = lightSource->getObservers();
+			for (ILightObserver* object : lightObservers) {
+				lightSource->detachObserver(object);
+			}
+			for (DrawableObject* object : newObjects) {
+				Camera::getInstance().attachObserver(object->getSaherProgram());
+				lightSource->attachObserver(object->getSaherProgram());
+			}
 		}
-
+		else {
+			for (DrawableObject* object : newObjects) {
+				Camera::getInstance().attachObserver(object->getSaherProgram());
+			}
+		}		
 		currentSceneName = name;
 	}
 }
+
+
 
 void SceneManager::switchToNextScene() {
 	switchScene(getNextScene());

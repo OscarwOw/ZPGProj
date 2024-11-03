@@ -18,11 +18,12 @@ void Scene::clearScene() {
 }
 
 void Scene::addLightSource(LightSource* lightSource) {//TODO multiple light sources
+    addObject(lightSource);
     _lightSource = lightSource;
     _hasLightSource = true;
 }
 
-LightSource* Scene::addLightSource() {
+LightSource* Scene::getLightSource() {
     return _lightSource;
 }
 bool Scene::hasLightSource() {

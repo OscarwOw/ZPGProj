@@ -129,38 +129,35 @@ void DrawableObject::updateTransformation() {
     glm::mat4 viewMatrix = glm::mat4(1.0);
     glm::mat4 perspectiveMatrix = glm::mat4(1.0);
 
+
     glm::vec3 lightPosition = glm::vec3(10.0f, 5.0f, 5.0f);
-    
+    float lightIntensity = 1.0f;
+    glm::vec4 lightColor = glm::vec4(1.0f);
+
+    if (_shaderProgram->hasLightPosition()) {
+        lightPosition = _shaderProgram->getLightPosition();
+        if (_shaderProgram->hasLightIntensity()) {
+            lightIntensity = _shaderProgram->getLightIntensity();
+        }
+        if (_shaderProgram->hasLightColor()) {
+            lightColor = _shaderProgram->getLightColor();
+        }
+    }
+     
 
     if (_shaderProgram) {
         _shaderProgram->use();
         _shaderProgram->setUniformMat4("modelMatrix", modelMatrix);
-    }
-
-    if (_shaderProgram) {
-        _shaderProgram->use();
         viewMatrix = _shaderProgram->getViewMatrix();
 
         _shaderProgram->setUniformMat4("viewMatrix", viewMatrix);
-    }
-    if (_shaderProgram) { //TODO inside one if
-        _shaderProgram->use();
-
         perspectiveMatrix = _shaderProgram->getPerspectiveMatrix();
 
         _shaderProgram->setUniformMat4("projectionMatrix", perspectiveMatrix);
-    }
-    if (_shaderProgram) {
-        _shaderProgram->use();
         _shaderProgram->setUniformVec3("lightPosition", lightPosition);
-    }
-    if (_shaderProgram) {
-        _shaderProgram->use();
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
-    }
 
-    
-   
+    }
 }
 
 

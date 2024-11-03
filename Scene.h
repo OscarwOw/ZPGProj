@@ -12,7 +12,7 @@ public:
     void drawScene();
     void clearScene();
     void addLightSource(LightSource* lightSource);
-    LightSource* addLightSource();
+    LightSource* getLightSource();
     bool hasLightSource();
     void circusTransform();
     std::vector<DrawableObject*> getObjects();

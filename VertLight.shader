@@ -11,6 +11,7 @@ out vec3 fragColor;
 out vec3 Normal;
 out vec3 FragPos;
 out vec3 cameraPos;
+out vec3 lightPos;
 void main() {
     
 
@@ -25,4 +26,5 @@ void main() {
 
     Normal = color;
     cameraPos = cameraPosition;
+    lightPos = lightPosition;
 };
