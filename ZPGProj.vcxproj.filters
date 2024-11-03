@@ -244,31 +244,49 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Basic.shader">
-      <Filter>Resource Files\shaders</Filter>
-    </None>
     <None Include="ColorShader.shader">
       <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="readmePipeline.md" />
     <None Include="Readme.md" />
-    <None Include="VertexShaderFirstLight.shader">
-      <Filter>Resource Files\shaders</Filter>
-    </None>
-    <None Include="FragmentShaderFirstLight.shader">
-      <Filter>Resource Files\shaders</Filter>
-    </None>
-    <None Include="ColorVertexShader.shader">
-      <Filter>Resource Files\shaders</Filter>
+    <None Include="Basic.shader">
+      <Filter>Resource Files\shaders\mixedShaders</Filter>
     </None>
     <None Include="ColorFragmentShader.shader">
-      <Filter>Resource Files\shaders</Filter>
+      <Filter>Resource Files\shaders\testShaders</Filter>
+    </None>
+    <None Include="ColorVertexShader.shader">
+      <Filter>Resource Files\shaders\testShaders</Filter>
+    </None>
+    <None Include="frag_constant.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
     <None Include="VertLight.shader">
-      <Filter>Resource Files\shaders</Filter>
+      <Filter>Resource Files\shaders\testShaders</Filter>
     </None>
     <None Include="FragLight.shader">
-      <Filter>Resource Files\shaders</Filter>
+      <Filter>Resource Files\shaders\testShaders</Filter>
+    </None>
+    <None Include="vert_constant.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="frag_blinn.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
+    <None Include="frag_phong.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
+    <None Include="frag_lambert.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
+    <None Include="vert_blinn.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="vert_phong.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="vert_lambert.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -36,6 +36,12 @@ Scene* SceneManager::generateSphereScene(std::string name) {
 	return scene;
 }
 
+Scene* SceneManager::generateShadersSphereScene(std::string name) {
+	Scene* scene = SceneGenerator::getInstance().generateShadersSphereScene();
+	addScene(name, scene);
+	return scene;
+}
+
 void SceneManager::switchScene(const std::string& name) { //TODO debug shows that current scene is not properly cleared!!! objects from current scene display newscene objects for no reason
 	auto scene = scenes.find(name);
 

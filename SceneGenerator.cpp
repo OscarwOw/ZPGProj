@@ -143,6 +143,41 @@ Scene* SceneGenerator::generateSphereScene() {
     scene->addObject(sphere4);
     return scene;
 }
+
+
+Scene* SceneGenerator::generateShadersSphereScene() {
+    Scene* scene = new Scene();
+    TransformationData transformationData;
+    transformationData.TranslationX = 1.5f;
+    transformationData.TranslationY = 1.5f;
+    DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::CONSTANT, ModelType::SPHERE);
+
+    transformationData.TranslationX = -1.5f;
+    transformationData.TranslationY = 1.5f;
+    DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Blinn, ModelType::SPHERE);
+
+    transformationData.TranslationX = 1.5f;
+    transformationData.TranslationY = -1.5f;
+    DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+
+    transformationData.TranslationX = -1.5f;
+    transformationData.TranslationY = -1.5f;
+    DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::CONSTANT, ModelType::SPHERE);
+
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationY = 0.0f;
+    transformationData.TranslationZ = 0.0f;
+    transformationData.Scale = 0.1f;
+    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    scene->addObject(light);
+    scene->addLightSource(light);
+
+    scene->addObject(sphere1);
+    scene->addObject(sphere2);
+    scene->addObject(sphere3);
+    scene->addObject(sphere4);
+    return scene;
+}
 #pragma endregion
 
 #pragma region object generation
