@@ -34,7 +34,7 @@ void tick(GLFWwindow* window, SceneManager& sceneManager) {
     Scene* currentScene = sceneManager.getCurrentScene();
     if (currentScene) {
         // Example of scene-specific transformation
-        //currentScene->circusTransform();
+        currentScene->circusTransform();
         currentScene->drawScene();
     }
     glfwSwapBuffers(window);

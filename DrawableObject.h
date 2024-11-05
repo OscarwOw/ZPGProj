@@ -21,6 +21,8 @@ protected:
     ShaderProgram* _shaderProgram;
     std::string _shaderProgramManagerString;
 
+    glm::vec3 _color = glm::vec3(0.01, 0.19, 0.12);
+
     //added for testing
     glm::mat4 _transformationMatrix;
     bool _isRotationTransformationDirty;
@@ -58,6 +60,8 @@ public:
 
     void setShaderProgram(ShaderProgram* shaderProgram);
     void setShaderProgram(ShaderProgram* shaderProgram, std::string shaderProgramManagerString);
+    void setColor(glm::vec3 color);
+    glm::vec3 getColor();
     ShaderProgram* getSaherProgram();
 
     glm::mat4 GetCurrentTransformation();

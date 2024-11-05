@@ -26,7 +26,11 @@ public:
     DrawableObject* generateTree();
     DrawableObject* generateTree(float scale, float rotation, float x, float z);
 
+    DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color);
+
     DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType);
+
+    //DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType);
     LightSource* generateLightSource(TransformationData transformationData, ShaderType shaderType, ModelType modelType, const glm::vec4& lightColor, float lightIntensity);
 private:
     SceneGenerator() {}

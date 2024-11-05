@@ -33,6 +33,6 @@ class InputManager {
     private:
         InputManager() {}    
 
-        bool _forwardMovement, _backwardMovement, _rightMovement, _leftMovement, _mousePressed = false;
+        bool _forwardMovement, _backwardMovement, _rightMovement, _leftMovement, _mousePressed, _upMovement, _downMovement = false;
         double _lastMouseX, _lastMouseY = 0;
 };

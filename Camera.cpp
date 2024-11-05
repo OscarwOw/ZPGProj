@@ -42,8 +42,11 @@ void Camera::processKeyboard(Camera_Movement direction, float deltaTime) {
         position -= right * velocity;
     if (direction == Camera_Movement::RIGHT)
         position += right * velocity;
+    if (direction == Camera_Movement::UP)
+        position += worldUp * velocity;
+    if (direction == Camera_Movement::DOWN)
+        position -= worldUp * velocity;
 
-    printf("Camera Position: [X: %f, Y: %f, Z: %f]\n", position.x, position.y, position.z);
     notifyObservers();
 }
 
@@ -86,6 +89,7 @@ void Camera::notifyObservers() {
     for (auto* observer : observers) {
         observer->setViewMatrix(viewMatrix);
         observer->setPerspectiveMatrix(perspectiveMatrix);
+        observer->setCameraPosition(position);
     }
 }
 

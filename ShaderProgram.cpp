@@ -128,6 +128,7 @@ void ShaderProgram::setPerspectiveMatrix(const glm::mat4& perspectiveMatrix)
 
 void ShaderProgram::setCameraPosition(const glm::vec3& cameraPosition)
 {
+    //printf("camera position changed");
     _cameraPosition = cameraPosition;
 }
 

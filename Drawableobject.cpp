@@ -65,6 +65,16 @@ void DrawableObject::setShaderProgram(ShaderProgram* shaderProgram, std::string 
     _shaderProgramManagerString = shaderProgramManagerString;
 }
 
+void DrawableObject::setColor(glm::vec3 color)
+{
+    _color = color;
+}
+
+glm::vec3 DrawableObject::getColor()
+{
+    return _color;
+}
+
 ShaderProgram* DrawableObject::getSaherProgram()
 {
     if (_shaderProgram) {
@@ -156,6 +166,7 @@ void DrawableObject::updateTransformation() {
         _shaderProgram->setUniformMat4("projectionMatrix", perspectiveMatrix);
         _shaderProgram->setUniformVec3("lightPosition", lightPosition);
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
+        _shaderProgram->setUniformVec3("objectColor", _color);
 
     }
 }
