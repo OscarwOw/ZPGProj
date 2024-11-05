@@ -203,6 +203,7 @@
     <None Include="frag_constant.shader" />
     <None Include="FragLight.shader" />
     <None Include="frag_lambert.shader" />
+    <None Include="frag_light.shader" />
     <None Include="frag_phong.shader" />
     <None Include="Readme.md" />
     <None Include="readmePipeline.md" />
@@ -210,6 +211,7 @@
     <None Include="vert_blinn.shader" />
     <None Include="vert_constant.shader" />
     <None Include="vert_lambert.shader" />
+    <None Include="vert_light.shader" />
     <None Include="vert_phong.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

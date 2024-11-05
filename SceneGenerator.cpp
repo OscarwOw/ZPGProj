@@ -22,7 +22,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     transformationData.TranslationY = 2.0f;
     transformationData.TranslationZ = 0.0f;
     transformationData.Scale = 0.1f;
-    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light);
 
     return scene;
@@ -32,9 +32,18 @@ Scene* SceneGenerator::generateTestTreeScene()
 {
     Scene* scene = new Scene();
     TransformationData transformationData;
-    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Test, ModelType::TREE);
-
+    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::CUBE);
     scene->addObject(tree);
+
+    transformationData.TranslationX = -2.0f;
+    transformationData.TranslationY = 2.0f;
+    transformationData.TranslationZ = 0.0f;
+    transformationData.Scale = 0.1f;
+    LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
+    scene->addLightSource(light);
+    //scene->addObject(tree);
+
+    
     return scene;
 }
 
@@ -103,7 +112,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     transformationData.TranslationY = 0.0f;
     transformationData.TranslationZ = -8.0f;
     transformationData.Scale = 0.1f;
-    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     forestScene->addLightSource(light);
     forestScene->addObject(light);
     return forestScene;
@@ -133,14 +142,15 @@ Scene* SceneGenerator::generateSphereScene() {
     transformationData.TranslationY = 0.0f;
     transformationData.TranslationZ = 0.0f;
     transformationData.Scale = 0.1f;
-    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
-    scene->addObject(light);
-    scene->addLightSource(light);
+    LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    //scene->addObject(light);
+    
 
     scene->addObject(sphere1);
     scene->addObject(sphere2);
     scene->addObject(sphere3);
     scene->addObject(sphere4);
+    scene->addLightSource(light);
     return scene;
 }
 
@@ -168,7 +178,7 @@ Scene* SceneGenerator::generateShadersSphereScene() {
     transformationData.TranslationY = 0.0f;
     transformationData.TranslationZ = 0.0f;
     transformationData.Scale = 0.1f;
-    LightSource* light = generateLightSource(transformationData, ShaderType::Test, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     scene->addObject(light);
     scene->addLightSource(light);
 
@@ -213,6 +223,13 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
     return treeObject;
 }
 
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color) { //TODO since we need to use deep cloneing its 
+                                                                                                                                                             //much better to move this to contructor and use base class contructor
+    DrawableObject* object = generateDrawableObject(transformationData, shaderType, modelType);
+    object->setColor(color);
+    return object;
+}
+
 DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType) { //TODO since we need to use deep cloneing its 
                                                                                                                                             //much better to move this to contructor and use base class contructor
     DrawableObject* object = new DrawableObject();
@@ -248,7 +265,8 @@ DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transf
 
 #pragma region light generation
 LightSource* SceneGenerator::generateLightSource(TransformationData transformationData, ShaderType shaderType, ModelType modelType, const glm::vec4& lightColor, float lightIntensity) {
-    DrawableObject* baseObject = generateDrawableObject(transformationData, shaderType, modelType);
+    glm::vec3 colorCopy = lightColor;
+    DrawableObject* baseObject = generateDrawableObject(transformationData, shaderType, modelType, colorCopy);
     LightSource* lightSource = new LightSource(*baseObject, lightColor, lightIntensity);
     delete baseObject;
     return lightSource;

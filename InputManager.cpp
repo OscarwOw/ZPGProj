@@ -16,7 +16,15 @@ void InputManager::handleMovement(float time) {
     }
     if (_rightMovement) {
         Camera::getInstance().processKeyboard(Camera_Movement::RIGHT, time);
-    }    
+    }
+    if (_upMovement) {
+        Camera::getInstance().processKeyboard(Camera_Movement::UP, time);
+    }
+    if (_downMovement) {
+        Camera::getInstance().processKeyboard(Camera_Movement::DOWN, time);
+    }
+
+    
 }
 
 void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -42,6 +50,22 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
     if (key == GLFW_KEY_S && (action == GLFW_RELEASE)) { 
         inputManager._backwardMovement = false;
     }
+
+    if (key == GLFW_KEY_SPACE && (action == GLFW_PRESS)) {
+        inputManager._upMovement = true;
+    }
+    if (key == GLFW_KEY_SPACE && (action == GLFW_RELEASE)) {
+        inputManager._upMovement = false;
+    }
+
+    if (key == GLFW_KEY_LEFT_SHIFT && (action == GLFW_PRESS)) {
+        inputManager._downMovement = true;
+    }
+    if (key == GLFW_KEY_LEFT_SHIFT && (action == GLFW_RELEASE)) {
+        inputManager._downMovement = false;
+    }
+
+
 
     if (key == GLFW_KEY_D && (action == GLFW_PRESS)) {  
         inputManager._rightMovement = true;

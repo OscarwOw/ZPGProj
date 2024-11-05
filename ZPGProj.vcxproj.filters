@@ -288,5 +288,12 @@
     <None Include="vert_lambert.shader">
       <Filter>Resource Files\shaders\vertexShaders</Filter>
     </None>
+    <None Include="form.md" />
+    <None Include="vert_light.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="frag_light.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -84,6 +84,10 @@ void SceneManager::switchScene(const std::string& name) { //TODO debug shows tha
 	}
 }
 
+//void SceneManager::rotateObjectSimulation() {
+//	getCurrentScene()->circusTransform();
+//}
+
 
 
 void SceneManager::switchToNextScene() {

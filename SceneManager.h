@@ -24,6 +24,7 @@ public:
     Scene* generateSphereScene(std::string name);
     Scene* generateShadersSphereScene(std::string name);
     void switchScene(const std::string& name);
+    void rotateObjectSimulation();
     void switchToNextScene();
     std::string getNextScene();
     Scene* getCurrentScene();
