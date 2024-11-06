@@ -14,7 +14,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     TransformationData transformationData;
     //transformationData.TranslationX = -2.0f;
     transformationData.TranslationZ = -2.0f;
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Test, ModelType::TRIANGLE);
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::TRIANGLE);
     scene->addObject(triangle);
 
 
