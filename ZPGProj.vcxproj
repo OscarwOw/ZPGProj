@@ -157,9 +157,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="bushes.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraMovement.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="ErrorHandler.h" />
+    <ClInclude Include="frag_phong_static.shader" />
     <ClInclude Include="gift.h" />
     <ClInclude Include="ICameraObserver.h" />
     <ClInclude Include="ILightObserver.h" />
@@ -213,6 +215,7 @@
     <None Include="vert_lambert.shader" />
     <None Include="vert_light.shader" />
     <None Include="vert_phong.shader" />
+    <None Include="vert_phong_Static.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

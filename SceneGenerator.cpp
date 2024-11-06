@@ -84,7 +84,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
         treeTransformationData.Scale = 1.0f;
         treeTransformationData.RotationAngle = 0.0f; 
 
-        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Test, ModelType::TREE);
+        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Phong, ModelType::TREE);
 
         forestScene->addObject(tree);
 
@@ -124,19 +124,19 @@ Scene* SceneGenerator::generateSphereScene() {
     TransformationData transformationData;
     transformationData.TranslationX = 1.5f;
     transformationData.TranslationY = 1.5f;
-    DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+    DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::SPHERE);
 
     transformationData.TranslationX = -1.5f;
     transformationData.TranslationY = 1.5f;
-    DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+    DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::SPHERE);
 
     transformationData.TranslationX = 1.5f;
     transformationData.TranslationY = -1.5f;
-    DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+    DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::SPHERE);
 
     transformationData.TranslationX = -1.5f;
     transformationData.TranslationY = -1.5f;
-    DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Test, ModelType::SPHERE);
+    DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::SPHERE);
 
     transformationData.TranslationX = 0.0f;
     transformationData.TranslationY = 0.0f;

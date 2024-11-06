@@ -17,3 +17,9 @@ zmena rozmeru okna nezmeni rozmery
 
 
 I= Ia * rc  
+
+
+
+
+Transformation CatMatrix
+

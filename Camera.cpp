@@ -29,22 +29,23 @@ glm::mat4 Camera::getViewMatrix() const {
     return glm::lookAt(position, position + front, up);
 }
 glm::mat4 Camera::getPerspectiveMatrix() const {
+    //TODO do not hardcode
     return glm::perspective(glm::radians(45.0f), (float)(1500 / 1200), 0.1f, 100.0f);
 }
 
-void Camera::processKeyboard(Camera_Movement direction, float deltaTime) {
+void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
     float velocity = movementSpeed * deltaTime;
-    if (direction == Camera_Movement::FORWARD)
+    if (direction == CameraMovement::FORWARD)
         position += front * velocity;
-    if (direction == Camera_Movement::BACKWARD)
+    if (direction == CameraMovement::BACKWARD)
         position -= front * velocity;
-    if (direction == Camera_Movement::LEFT)
+    if (direction == CameraMovement::LEFT)
         position -= right * velocity;
-    if (direction == Camera_Movement::RIGHT)
+    if (direction == CameraMovement::RIGHT)
         position += right * velocity;
-    if (direction == Camera_Movement::UP)
+    if (direction == CameraMovement::UP)
         position += worldUp * velocity;
-    if (direction == Camera_Movement::DOWN)
+    if (direction == CameraMovement::DOWN)
         position -= worldUp * velocity;
 
     notifyObservers();

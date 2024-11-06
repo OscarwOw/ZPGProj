@@ -7,16 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include "ICameraObserver.h"
-
-// Defines several possible options for camera movement.
-enum class Camera_Movement {
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT,
-    UP,
-    DOWN
-};
+#include "CameraMovement.h"
 
 
 // Camera class definition
@@ -40,7 +31,7 @@ public:
 
     glm::mat4 getPerspectiveMatrix() const;
 
-    void processKeyboard(Camera_Movement direction, float deltaTime);
+    void processKeyboard(CameraMovement direction, float deltaTime);
     void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
     void processMouseScroll(float yoffset);
     void attachObserver(ICameraObserver* observer);
