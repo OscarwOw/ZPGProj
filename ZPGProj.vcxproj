@@ -136,6 +136,7 @@
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LightPublisher.cpp" />
     <ClCompile Include="LightSource.cpp" />
     <ClCompile Include="MatrixHelper.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -167,7 +168,10 @@
     <ClInclude Include="ILightObserver.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="LightData.h" />
+    <ClInclude Include="LightPublisher.h" />
     <ClInclude Include="LightSource.h" />
+    <ClInclude Include="MaterialProperties.h" />
     <ClInclude Include="MatrixHelper.h" />
     <ClInclude Include="ModelMapping.h" />
     <ClInclude Include="ModelType.h" />

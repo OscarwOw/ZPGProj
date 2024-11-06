@@ -7,11 +7,16 @@
 #include <iostream>
 #include "MatrixHelper.h"
 #include "TransformationData.h"
-
+#include "MaterialProperties.h"
+#include "ShaderType.h"
+#include "ModelType.h"
 
 
 //TODO this whole class is one big mess... should i call it mastershit?
 class DrawableObject {
+private:
+    MaterialProperties _material;
+
 protected:
     VertexBuffer* _vertexBuffer;
     IndexBuffer* _indexBuffer;
@@ -22,6 +27,9 @@ protected:
     std::string _shaderProgramManagerString;
 
     glm::vec3 _color = glm::vec3(0.01, 0.19, 0.12);
+    MaterialProperties _materialProperties;
+
+    
 
     //added for testing
     glm::mat4 _transformationMatrix;
@@ -50,6 +58,13 @@ protected:
 
 public:
     DrawableObject();
+    DrawableObject(
+        TransformationData transformationData,
+        ShaderType shaderType,
+        ModelType modelType,
+        glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f),
+        MaterialProperties materialProperties = MaterialProperties()
+    );
     ~DrawableObject();
     TransformationComposite transformationComposite;
 
@@ -66,6 +81,9 @@ public:
 
     glm::mat4 GetCurrentTransformation();
     TransformationData GetCurrentTransformationData();
+    glm::vec3 getPosition();
+
+    MaterialProperties getMaterialProperties() const;
 
     // Optional: Apply transformations to the entire object
     void translate(float x, float y, float z);
