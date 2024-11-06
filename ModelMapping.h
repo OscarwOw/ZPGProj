@@ -19,7 +19,7 @@ struct ModelData {
 
 static const std::map<ModelType, ModelData> ModelMappings = {
     { ModelType::TREE, { tree, 92814 } },
-    { ModelType::BUSH, { bushes, 36873 } },
+    { ModelType::BUSH, { bushes, 8730 } },
     { ModelType::SUZI_SMOOTH, { suziSmooth, 2880 } },
     { ModelType::SUZI_FLAT, { suziFlat, 1704 } },
     { ModelType::GIFT, { gift, 36336 } },

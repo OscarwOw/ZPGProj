@@ -6,22 +6,22 @@
 void InputManager::handleMovement(float time) {
 
     if (_forwardMovement) {
-        Camera::getInstance().processKeyboard(Camera_Movement::FORWARD, time);
+        Camera::getInstance().processKeyboard(CameraMovement::FORWARD, time);
     }
     if (_leftMovement) {
-        Camera::getInstance().processKeyboard(Camera_Movement::LEFT, time);
+        Camera::getInstance().processKeyboard(CameraMovement::LEFT, time);
     }
     if (_backwardMovement) {
-        Camera::getInstance().processKeyboard(Camera_Movement::BACKWARD, time);
+        Camera::getInstance().processKeyboard(CameraMovement::BACKWARD, time);
     }
     if (_rightMovement) {
-        Camera::getInstance().processKeyboard(Camera_Movement::RIGHT, time);
+        Camera::getInstance().processKeyboard(CameraMovement::RIGHT, time);
     }
     if (_upMovement) {
-        Camera::getInstance().processKeyboard(Camera_Movement::UP, time);
+        Camera::getInstance().processKeyboard(CameraMovement::UP, time);
     }
     if (_downMovement) {
-        Camera::getInstance().processKeyboard(Camera_Movement::DOWN, time);
+        Camera::getInstance().processKeyboard(CameraMovement::DOWN, time);
     }
 
     
