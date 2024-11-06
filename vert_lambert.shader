@@ -12,6 +12,8 @@ out vec3 fragColor;
 out vec3 Normal;
 out vec3 FragPos;
 out vec3 lightPos;
+out vec3 cameraPos;
+
 
 void main() {
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vp, 1.0);
@@ -20,4 +22,5 @@ void main() {
     FragPos = vec3(modelMatrix * vec4(vp, 1.0));
     Normal = mat3(transpose(inverse(modelMatrix))) * color; // Transformed normal
     lightPos = lightPosition;
+    cameraPos = cameraPosition;
 }
