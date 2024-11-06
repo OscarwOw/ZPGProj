@@ -123,8 +123,11 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\Common</Filter>
     </ClCompile>
+    <ClCompile Include="LightPublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LightSource.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +245,19 @@
     <ClInclude Include="triangle.h">
       <Filter>Resource Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="CameraMovement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="frag_phong_static.shader" />
+    <ClInclude Include="MaterialProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightPublisher.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="LightData.h">
+      <Filter>Header Files\Structures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorShader.shader">
@@ -251,12 +267,6 @@
     <None Include="Readme.md" />
     <None Include="Basic.shader">
       <Filter>Resource Files\shaders\mixedShaders</Filter>
-    </None>
-    <None Include="ColorFragmentShader.shader">
-      <Filter>Resource Files\shaders\testShaders</Filter>
-    </None>
-    <None Include="ColorVertexShader.shader">
-      <Filter>Resource Files\shaders\testShaders</Filter>
     </None>
     <None Include="frag_constant.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
@@ -294,6 +304,13 @@
     </None>
     <None Include="frag_light.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
+    <None Include="vert_phong_Static.shader" />
+    <None Include="frag_develop.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
+    <None Include="vert_develop.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
     </None>
   </ItemGroup>
 </Project>

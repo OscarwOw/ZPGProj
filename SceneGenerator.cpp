@@ -14,7 +14,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     TransformationData transformationData;
     //transformationData.TranslationX = -2.0f;
     transformationData.TranslationZ = -2.0f;
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::TRIANGLE);
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::TRIANGLE, glm::vec3(0.8f, 0.4f, 0.0f));
     scene->addObject(triangle);
 
 
@@ -24,6 +24,8 @@ Scene* SceneGenerator::generateDefaultScene() {
     transformationData.Scale = 0.1f;
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light);
+    
+    //scene->addLightSource(light);
 
     return scene;
 }
@@ -32,7 +34,7 @@ Scene* SceneGenerator::generateTestTreeScene()
 {
     Scene* scene = new Scene();
     TransformationData transformationData;
-    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::CUBE);
+    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::CUBE, glm::vec3(0.8f, 0.4f, 0.0f));
     scene->addObject(tree);
 
     transformationData.TranslationX = -2.0f;
@@ -43,7 +45,14 @@ Scene* SceneGenerator::generateTestTreeScene()
     scene->addLightSource(light);
     //scene->addObject(tree);
 
-    
+    transformationData.TranslationX = 2.0f;
+    transformationData.TranslationY = 4.0f;
+    transformationData.TranslationZ = 1.0f;
+    transformationData.Scale = 0.1f;
+    LightSource* light2 = generateLightSource(transformationData, ShaderType::Light, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
+    scene->addLightSource(light2);
+
+
     return scene;
 }
 
@@ -223,52 +232,28 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
     return treeObject;
 }
 
-DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color) { //TODO since we need to use deep cloneing its 
-                                                                                                                                                             //much better to move this to contructor and use base class contructor
-    DrawableObject* object = generateDrawableObject(transformationData, shaderType, modelType);
-    object->setColor(color);
-    return object;
+
+
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color) {
+    return new DrawableObject(transformationData, shaderType, modelType, color);
 }
 
-DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType) { //TODO since we need to use deep cloneing its 
-                                                                                                                                            //much better to move this to contructor and use base class contructor
-    DrawableObject* object = new DrawableObject();
-    auto it = ShaderMappings.find(shaderType); //ShaderType handle
-    ShaderProgram* shaderProgram = nullptr;    
-    if (it == ShaderMappings.end()) {
-        std::cerr << "Invalid ShaderType specified. Assigning default shader." << std::endl;
-        it = ShaderMappings.find(ShaderType::Test);
-    }
-    ShaderInfo shaderInfo = it->second;
-    std::string accessString = shaderProgramManager.CreateShaderNemec(shaderInfo.vertexPath.c_str(), shaderInfo.fragmentPath.c_str(), "generatedObject");
-    shaderProgram = shaderProgramManager.getShader(accessString);
-    if (shaderProgram) {
-        object->setShaderProgram(shaderProgram);
-    }
-    auto modelIt = ModelMappings.find(modelType); //ModelType handle    
-    if (modelIt != ModelMappings.end()) {
-        const ModelData& modelData = modelIt->second;
-        object->loadFromRawData(modelData.data, modelData.vertexCount, 6);
-    }
-    else {
-        std::cerr << "Invalid ModelType specified. Assigning default model." << std::endl;
-        const ModelData& modelData = ModelMappings.at(ModelType::PLAIN);
-        object->loadFromRawData(modelData.data, modelData.vertexCount, 6);
-    }
-    object->scale(transformationData.Scale);
-    object->rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
-    object->translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
-    object->updateTransformation();
-    return object;
+//DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color) { //TODO since we need to use deep cloneing its 
+//                                                                                                                                                             //much better to move this to contructor and use base class contructor
+//    DrawableObject* object = generateDrawableObject(transformationData, shaderType, modelType);
+//    object->setColor(color);
+//    return object;
+//}
+
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType) {
+    return new DrawableObject(transformationData, shaderType, modelType); 
 }
 #pragma endregion
 
 #pragma region light generation
 LightSource* SceneGenerator::generateLightSource(TransformationData transformationData, ShaderType shaderType, ModelType modelType, const glm::vec4& lightColor, float lightIntensity) {
-    glm::vec3 colorCopy = lightColor;
-    DrawableObject* baseObject = generateDrawableObject(transformationData, shaderType, modelType, colorCopy);
-    LightSource* lightSource = new LightSource(*baseObject, lightColor, lightIntensity);
-    delete baseObject;
+    glm::vec3 colorCopy = glm::vec3(lightColor);  // Convert glm::vec4 to glm::vec3 by copying RGB values
+    LightSource* lightSource = new LightSource(transformationData, shaderType, modelType, colorCopy, lightColor, lightIntensity);
     return lightSource;
 }
 

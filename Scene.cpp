@@ -2,6 +2,7 @@
 
 void Scene::addObject(DrawableObject* object) {
     objects.push_back(object);
+    addLightObserver(object->getSaherProgram());
 }
 
 void Scene::drawScene() {
@@ -17,14 +18,26 @@ void Scene::clearScene() {
     objects.clear(); 
 }
 
-void Scene::addLightSource(LightSource* lightSource) {//TODO multiple light sources
-    addObject(lightSource);
-    _lightSource = lightSource;
-    _hasLightSource = true;
+void Scene::addLightObserver(ILightObserver* observer)
+{
+    _lightPublisher.attachObserver(observer);
+    publishLights();
 }
 
-LightSource* Scene::getLightSource() {
-    return _lightSource;
+void Scene::publishLights()
+{
+    _lightPublisher.publish();
+}
+
+void Scene::addLightSource(LightSource* lightSource) {//TODO multiple light sources
+    addObject(lightSource);
+    _lightPublisher.attachLightSource(lightSource);
+    _hasLightSource = true;
+    publishLights();
+}
+
+std::vector<LightSource*> Scene::getLightSources() {
+    return _lightSources;
 }
 bool Scene::hasLightSource() {
     return _hasLightSource;
@@ -53,6 +66,7 @@ void Scene::circusTransform()//deprecated
     }
 
 }
+
 
 std::vector<DrawableObject*> Scene::getObjects()
 {

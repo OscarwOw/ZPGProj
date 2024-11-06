@@ -65,15 +65,12 @@ void SceneManager::switchScene(const std::string& name) { //TODO debug shows tha
 		}
 		
 		if (scene->second->hasLightSource()) { //wierd looking strcture but its optimized 
-			LightSource* lightSource = scene->second->getLightSource();
-			std::vector<ILightObserver*> lightObservers = lightSource->getObservers();
-			for (ILightObserver* object : lightObservers) {
-				lightSource->detachObserver(object);
-			}
+			std::vector<LightSource*> lightSources = scene->second->getLightSources();
+
+			
 			for (DrawableObject* object : newObjects) {
-				Camera::getInstance().attachObserver(object->getSaherProgram());
-				lightSource->attachObserver(object->getSaherProgram());
-			}
+				Camera::getInstance().attachObserver(object->getSaherProgram());					
+			}					
 		}
 		else {
 			for (DrawableObject* object : newObjects) {

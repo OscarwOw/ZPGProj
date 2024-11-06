@@ -115,6 +115,24 @@ void ShaderProgram::setUniformVec3(const std::string& name, const glm::vec3& vec
     glUniform3fv(location, 1, glm::value_ptr(vector));
 }
 
+void ShaderProgram::setUniformFloat(const std::string& name, const float& value) {
+    GLuint location = glGetUniformLocation(_programID, name.c_str());
+    glUniform1f(location, value);
+}
+
+void ShaderProgram::setUniformInt(const std::string& name, int value) {
+    GLuint location = glGetUniformLocation(_programID, name.c_str());
+    glUniform1i(location, value);
+}
+
+
+void ShaderProgram::setMaterialProperties(const MaterialProperties& material) {
+    setUniformVec3("materialAmbient", material.ambientReflectivity);
+    setUniformVec3("materialDiffuse", material.diffuseReflectivity);
+    setUniformVec3("materialSpecular", material.specularReflectivity);
+    setUniformFloat("materialShininess", material.shininess);
+}
+
 #pragma region ICameraObserver overrides
 void ShaderProgram::setViewMatrix(const glm::mat4& viewMatrix)
 {
@@ -149,51 +167,27 @@ glm::vec3 ShaderProgram::getCameraPosition()
 #pragma endregion
 
 #pragma region ILightObserver overrides
-void ShaderProgram::setLightColor(const glm::vec4& color)
+
+void ShaderProgram::setLightsVector(std::vector<LightData> data)
 {
-    _hasLightColor = true;
-    _lightColor = color;
+    _lightData = data;
 }
 
-void ShaderProgram::setLightIntensity(float intensity)
-{
-    _hasLightIntensity = true;
-    _lightIntensity = intensity;
+void ShaderProgram::updateLightSources() {
+    use(); // Make sure the shader program is active
+
+    // Set the number of light sources as an integer
+    setUniformInt("numLights", static_cast<int>(_lightData.size()));
+
+    // Iterate over each light and set its properties in the shader
+    for (size_t i = 0; i < _lightData.size(); ++i) {
+        std::string indexStr = std::to_string(i);
+        setUniformVec3("lightSources[" + indexStr + "].position", _lightData[i].position);
+        setUniformVec3("lightSources[" + indexStr + "].color", glm::vec3(_lightData[i].color));
+    }
 }
 
-void ShaderProgram::setLightPosition(const glm::vec3& position)
-{
-    _hasLightPosition = true;
-    _lightPosition = position;
-}
 
-
-glm::vec4 ShaderProgram::getLightColor()
-{
-    return _lightColor;
-}
-
-float ShaderProgram::getLightIntensity()
-{
-    return _lightIntensity;
-}
-
-glm::vec3 ShaderProgram::getLightPosition()
-{
-    return _lightPosition;
-}
-
-bool ShaderProgram::hasLightColor() {
-    return _hasLightColor;
-}
-
-bool ShaderProgram::hasLightIntensity() {
-    return _hasLightIntensity;
-}
-
-bool ShaderProgram::hasLightPosition() {
-    return _hasLightPosition;
-}
 #pragma endregion
 
 

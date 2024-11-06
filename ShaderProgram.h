@@ -14,6 +14,8 @@
 #include "ShaderKind.h"
 #include "ShaderProgramSourceStrings.h"
 #include "ILightObserver.h"
+#include "MaterialProperties.h"
+#include "LightData.h"
 
 
 class ShaderProgram : public ICameraObserver, public ILightObserver {
@@ -32,6 +34,12 @@ public:
     void setUniformMat4(const std::string& name, const glm::mat4& matrix);
     void setUniformVec3(const std::string& name, const glm::vec3& vector);
 
+    void setUniformFloat(const std::string& name, const float& vector);
+
+    void setUniformInt(const std::string& name, int value);
+
+    void setMaterialProperties(const MaterialProperties& material);
+
 
 #pragma region ICameraObserver overrides
     void setViewMatrix(const glm::mat4& viewMatrix) override;
@@ -44,18 +52,11 @@ public:
 #pragma endregion
 
 #pragma region ILightObserver overides
-    void setLightColor(const glm::vec4& color) override;
-    void setLightIntensity(float intensity) override;
-    void setLightPosition(const glm::vec3& position) override;
-
-    glm::vec4 getLightColor();
-    float getLightIntensity();
-    glm::vec3 getLightPosition();
-
-    bool hasLightColor();
-    bool hasLightIntensity();
-    bool hasLightPosition();
+    void setLightsVector(std::vector<LightData> data) override;
 #pragma endregion
+
+    void addLightSource(const glm::vec4& color, float intensity, const glm::vec3& position);
+    void updateLightSources();
 
 private:
     GLuint _programID;
@@ -68,6 +69,8 @@ private:
     glm::vec4 _lightColor;
     float _lightIntensity;
     glm::vec3 _lightPosition;
+
+    std::vector<LightData> _lightData;
 
     bool _hasLightColor, _hasLightIntensity, _hasLightPosition = false;
 

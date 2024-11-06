@@ -6,29 +6,54 @@ in vec3 cameraPos;
 in vec3 lightPos;
 in vec3 fragNormal;
 
+uniform int numLights; // Number of light sources
+
+struct Light {
+    vec3 position;
+    vec3 color;
+};
+
+uniform Light lightSources[10];
+
+uniform vec3 materialAmbient;    // Ambient reflectivity (r_a)
+uniform vec3 materialDiffuse;    // Diffuse reflectivity (r_d)
+uniform vec3 materialSpecular;   // Specular reflectivity (r_s)
+uniform float materialShininess; // Shininess factor (s)
+
+const vec3 SpecularlightColor = vec3(0.7, 0.7, 0.7);
+const vec3 DifuselightColor = vec3(0.5, 0.2, 0.2);
+const vec3 AmbientlightColor = vec3(0.1, 0.1, 0.1);
+
 layout(location = 0) out vec4 frag_colour;
+
 void main() {
-    const vec3 lightColor = vec3(0.0, 0.0, 1.0);
-    float specularStrength = 0.5;
+    vec3 result = vec3(0.0);
     vec3 normal = normalize(fragNormal);
-
-    vec3 lightDir = normalize(lightPos - FragPos);
-    
-    float diff = max(dot(normal, lightDir), 0.0);
-    vec3 diffuse = diff * lightColor;
-
-
     vec3 viewDir = normalize(cameraPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, normal);
 
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec3 specular = specularStrength * spec * lightColor;  
 
-    vec3 ambient = 0.1 * lightColor;
-    vec3 result = (ambient + diffuse + specular) * fragColor; 
-    //difuse vynasobit s materialom
-    //specular vynasobit s materialom
-    //a nasledne spocitat
+    for(int i=0; i< numLights;i++){
+        vec3 lightPos = lightSources[i].position;
+        vec3 lightColor = lightSources[i].color;
 
-    frag_colour = vec4(result, 1.0);
+        //ambient component
+        vec3 ambient = materialAmbient * AmbientlightColor;
+
+        //diffuse component
+        vec3 lightDir = normalize(lightPos - FragPos);
+        float diff = max(dot(normal, lightDir), 0.0);
+        vec3 diffuse = diff * DifuselightColor * materialDiffuse;
+
+        //specular component
+        vec3 reflectDir = reflect(-lightDir, normal);
+    
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), materialShininess);
+        vec3 specular = materialSpecular * spec * SpecularlightColor;  
+
+        //combine components
+        result += ambient + diffuse + specular;
+    }
+
+    result *= fragColor;
+    frag_colour = vec4(result, 1.0);  
 };
