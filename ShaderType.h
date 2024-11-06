@@ -8,7 +8,8 @@ enum class ShaderType {
     Phong,
     Blinn,
     Test,
-    Light
+    Light,
+    Develop
 };
 
 struct ShaderInfo {
@@ -22,5 +23,6 @@ const std::unordered_map<ShaderType, ShaderInfo> ShaderMappings = {
     { ShaderType::Phong, { "vert_phong.shader", "frag_phong.shader" } },
     { ShaderType::Blinn, { "vert_blinn.shader", "frag_blinn.shader" } },
     { ShaderType::Test, { "VertLight.shader", "FragLight.shader" } },
-    { ShaderType::Light, { "Vert_light.shader", "Frag_light.shader" } }
+    { ShaderType::Light, { "Vert_light.shader", "Frag_light.shader" } },
+    { ShaderType::Develop, { "vert_develop.shader", "frag_develop.shader" } }
 };
