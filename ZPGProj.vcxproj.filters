@@ -248,7 +248,6 @@
     <ClInclude Include="CameraMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="frag_phong_static.shader" />
     <ClInclude Include="MaterialProperties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -257,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="LightData.h">
       <Filter>Header Files\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="frag_phong_static.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,11 +307,13 @@
     <None Include="frag_light.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
-    <None Include="vert_phong_Static.shader" />
     <None Include="frag_develop.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
     <None Include="vert_develop.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="vert_phong_Static.shader">
       <Filter>Resource Files\shaders\vertexShaders</Filter>
     </None>
   </ItemGroup>

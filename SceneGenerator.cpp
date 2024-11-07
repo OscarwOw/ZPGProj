@@ -34,20 +34,32 @@ Scene* SceneGenerator::generateTestTreeScene()
 {
     Scene* scene = new Scene();
     TransformationData transformationData;
-    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::CUBE, glm::vec3(0.8f, 0.4f, 0.0f));
+    transformationData.TranslationX = -1.0f;
+    MaterialProperties materialProperties(glm::vec3(0.08f), glm::vec3(0.2f), glm::vec3(1.0f));
+    
+    DrawableObject* tree = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, glm::vec3(0.8f, 0.4f, 0.0f), materialProperties);
     scene->addObject(tree);
 
-    transformationData.TranslationX = -2.0f;
-    transformationData.TranslationY = 2.0f;
+
+
+    transformationData.TranslationX = 1.0f;
+    transformationData.TranslationY = 0.0f;
     transformationData.TranslationZ = 0.0f;
+    MaterialProperties materialProperties2(glm::vec3(0.2f), glm::vec3(0.5f), glm::vec3(0.3f));
+    DrawableObject* tree1 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, glm::vec3(0.8f, 0.4f, 0.0f), materialProperties2);
+    scene->addObject(tree1);
+
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationY = 2.0f;
+    transformationData.TranslationZ = 2.0f;
     transformationData.Scale = 0.1f;
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light);
     //scene->addObject(tree);
 
-    transformationData.TranslationX = 2.0f;
-    transformationData.TranslationY = 4.0f;
-    transformationData.TranslationZ = 1.0f;
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationY = 2.0f;
+    transformationData.TranslationZ = -2.0f;
     transformationData.Scale = 0.1f;
     LightSource* light2 = generateLightSource(transformationData, ShaderType::Light, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light2);
@@ -233,6 +245,10 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
 }
 
 
+
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material) {
+    return new DrawableObject(transformationData, shaderType, modelType, color, material);
+}
 
 DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color) {
     return new DrawableObject(transformationData, shaderType, modelType, color);

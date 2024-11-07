@@ -26,6 +26,8 @@ public:
     DrawableObject* generateTree();
     DrawableObject* generateTree(float scale, float rotation, float x, float z);
 
+    DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material);
+
     DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color);
 
     DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType);

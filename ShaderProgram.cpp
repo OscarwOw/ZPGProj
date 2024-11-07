@@ -126,7 +126,7 @@ void ShaderProgram::setUniformInt(const std::string& name, int value) {
 }
 
 
-void ShaderProgram::setMaterialProperties(const MaterialProperties& material) {
+void ShaderProgram::updateMaterialProperties(const MaterialProperties& material) {
     setUniformVec3("materialAmbient", material.ambientReflectivity);
     setUniformVec3("materialDiffuse", material.diffuseReflectivity);
     setUniformVec3("materialSpecular", material.specularReflectivity);
