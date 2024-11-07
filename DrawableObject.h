@@ -14,8 +14,7 @@
 
 //TODO this whole class is one big mess... should i call it mastershit?
 class DrawableObject {
-private:
-    MaterialProperties _material;
+    
 
 protected:
     VertexBuffer* _vertexBuffer;
@@ -27,9 +26,8 @@ protected:
     std::string _shaderProgramManagerString;
 
     glm::vec3 _color = glm::vec3(0.01, 0.19, 0.12);
-    MaterialProperties _materialProperties;
 
-    
+    MaterialProperties _materialProperties;
 
     //added for testing
     glm::mat4 _transformationMatrix;

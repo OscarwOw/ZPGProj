@@ -38,7 +38,7 @@ public:
 
     void setUniformInt(const std::string& name, int value);
 
-    void setMaterialProperties(const MaterialProperties& material);
+    void updateMaterialProperties(const MaterialProperties& material);
 
 
 #pragma region ICameraObserver overrides

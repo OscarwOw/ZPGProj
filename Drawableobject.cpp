@@ -138,6 +138,11 @@ glm::vec3 DrawableObject::getPosition()
     return glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
 }
 
+MaterialProperties DrawableObject::getMaterialProperties() const
+{
+    return _materialProperties;
+}
+
 
 
 void DrawableObject::translate(float x, float y, float z) {
@@ -204,7 +209,7 @@ void DrawableObject::updateTransformation() {
         _shaderProgram->setUniformVec3("lightPosition", lightPosition);
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
         _shaderProgram->setUniformVec3("objectColor", _color);
-        _shaderProgram->setMaterialProperties(_material);
+        _shaderProgram->updateMaterialProperties(_materialProperties);
         _shaderProgram->updateLightSources();
 
     }
