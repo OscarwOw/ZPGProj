@@ -29,6 +29,16 @@ Scene* SceneGenerator::generateDefaultScene() {
 
 
 
+
+    transformationData.TranslationZ = -22.0f;
+    DrawableObject* triangle3 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, glm::vec3(0.8f, 0.4f, 0.0f));
+    triangle2->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
+    triangle2->transformation.setDynamicAngle(60);
+
+    scene->addObject(triangle3);
+
+
+
     transformationData.TranslationX = -2.0f;
     transformationData.TranslationY = 2.0f;
     transformationData.TranslationZ = 0.0f;
@@ -49,9 +59,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     transformationData.Scale = 0.1f;
     LightSource* light3 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light3);
-    
-
-    scene->setBehavioralManager(new BehaviorManager());
+   
 
     AnimationObject* animationObject = new AnimationObject(2, 0.5, triangle, 4, 5, 5, -2, -3, -4);
     AnimationObject* animationObject2 = new AnimationObject(2, 0.5, triangle2, 4, 5, 5, -2, -3, -4);
@@ -96,7 +104,7 @@ Scene* SceneGenerator::generateTestTreeScene()
     LightSource* light2 = generateLightSource(transformationData, ShaderType::Light, ModelType::CUBE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light2);
 
-
+    
     return scene;
 }
 
