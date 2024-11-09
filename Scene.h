@@ -2,12 +2,14 @@
 #include "DrawableObject.h"
 #include "LightSource.h"
 #include "LightPublisher.h"
+#include "BehaviorManager.h"
 
 class Scene {
 private:
     std::vector<DrawableObject*> objects;
     std::vector<LightSource*> _lightSources;
     LightPublisher _lightPublisher;
+    BehaviorManager* _behavioralManager;
     //LightSource* _lightSource;
     bool _hasLightSource = false;
     void publishLights();
@@ -22,4 +24,7 @@ public:
     bool hasLightSource();
     void circusTransform();
     std::vector<DrawableObject*> getObjects();
+
+    BehaviorManager* getBehavioralManager();
+    void setBehavioralManager(BehaviorManager* behaviorManager);
 };

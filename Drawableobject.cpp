@@ -7,7 +7,7 @@
 
 
 
-DrawableObject::DrawableObject() : _vertexBuffer(nullptr), _indexBuffer(nullptr), _isTransformationDirty(false) {
+DrawableObject::DrawableObject() : _vertexBuffer(nullptr), _indexBuffer(nullptr) {
     _transformationMatrix = glm::mat4(1.0f);
     _translationMatrix = glm::mat4(1.0f);
     _rotationMatrix = glm::mat4(1.0f);
@@ -48,10 +48,10 @@ DrawableObject::DrawableObject(
     }
 
     // Apply transformations
-    scale(transformationData.Scale);
-    rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
     translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
-    updateTransformation();
+    rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
+    scale(transformationData.Scale);
+    updateDrawData();
 }
 
 DrawableObject::~DrawableObject() {
@@ -89,7 +89,8 @@ unsigned int* DrawableObject::generateIndices(int vertexCount) {
 
 void DrawableObject::Draw() {
     if (_shaderProgram) {
-        updateTransformation();
+        updateTransformation(16); //get actual chrono
+        updateDrawData();
         _shaderProgram->use();
     }
     
@@ -146,7 +147,12 @@ MaterialProperties DrawableObject::getMaterialProperties() const
 
 
 void DrawableObject::translate(float x, float y, float z) {
+    transformation.translate(glm::vec3(x, y, z));
+
+
+    //_transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(x, y, z)));
     _translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
+    
 
     
     transformationData.TranslationX = x;
@@ -154,14 +160,16 @@ void DrawableObject::translate(float x, float y, float z) {
     transformationData.TranslationZ = z;
 
 
-    _isTranslateTransformationDirty = true;
-    _isTransformationDirty = true;
+    //_isTranslateTransformationDirty = true;
+    //_isTransformationDirty = true;
 }
 
 void DrawableObject::rotate(float angle, float x, float y, float z) {
     if (x == 0.0f && y == 0.0f && z == 0.0f) {
         y = 1.0f;
     }
+    //_transformationComposite.addTransformation(new TransformationRotate(angle, glm::vec3(x, y, z)));
+    transformation.rotate(angle, glm::vec3(x, y, z));
     
     _rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x, y, z));
 
@@ -170,23 +178,35 @@ void DrawableObject::rotate(float angle, float x, float y, float z) {
     transformationData.RotationY = y;
     transformationData.RotationZ = z;
 
-    _isRotationTransformationDirty = true;
-    _isTransformationDirty = true;
+    //_isRotationTransformationDirty = true;
+    //_isTransformationDirty = true;
 }
 
 void DrawableObject::scale(float scaleFactor) {    
+    //_transformationComposite.addTransformation(new TransformationScale{glm::vec3(scaleFactor)});
+    transformation.scale(scaleFactor);
+
     _scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+    
 
     transformationData.Scale = scaleFactor;
 
-    _isScaleTransformationDirty = true;
-    _isTransformationDirty = true;
+    //_isScaleTransformationDirty = true;
+    //_isTransformationDirty = true;
 }
 
-void DrawableObject::updateTransformation() {
+
+
+
+
+
+void DrawableObject::updateDrawData() { //update draw data
     MatrixHelper& matrixHelper = MatrixHelper::getInstance();
 
-    glm::mat4 modelMatrix = _translationMatrix * _rotationMatrix * _scaleMatrix;
+    glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
+    glm::mat4 modelMatrix = transformation.getModelMatrix();
+
+
 
     glm::mat4 viewMatrix = glm::mat4(1.0);
     glm::mat4 perspectiveMatrix = glm::mat4(1.0);
@@ -214,5 +234,15 @@ void DrawableObject::updateTransformation() {
 
     }
 }
+
+void DrawableObject::updateTransformation(float deltaTime)
+{
+    transformation.updateTransformations(deltaTime);
+    glm::vec3 TranslationVector = transformation.getTranslation();
+    transformationData.TranslationX = TranslationVector.x;
+    transformationData.TranslationY = TranslationVector.y;
+    transformationData.TranslationZ = TranslationVector.z;
+}
+
 
 
