@@ -14,6 +14,9 @@ private:
     bool _hasLightSource = false;
     void publishLights();
 public:
+    Scene() {
+        setBehavioralManager(new BehaviorManager());
+    }
     void addObject(DrawableObject* object);
     void addLightObserver(ILightObserver* observer);
     

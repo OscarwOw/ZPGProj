@@ -36,6 +36,9 @@ void main() {
         vec3 lightPos = lightSources[i].position;
         vec3 lightColor = lightSources[i].color;
 
+        float distance = length(lightPos - FragPos);
+        float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));
+
         //ambient component
         vec3 ambient = materialAmbient * AmbientlightColor;
 
@@ -49,6 +52,11 @@ void main() {
     
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), materialShininess);
         vec3 specular = materialSpecular * spec * SpecularlightColor;  
+
+        ambient *= attenuation;
+        diffuse *= attenuation;
+        specular *= attenuation;
+
 
         //combine components
         result += ambient + diffuse + specular;

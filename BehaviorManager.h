@@ -10,6 +10,9 @@ public:
     }
 
     void update() {
+        if (_objects.empty()) {
+            return;  // Exit early if there are no objects to update
+        }
         for (AnimationObject* object : _objects) {
             if (object) {
                 object->check();
