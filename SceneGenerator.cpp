@@ -14,8 +14,19 @@ Scene* SceneGenerator::generateDefaultScene() {
     TransformationData transformationData;
     //transformationData.TranslationX = -2.0f;
     transformationData.TranslationZ = -2.0f;
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::TRIANGLE, glm::vec3(0.8f, 0.4f, 0.0f));
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, glm::vec3(0.8f, 0.4f, 0.0f));
+    triangle->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
+    triangle->transformation.setDynamicAngle(60);
+
     scene->addObject(triangle);
+
+    transformationData.TranslationZ = -2.0f;
+    DrawableObject* triangle2 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, glm::vec3(0.8f, 0.4f, 0.0f));
+    triangle2->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
+    triangle2->transformation.setDynamicAngle(60);
+
+    scene->addObject(triangle2);
+
 
 
     transformationData.TranslationX = -2.0f;
@@ -24,7 +35,28 @@ Scene* SceneGenerator::generateDefaultScene() {
     transformationData.Scale = 0.1f;
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     scene->addLightSource(light);
+
+    transformationData.TranslationX = -4.0f;
+    transformationData.TranslationY = 2.0f;
+    transformationData.TranslationZ = -6.0f;
+    transformationData.Scale = 0.1f;
+    LightSource* light2 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    scene->addLightSource(light2);
+
+    transformationData.TranslationX = 5.0f;
+    transformationData.TranslationY = 4.0f;
+    transformationData.TranslationZ = 0.0f;
+    transformationData.Scale = 0.1f;
+    LightSource* light3 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    scene->addLightSource(light3);
     
+
+    scene->setBehavioralManager(new BehaviorManager());
+
+    AnimationObject* animationObject = new AnimationObject(2, 0.5, triangle, 4, 5, 5, -2, -3, -4);
+    AnimationObject* animationObject2 = new AnimationObject(2, 0.5, triangle2, 4, 5, 5, -2, -3, -4);
+    scene->getBehavioralManager()->addObject(animationObject);
+    scene->getBehavioralManager()->addObject(animationObject2);
     //scene->addLightSource(light);
 
     return scene;
@@ -106,6 +138,12 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
         treeTransformationData.RotationAngle = 0.0f; 
 
         DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Phong, ModelType::TREE);
+
+        float randomChance = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+        if (randomChance <= 0.2f) {
+            tree->transformation.setDynamicAngle(60);
+            tree->transformation.setDynamicAxis(glm::vec3(0.0f, 1.0f, 0.0f));
+        }
 
         forestScene->addObject(tree);
 
@@ -235,11 +273,11 @@ DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float 
 
 
     //TODO transformation order
-    treeObject->scale(scale);
-    treeObject->rotate(rotation, 0.0f, 1.0f, 0.0f);
     treeObject->translate(x, 0.0f, z);
+    treeObject->rotate(rotation, 0.0f, 1.0f, 0.0f);
+    treeObject->scale(scale);
 
-    treeObject->updateTransformation();
+    treeObject->updateDrawData();
 
     return treeObject;
 }

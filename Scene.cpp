@@ -6,6 +6,7 @@ void Scene::addObject(DrawableObject* object) {
 }
 
 void Scene::drawScene() {
+    _behavioralManager->update();
     for (auto& object : objects) {
         object->Draw(); 
     }
@@ -71,4 +72,14 @@ void Scene::circusTransform()//deprecated
 std::vector<DrawableObject*> Scene::getObjects()
 {
     return objects;
+}
+
+BehaviorManager* Scene::getBehavioralManager()
+{
+    return _behavioralManager;
+}
+
+void Scene::setBehavioralManager(BehaviorManager* behaviorManager)
+{
+    _behavioralManager = behaviorManager;
 }

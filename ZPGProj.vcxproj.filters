@@ -72,9 +72,6 @@
     <ClCompile Include="Transformation.cpp">
       <Filter>Source Files\Transformations</Filter>
     </ClCompile>
-    <ClCompile Include="TransformationComposite.cpp">
-      <Filter>Source Files\Transformations</Filter>
-    </ClCompile>
     <ClCompile Include="transformationRotate.cpp">
       <Filter>Source Files\Transformations</Filter>
     </ClCompile>
@@ -167,9 +164,6 @@
     <ClInclude Include="Transformation.h">
       <Filter>Header Files\Transformations</Filter>
     </ClInclude>
-    <ClInclude Include="TransformationComposite.h">
-      <Filter>Header Files\Transformations</Filter>
-    </ClInclude>
     <ClInclude Include="TransformationScale.h">
       <Filter>Header Files\Transformations</Filter>
     </ClInclude>
@@ -259,6 +253,24 @@
     </ClInclude>
     <ClInclude Include="frag_phong_static.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationComponent.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationDynamicRotate.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationDynamicTranslate.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviorManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomMovementCube.h">
+      <Filter>Header Files\Structures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

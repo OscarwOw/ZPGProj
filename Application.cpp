@@ -34,7 +34,7 @@ void tick(GLFWwindow* window, SceneManager& sceneManager) {
     Scene* currentScene = sceneManager.getCurrentScene();
     if (currentScene) {
         // Example of scene-specific transformation
-        currentScene->circusTransform();
+        //currentScene->circusTransform();
         currentScene->drawScene();
     }
     glfwSwapBuffers(window);
@@ -78,6 +78,7 @@ int Application::startApplication()
 
     auto lastTickTime = std::chrono::steady_clock::now();
     const std::chrono::milliseconds tickInterval(16);
+   /* const std::chrono::milliseconds tickInterval(100);*/
     auto movementCallbackTime = std::chrono::steady_clock::now();
 
 

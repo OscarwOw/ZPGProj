@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "TransformationComposite.h"
 #include "ShaderProgram.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -10,11 +9,15 @@
 #include "MaterialProperties.h"
 #include "ShaderType.h"
 #include "ModelType.h"
+#include "Transformation.h"
 
 
 //TODO this whole class is one big mess... should i call it mastershit?
 class DrawableObject {
-    
+//TODO Transformation approach completly skip the composite patern and change it so that Transformation class is property of drawableObject
+// so that we access it throught drawableObject.TransformationScale we gona have 3
+// and we inherit 3 classes into Transformation.
+// and then we have   
 
 protected:
     VertexBuffer* _vertexBuffer;
@@ -29,19 +32,8 @@ protected:
 
     MaterialProperties _materialProperties;
 
-    //added for testing
     glm::mat4 _transformationMatrix;
-    bool _isRotationTransformationDirty;
-    bool _isScaleTransformationDirty;
-    bool _isTranslateTransformationDirty;
-    bool _isTransformationDirty;
-                                  //if you change one all of them reset to default need to be addressed
-                                 //idea is to have matrix and values of rotation, scale and translation. and when one is changed the other 2 will be used to calculate new matrix. 
-                                 //proly other 2 flags need to be prepared dirtytranslate dirtyscale dirtyrotate
-    
-    Transformation* _curentTranslation;
-    Transformation* _curentScale;
-    Transformation* _curentRotation;
+
 
     glm::mat4 _translationMatrix;
     glm::mat4 _scaleMatrix;
@@ -64,7 +56,7 @@ public:
         MaterialProperties materialProperties = MaterialProperties()
     );
     ~DrawableObject();
-    TransformationComposite transformationComposite;
+    Transformation transformation;
 
     void loadFromRawData(const float* rawData, int vertexCount, int stride);
 
@@ -87,6 +79,8 @@ public:
     void translate(float x, float y, float z);
     void rotate(float angle, float x, float y, float z);
     void scale(float scale);
-    void updateTransformation();
+    void updateDrawData();
+
+    void updateTransformation(float deltaTime);
     //void printMatrix(const glm::mat4& matrix);
 };

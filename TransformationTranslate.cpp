@@ -1,11 +1,22 @@
 #include "TransformationTranslate.h"
 
-TransformationTranslate::TransformationTranslate(glm::vec3 translate)
-{
-	matrix = glm::translate(glm::mat4(1.0f), translate);
+void TransformationTranslate::translate(const glm::vec3& translationVector) {
+    _translation = translationVector;
+    _translationMatrix = glm::translate(glm::mat4(1.0f), _translation);
+    markDirty();
 }
 
-glm::mat4 TransformationTranslate::resultMatrix()
+void TransformationTranslate::translate(glm::mat4 matrix, const glm::vec3& translationVector)
 {
-	return matrix;
+    _translation += translationVector;
+    _translationMatrix = glm::translate(matrix, translationVector);
+    markDirty();
+}
+
+const glm::vec3& TransformationTranslate::getTranslation() const {
+    return _translation;
+}
+
+const glm::mat4& TransformationTranslate::getTranslationMatrix() const {
+    return _translationMatrix;
 }

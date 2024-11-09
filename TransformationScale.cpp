@@ -1,11 +1,15 @@
 #include "TransformationScale.h"
 
-TransformationScale::TransformationScale(glm::vec3 scale)
-{
-	matrix = glm::scale(glm::mat4(1.0f), scale);
+void TransformationScale::scale(float factor) {
+    _scaleFactor = factor;
+    _scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(_scaleFactor));
+    markDirty();
 }
 
-glm::mat4 TransformationScale::resultMatrix()
-{
-	return matrix;
+float TransformationScale::getScaleFactor() const {
+    return _scaleFactor;
+}
+
+const glm::mat4& TransformationScale::getScaleMatrix() const {
+    return _scaleMatrix;
 }
