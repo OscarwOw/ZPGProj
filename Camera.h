@@ -36,6 +36,8 @@ public:
     void processMouseScroll(float yoffset);
     void attachObserver(ICameraObserver* observer);
     void detachObserver(ICameraObserver* observer);
+    void setWindowSize(int width, int height);
+
 
 private:
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
@@ -62,6 +64,9 @@ private:
     float movementSpeed;
     float mouseSensitivity;
     float zoom;
+
+    int _windowHeight;
+    int _windowWidth;
 
     // List of observers
     std::vector<ICameraObserver*> observers;

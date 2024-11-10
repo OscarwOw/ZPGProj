@@ -29,8 +29,7 @@ glm::mat4 Camera::getViewMatrix() const {
     return glm::lookAt(position, position + front, up);
 }
 glm::mat4 Camera::getPerspectiveMatrix() const {
-    //TODO do not hardcode
-    return glm::perspective(glm::radians(45.0f), (float)(1500 / 1200), 0.1f, 100.0f);
+    return glm::perspective(glm::radians(45.0f), (float)(_windowWidth / _windowHeight), 0.1f, 100.0f);
 }
 
 void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
@@ -104,3 +103,15 @@ void Camera::attachObserver(ICameraObserver* observer) {
 void Camera::detachObserver(ICameraObserver* observer) {
     observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
 }
+
+void Camera::setWindowSize(int width, int height)
+{
+    _windowWidth = width;
+    _windowHeight = height;
+    notifyObservers();
+}
+//
+//void Camera::getWindowSize(int width, int height)
+//{
+//
+//}
