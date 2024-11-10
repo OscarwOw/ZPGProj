@@ -114,15 +114,21 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
 
     TransformationData groundTransformationData;
-    groundTransformationData.Scale = 3;
+    groundTransformationData.Scale = 55;
     groundTransformationData.RotationAngle = 90;
-    groundTransformationData.RotationX = 1.0f;
-    groundTransformationData.RotationY = 0.0f;
+    groundTransformationData.RotationX = 0.0f;
+    groundTransformationData.RotationY = 1.0f;
     groundTransformationData.TranslationX = 0.0f;
     groundTransformationData.TranslationY = 0.0f;
     groundTransformationData.TranslationZ = 0.0f;
 
-    DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::PLAIN);
+    MaterialProperties materialpropertiesforground;
+    materialpropertiesforground.ambientReflectivity = glm::vec3(0.2f);
+    materialpropertiesforground.diffuseReflectivity = glm::vec3(0.15f);
+    materialpropertiesforground.specularReflectivity = glm::vec3(0.002f);
+    materialpropertiesforground.shininess = 1;
+
+    DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::PLAIN, glm::vec3(0.3f,0.8f,0.01f), materialpropertiesforground);
 
     forestScene->addObject(ground);
 
