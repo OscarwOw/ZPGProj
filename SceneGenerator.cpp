@@ -111,6 +111,22 @@ Scene* SceneGenerator::generateTestTreeScene()
 Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float minDistance) {
     Scene* forestScene = new Scene();
 
+
+    //TODO ground yet some random bugs propably memory issue
+    //TransformationData groundTransformationData;
+    //groundTransformationData.Scale = 3;
+    //groundTransformationData.RotationAngle = 90;
+    //groundTransformationData.RotationX = 1.0f;
+    //groundTransformationData.RotationY = 0.0f;
+    //groundTransformationData.TranslationX = 0.0f;
+    //groundTransformationData.TranslationY = 0.0f;
+    //groundTransformationData.TranslationZ = 0.0f;
+
+    //DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::SQUARE);
+
+    //forestScene->addObject(ground);
+
+
     std::vector<glm::vec3> treePositions;
 
     for (int i = 0; i < numTrees; ++i) {
@@ -145,7 +161,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
         treeTransformationData.Scale = 1.0f;
         treeTransformationData.RotationAngle = 0.0f; 
 
-        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Phong, ModelType::TREE);
+        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE);
 
         float randomChance = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
         if (randomChance <= 0.2f) {
@@ -175,13 +191,49 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
         }
     }
     TransformationData transformationData;
-    transformationData.TranslationX = 0.0f;
-    transformationData.TranslationY = 0.0f;
-    transformationData.TranslationZ = -8.0f;
+    transformationData.TranslationX = 20.0f;
+    transformationData.TranslationY = 4.0f;
+    transformationData.TranslationZ = 3.0f;
     transformationData.Scale = 0.1f;
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
     forestScene->addLightSource(light);
-    forestScene->addObject(light);
+    transformationData.TranslationX = 10.0f;
+    transformationData.TranslationZ = 15.0f;
+
+    LightSource* light2 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    forestScene->addLightSource(light2);
+
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationZ = -15.0f;
+
+    LightSource* light3 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    forestScene->addLightSource(light3);
+
+
+    transformationData.TranslationX = -20.0f;
+    transformationData.TranslationZ = 15.0f;
+    LightSource* light4 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    forestScene->addLightSource(light4);
+
+    transformationData.TranslationX = 0.0f;
+    transformationData.TranslationY = 0.0f;
+    transformationData.TranslationZ = 3.0f;
+
+    LightSource* light5 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    forestScene->addLightSource(light5);
+
+
+    AnimationObject* animationObject = new AnimationObject(2, 0.5, light, 4, 30, 15, 0, 0, 0);
+    AnimationObject* animationObject2 = new AnimationObject(2, 0.5, light2, 4, 20, 25, 0, -10, 5);
+    AnimationObject* animationObject3 = new AnimationObject(2, 0.5, light3, 4, 10, 5, 0, -15, -30);
+    AnimationObject* animationObject4 = new AnimationObject(2, 0.5, light4, 4, 5, 25, 0, -30, 0);
+    AnimationObject* animationObject5 = new AnimationObject(2, 0.5, light5, 4, 15, 15, 0, -15, -15);
+    forestScene->getBehavioralManager()->addObject(animationObject);
+    forestScene->getBehavioralManager()->addObject(animationObject2);
+    forestScene->getBehavioralManager()->addObject(animationObject3);
+    forestScene->getBehavioralManager()->addObject(animationObject4);
+    forestScene->getBehavioralManager()->addObject(animationObject5);
+
     return forestScene;
 }
 

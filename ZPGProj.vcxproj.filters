@@ -272,6 +272,9 @@
     <ClInclude Include="RandomMovementCube.h">
       <Filter>Header Files\Structures</Filter>
     </ClInclude>
+    <ClInclude Include="square.h">
+      <Filter>Resource Files\models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorShader.shader">

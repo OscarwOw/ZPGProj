@@ -7,6 +7,7 @@
 #include "gift.h"
 #include "plain.h"
 #include "sphere.h"
+#include "square.h"
 #include "cube.h"
 #include "triangle.h"
 #include "ModelMapping.h"
@@ -24,7 +25,8 @@ static const std::map<ModelType, ModelData> ModelMappings = {
     { ModelType::SUZI_FLAT, { suziFlat, 1704 } },
     { ModelType::GIFT, { gift, 36336 } },
     { ModelType::PLAIN, { plain, 36 } },
-    { ModelType::SPHERE, { sphere, 17280 } },
+    { ModelType::SPHERE, { sphere, 2880 } },
     { ModelType::CUBE, { cube, 216 } },
-    { ModelType::TRIANGLE, { triangle, 18 } }
+    { ModelType::TRIANGLE, { triangle, 18 } },
+    { ModelType::SQUARE, { square, 18 } }, // added line
 };
