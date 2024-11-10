@@ -7,6 +7,7 @@ void Scene::addObject(DrawableObject* object) {
 
 void Scene::drawScene() {
     _behavioralManager->update();
+    publishLights();
     for (auto& object : objects) {
         object->Draw(); 
     }
