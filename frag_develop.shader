@@ -37,7 +37,7 @@ void main() {
         vec3 lightColor = lightSources[i].color;
 
         float distance = length(lightPos - FragPos);
-        float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.032 * (distance * distance));
+        float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.018 * (distance * distance));
 
         //ambient component
         vec3 ambient = materialAmbient * AmbientlightColor;
