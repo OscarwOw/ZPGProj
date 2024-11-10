@@ -187,7 +187,6 @@ void ShaderProgram::updateLightSources() {
     }
 }
 
-
 #pragma endregion
 
 
