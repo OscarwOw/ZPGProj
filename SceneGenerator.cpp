@@ -112,19 +112,19 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     Scene* forestScene = new Scene();
 
 
-    //TODO ground yet some random bugs propably memory issue
-    //TransformationData groundTransformationData;
-    //groundTransformationData.Scale = 3;
-    //groundTransformationData.RotationAngle = 90;
-    //groundTransformationData.RotationX = 1.0f;
-    //groundTransformationData.RotationY = 0.0f;
-    //groundTransformationData.TranslationX = 0.0f;
-    //groundTransformationData.TranslationY = 0.0f;
-    //groundTransformationData.TranslationZ = 0.0f;
 
-    //DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::SQUARE);
+    TransformationData groundTransformationData;
+    groundTransformationData.Scale = 3;
+    groundTransformationData.RotationAngle = 90;
+    groundTransformationData.RotationX = 1.0f;
+    groundTransformationData.RotationY = 0.0f;
+    groundTransformationData.TranslationX = 0.0f;
+    groundTransformationData.TranslationY = 0.0f;
+    groundTransformationData.TranslationZ = 0.0f;
 
-    //forestScene->addObject(ground);
+    DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::PLAIN);
+
+    forestScene->addObject(ground);
 
 
     std::vector<glm::vec3> treePositions;
