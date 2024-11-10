@@ -16,6 +16,8 @@ static void window_iconify_callback(GLFWwindow* window, int iconified) { printf(
 
 static void window_size_callback(GLFWwindow* window, int width, int height) {
     printf("resize %d, %d \n", width, height);
+
+    Camera::getInstance().setWindowSize(width, height);
     glViewport(0, 0, width, height);
 }
 
@@ -46,10 +48,18 @@ int Application::startApplication()
 {
     glfwSetErrorCallback(error_callback);
 
-    _startupManager.initializeProgram(&_window, 1500, 1200, "My OpenGL Window");
+
+    int width = 1500;
+    int height = 1200;
+
+    _startupManager.initializeProgram(&_window, width, height, "My OpenGL Window");
+
+    Camera::getInstance().setWindowSize(width, height);
 
     _inputManager.initializeEvents();
 
+
+    glfwSetWindowSizeCallback(_window, window_size_callback);
 
     /*Scene* forestScene = new Scene();
     sceneGenerator.generateForest(forestScene, 50, 25, &_camera);

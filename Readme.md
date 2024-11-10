@@ -23,3 +23,8 @@ I= Ia * rc
 
 Transformation CatMatrix
 
+
+
+TODO
+uniform can be set only once and and shader remember it until it is changed
+

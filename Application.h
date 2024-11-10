@@ -39,3 +39,5 @@ private:
     Camera& _camera = Camera::getInstance();
     InputManager& _inputManager = InputManager::getInstance();
 };
+
+
