@@ -34,19 +34,38 @@ glm::mat4 Camera::getPerspectiveMatrix() const {
 
 void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
     float velocity = movementSpeed * deltaTime;
-    if (direction == CameraMovement::FORWARD)
-        position += front * velocity;
-    if (direction == CameraMovement::BACKWARD)
-        position -= front * velocity;
-    if (direction == CameraMovement::LEFT)
-        position -= right * velocity;
-    if (direction == CameraMovement::RIGHT)
-        position += right * velocity;
-    if (direction == CameraMovement::UP)
-        position += worldUp * velocity;
-    if (direction == CameraMovement::DOWN)
-        position -= worldUp * velocity;
+    if (false) { //real world movement
+        if (direction == CameraMovement::FORWARD)
+            position += glm::vec3(0.0f, 0.0f, 0.0f);
+        if (direction == CameraMovement::BACKWARD)
+            position -= 0.25 * velocity;
+        if (direction == CameraMovement::LEFT)
+            position[1] -= 0.25 * velocity;
+        if (direction == CameraMovement::RIGHT)
+            position[1] += 0.25 * velocity;
+        if (direction == CameraMovement::UP)
+            position[2] += 0.25 * velocity;
+        if (direction == CameraMovement::DOWN)
+            position[2] -= 0.25 * velocity;
+    }
+    else {
+        if (direction == CameraMovement::FORWARD)
+            position += front * velocity;
+        if (direction == CameraMovement::BACKWARD)
+            position -= front * velocity;
+        if (direction == CameraMovement::LEFT)
+            position -= right * velocity;
+        if (direction == CameraMovement::RIGHT)
+            position += right * velocity;
+        if (direction == CameraMovement::UP)
+            position += worldUp * velocity;
+        if (direction == CameraMovement::DOWN)
+            position -= worldUp * velocity;
+    }
+    
 
+
+    //TODO update camera vectors here
     notifyObservers();
 }
 

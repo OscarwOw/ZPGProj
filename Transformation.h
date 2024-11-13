@@ -13,7 +13,7 @@ private:
     bool _isTransformationDirty = true;
 
     void updateModelMatrix() {
-        _modelMatrix = getTranslationMatrix() * getRotationMatrix() * getScaleMatrix();
+        _modelMatrix = getTranslationMatrix() * getRotationMatrix() * getScaleMatrix(); //TODO to vector with first part for default positions
         _isTransformationDirty = false; 
     }
 
