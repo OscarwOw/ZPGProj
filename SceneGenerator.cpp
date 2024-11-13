@@ -124,7 +124,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
     MaterialProperties materialpropertiesforground;
     materialpropertiesforground.ambientReflectivity = glm::vec3(0.2f);
-    materialpropertiesforground.diffuseReflectivity = glm::vec3(0.15f);
+    materialpropertiesforground.diffuseReflectivity = glm::vec3(0.55f);
     materialpropertiesforground.specularReflectivity = glm::vec3(0.002f);
     materialpropertiesforground.shininess = 1;
 
@@ -177,10 +177,12 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
         forestScene->addObject(tree);
 
-        int numBushes = rand() % 3;
+        int numBushes = 5 + (rand() % 15);
+        float calcdistance = minDistance * 10;
+
         for (int j = 0; j < numBushes; ++j) {
-            float bushOffsetX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / minDistance) - (minDistance / 2);
-            float bushOffsetZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / minDistance) - (minDistance / 2);
+            float bushOffsetX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / calcdistance) - (calcdistance / 2);
+            float bushOffsetZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / calcdistance) - (calcdistance / 2);
 
             glm::vec3 bushPosition = position + glm::vec3(bushOffsetX, 0.0f, bushOffsetZ);
 

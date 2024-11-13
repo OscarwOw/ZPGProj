@@ -28,3 +28,26 @@ Transformation CatMatrix
 TODO
 uniform can be set only once and and shader remember it until it is changed
 
+TODO
+
+alpha = cos()//niaky vzorec
+
+if(uhek < uhelsvetla){
+	intensity+=intens;
+}
+
+
+
+
+
+Transofrmace
+..R2*T2*T1*A
+
+Transformace contains bacisTransformation extends (rotation, translation, scale)
+
+Drawable Object extends model contains -VAO
+
+bezier
+
+
+normalizacia zmeni velkost vektoru na 1
