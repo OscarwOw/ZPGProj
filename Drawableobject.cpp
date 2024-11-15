@@ -136,7 +136,9 @@ TransformationData DrawableObject::GetCurrentTransformationData() {
 
 glm::vec3 DrawableObject::getPosition()
 {
-    return glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
+    glm::mat4 matrix = transformationComposite.getMatrix();
+    return glm::vec3(matrix[3][0], matrix[3][1], matrix[3][2]);
+    //return glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
 }
 
 MaterialProperties DrawableObject::getMaterialProperties() const
@@ -206,7 +208,7 @@ void DrawableObject::updateDrawData() { //update draw data
     glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
     glm::mat4 modelMatrix = transformation.getModelMatrix();
 
-
+    glm::mat4 modelMatrixNew = transformationComposite.getMatrix();
 
     glm::mat4 viewMatrix = glm::mat4(1.0);
     glm::mat4 perspectiveMatrix = glm::mat4(1.0);
@@ -219,7 +221,7 @@ void DrawableObject::updateDrawData() { //update draw data
 
     if (_shaderProgram) {
         _shaderProgram->use();
-        _shaderProgram->setUniformMat4("modelMatrix", modelMatrix);
+        _shaderProgram->setUniformMat4("modelMatrix", modelMatrixNew);
         viewMatrix = _shaderProgram->getViewMatrix();
 
         _shaderProgram->setUniformMat4("viewMatrix", viewMatrix);

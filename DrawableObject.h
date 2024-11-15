@@ -10,6 +10,8 @@
 #include "ShaderType.h"
 #include "ModelType.h"
 #include "Transformation.h"
+#include "NewTransformation.h"
+#include "NewTransformationComposite.h"
 
 
 //TODO this whole class is one big mess... should i call it mastershit?
@@ -57,6 +59,8 @@ public:
     );
     ~DrawableObject();
     Transformation transformation;
+
+    TransformationComposite transformationComposite;
 
     void loadFromRawData(const float* rawData, int vertexCount, int stride);
 
