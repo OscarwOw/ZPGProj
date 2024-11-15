@@ -162,6 +162,8 @@
     <ClInclude Include="CameraMovement.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="NewTransformation.h" />
+    <ClInclude Include="NewTransformationComposite.h" />
     <ClInclude Include="RandomMovementCube.h" />
     <ClInclude Include="square.h" />
     <ClInclude Include="TransformationDynamicRotate.h" />

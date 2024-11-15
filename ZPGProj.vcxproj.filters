@@ -275,6 +275,12 @@
     <ClInclude Include="square.h">
       <Filter>Resource Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="NewTransformation.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="NewTransformationComposite.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorShader.shader">
