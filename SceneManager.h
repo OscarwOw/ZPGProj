@@ -3,16 +3,21 @@
 #include <string>
 #include "Scene.h"
 #include "SceneGenerator.h"
+#include "Model.h"
+#include "ModelType.h"
 
 class SceneManager {
 private:
     std::map<std::string, Scene*> scenes;
     std::string currentSceneName;
 
+    std::map<ModelType, std::shared_ptr<Model>> modelCache;
+
     SceneManager() {}
 
     SceneManager(const SceneManager&) = delete;
     SceneManager& operator=(const SceneManager&) = delete;
+
 public:
     //SceneManager();
     static SceneManager& getInstance();
@@ -28,4 +33,7 @@ public:
     void switchToNextScene();
     std::string getNextScene();
     Scene* getCurrentScene();
+
+    std::shared_ptr<Model> getModel(ModelType modelType);
+    void loadModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex);
 };

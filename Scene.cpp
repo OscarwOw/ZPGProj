@@ -5,8 +5,8 @@ void Scene::addObject(DrawableObject* object) {
     addLightObserver(object->getSaherProgram());
 }
 
-void Scene::drawScene() {
-    _behavioralManager->update();
+void Scene::drawScene(float time) {
+    _behavioralManager->update(time);
     publishLights();
     for (auto& object : objects) {
         object->Draw(); 

@@ -27,6 +27,7 @@ public:
     // Method to load, compile and link shaders
     unsigned int attachShader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource);
     void use();
+    void use(int id);
     ShaderProgramSourceStrings parseShaders(const std::string& file);
     std::string parseShader(const std::string& file);
     GLuint getProgramID() const;

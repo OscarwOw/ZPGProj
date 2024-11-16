@@ -84,6 +84,7 @@ public:
             movementDirection.z = -movementDirection.z; 
         }
 
+        //TODO dyn trans
         _object->transformation.setDynamicTranslate(movementDirection);
     }
 
