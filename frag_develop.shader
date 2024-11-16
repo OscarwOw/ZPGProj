@@ -11,9 +11,12 @@ uniform int numLights; // Number of light sources
 struct Light {
     vec3 position;
     vec3 color;
+    vec3 direction;
+    int lightType;
+    float angle;
 };
 
-uniform Light lightSources[10];
+uniform Light lightSources[50];
 
 uniform vec3 materialAmbient;    // Ambient reflectivity (r_a)
 uniform vec3 materialDiffuse;    // Diffuse reflectivity (r_d)
@@ -26,24 +29,57 @@ const vec3 AmbientlightColor = vec3(0.1, 0.1, 0.1);
 
 layout(location = 0) out vec4 frag_colour;
 
-void main() {
-    vec3 result = vec3(0.0);
-    vec3 normal = normalize(fragNormal);
-    vec3 viewDir = normalize(cameraPos - FragPos);
 
 
-    for(int i=0; i< numLights;i++){
-        vec3 lightPos = lightSources[i].position;
-        vec3 lightColor = lightSources[i].color;
+vec3 calculatePointLight(Light light, vec3 normal, vec3 viewDir) {
+    vec3 lightPos = light.position;
+    vec3 lightColor = light.color;
+
+    float distance = length(lightPos - FragPos);
+    float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.018 * (distance * distance));
+
+    //ambient component
+    vec3 ambient = materialAmbient * AmbientlightColor;
+
+    //diffuse component
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = diff * DifuselightColor * materialDiffuse;
+
+    //specular component
+    vec3 reflectDir = reflect(-lightDir, normal);
+    
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), materialShininess);
+    vec3 specular = materialSpecular * spec * SpecularlightColor;  
+
+    ambient *= attenuation;
+    diffuse *= attenuation;
+    specular *= attenuation;
+
+
+    //combine components
+    return ambient + diffuse + specular;
+}
+
+
+vec3 calculateSpotLight(Light light, vec3 normal, vec3 viewDir) {
+    vec3 lightPos = light.position;
+    vec3 lightColor = light.color;
+
+    vec3 lightDir = normalize(lightPos - FragPos);
+
+    float alpha = dot(light.direction, -lightDir);
+    //float epsilon = cos(radians(light.angle));
+    if(alpha > light.angle){
 
         float distance = length(lightPos - FragPos);
-        float attenuation = 1.0 / (1.0 + 0.09 * distance + 0.018 * (distance * distance));
+        float attenuation = 1.0 / (1.0 + 0.04 * distance + 0.0008 * (distance * distance));
 
         //ambient component
         vec3 ambient = materialAmbient * AmbientlightColor;
 
         //diffuse component
-        vec3 lightDir = normalize(lightPos - FragPos);
+
         float diff = max(dot(normal, lightDir), 0.0);
         vec3 diffuse = diff * DifuselightColor * materialDiffuse;
 
@@ -59,9 +95,36 @@ void main() {
 
 
         //combine components
-        result += ambient + diffuse + specular;
+        return ambient + diffuse + specular;
+    }
+    return vec3(0, 0, 0);
+}
+
+
+
+void main() {
+    vec3 result = vec3(0.0);
+    vec3 normal = normalize(fragNormal);
+    vec3 viewDir = normalize(cameraPos - FragPos);
+
+
+    for(int i=0; i< numLights;i++){
+
+
+        if (lightSources[i].lightType == 1) { 
+            result += calculatePointLight(lightSources[i], normal, viewDir);
+        } 
+        else if (lightSources[i].lightType == 2) { // SPOTLIGHT
+            result += calculateSpotLight(lightSources[i], normal, viewDir);
+        } 
     }
 
     result *= fragColor;
     frag_colour = vec4(result, 1.0);  
 };
+
+
+
+
+
+

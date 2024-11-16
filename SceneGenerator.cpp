@@ -33,14 +33,14 @@ Scene* SceneGenerator::generateDefaultScene() {
     //float maxHeight, float maxWidth, float maxLength,
     //    float minHeight, float minWidth, float minLength
 
-    glm::mat4 initialMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
-    NewTransformationDynamicTranslateCube* dyntrans = new NewTransformationDynamicTranslateCube(2.0f, 2.0f, initialMatrix,
+    glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
+    NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(2.0f, 2.0f, initialMatrix3,
         15.0f, 15.0f, 15.0f, -15.0f, -15.0f, -15.0f
     );
 
-    triangle->transformationComposite.addTransformation(dyntrans);
+    triangle->transformationComposite.addTransformation(dyntrans3);
 
-    scene->getBehavioralManager()->addAnimeObject(dyntrans);
+    scene->getBehavioralManager()->addAnimeObject(dyntrans3);
 
 
     triangle->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
@@ -85,8 +85,14 @@ Scene* SceneGenerator::generateDefaultScene() {
 
     // Add new transformations to light
     NewTransformationTranslate* lightTranslate = new NewTransformationTranslate(glm::vec3(-2.0f, 2.0f, 0.0f));
+
+    glm::mat4 initialMatrix2 = glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 2.0f, 0.0f));
+    NewTransformationDynamicTranslateCube* dyntrans2 = new NewTransformationDynamicTranslateCube(2.0f, 2.0f, initialMatrix2,
+        15.0f, 15.0f, 15.0f, -15.0f, -15.0f, -15.0f
+    );
+
     NewTransformationScale* lightScale = new NewTransformationScale(glm::vec3(0.1f, 0.1f, 0.1f));
-    light->transformationComposite.addTransformation(lightTranslate);
+    light->transformationComposite.addTransformation(dyntrans2);
     light->transformationComposite.addTransformation(lightScale);
 
     scene->addLightSource(light);
@@ -99,9 +105,14 @@ Scene* SceneGenerator::generateDefaultScene() {
     LightSource* light2 = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
 
     // Add new transformations to light2
-    NewTransformationTranslate* light2Translate = new NewTransformationTranslate(glm::vec3(-4.0f, 2.0f, -6.0f));
+    //NewTransformationTranslate* light2Translate = new NewTransformationTranslate(glm::vec3(-4.0f, 2.0f, -6.0f));
+
+    glm::mat4 initialMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 2.0f, -6.0f));
+    NewTransformationDynamicTranslateCube* dyntrans = new NewTransformationDynamicTranslateCube(2.0f, 2.0f, initialMatrix,
+        15.0f, 15.0f, 15.0f, -15.0f, -15.0f, -15.0f
+    );
     NewTransformationScale* light2Scale = new NewTransformationScale(glm::vec3(0.1f, 0.1f, 0.1f));
-    light2->transformationComposite.addTransformation(light2Translate);
+    light2->transformationComposite.addTransformation(dyntrans);
     light2->transformationComposite.addTransformation(light2Scale);
 
     //scene->addLightSource(light2);
@@ -292,10 +303,17 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
 
     // Add new transformations to light
-    NewTransformationTranslate* lightTranslate = new NewTransformationTranslate(glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ));
+    glm::mat4 initialMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(15.0f, 4.0f, 3.0f));
+    NewTransformationDynamicTranslateCube* dyntrans = new NewTransformationDynamicTranslateCube(2.0f, 2.0f, initialMatrix,
+        25.0f, 15.0f, 15.0f, -15.0f, -15.0f, -15.0f
+    );
+
+    //NewTransformationTranslate* lightTranslate = new NewTransformationTranslate(glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ));
     NewTransformationScale* lightScale = new NewTransformationScale(glm::vec3(transformationData.Scale));
-    light->transformationComposite.addTransformation(lightTranslate);
+    light->transformationComposite.addTransformation(dyntrans);
     light->transformationComposite.addTransformation(lightScale);
+
+    forestScene->getBehavioralManager()->addAnimeObject(dyntrans);
 
     forestScene->addLightSource(light);
 

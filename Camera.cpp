@@ -62,10 +62,7 @@ void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
         if (direction == CameraMovement::DOWN)
             position -= worldUp * velocity;
     }
-    
 
-
-    //TODO update camera vectors here
     notifyObservers();
 }
 
@@ -128,6 +125,14 @@ void Camera::setWindowSize(int width, int height)
     _windowWidth = width;
     _windowHeight = height;
     notifyObservers();
+}
+bool Camera::getLight()
+{
+    return _lightOn;
+}
+glm::vec3 Camera::getCameraFront()
+{
+    return front;
 }
 //
 //void Camera::getWindowSize(int width, int height)
