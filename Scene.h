@@ -20,7 +20,7 @@ public:
     void addObject(DrawableObject* object);
     void addLightObserver(ILightObserver* observer);
     
-    void drawScene();
+    void drawScene(float deltatime);
     void clearScene();
     void addLightSource(LightSource* lightSource);
     std::vector<LightSource*> getLightSources();

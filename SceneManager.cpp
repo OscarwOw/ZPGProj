@@ -113,3 +113,18 @@ Scene* SceneManager::getCurrentScene() {
 	}
 	return nullptr;
 }
+
+std::shared_ptr<Model> SceneManager::getModel(ModelType modelType) {
+	auto it = modelCache.find(modelType);
+	if (it != modelCache.end()) {
+		return it->second;
+	}
+	return nullptr; 
+}
+
+void SceneManager::loadModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex) {
+	if (modelCache.find(modelType) == modelCache.end()) {
+		std::shared_ptr<Model> newModel = std::make_shared<Model>(modelType, rawData, vertexCount, floatsPerVertex);
+		modelCache[modelType] = newModel;
+	}
+}

@@ -12,6 +12,7 @@
 #include "Transformation.h"
 #include "NewTransformation.h"
 #include "NewTransformationComposite.h"
+#include "Model.h"
 
 
 //TODO this whole class is one big mess... should i call it mastershit?
@@ -26,6 +27,7 @@ protected:
     IndexBuffer* _indexBuffer;
     GLuint _VAO;
     int _vertexCount;
+    Model* _model;
     
     ShaderProgram* _shaderProgram;
     std::string _shaderProgramManagerString;

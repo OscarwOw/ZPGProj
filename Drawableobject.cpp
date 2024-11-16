@@ -4,6 +4,7 @@
 #include "TransformationRotate.h"
 #include <glm/gtc/type_ptr.hpp> 
 #include "SceneGenerator.h"
+#include "ModelManager.h"
 
 
 
@@ -36,16 +37,19 @@ DrawableObject::DrawableObject(
         setShaderProgram(_shaderProgram);
     }
 
-    auto modelIt = ModelMappings.find(modelType); // ModelType handle
-    if (modelIt != ModelMappings.end()) {
-        const ModelData& modelData = modelIt->second;
-        loadFromRawData(modelData.data, modelData.vertexCount, 6);
-    }
-    else {
-        std::cerr << "Invalid ModelType specified. Assigning default model." << std::endl;
-        const ModelData& modelData = ModelMappings.at(ModelType::PLAIN);
-        loadFromRawData(modelData.data, modelData.vertexCount, 6);
-    }
+
+    _model = ModelManager::getInstance().getModel(modelType);
+
+    //auto modelIt = ModelMappings.find(modelType); // ModelType handle
+    //if (modelIt != ModelMappings.end()) {
+    //    const ModelData& modelData = modelIt->second;
+    //    loadFromRawData(modelData.data, modelData.vertexCount, 6);
+    //}
+    //else {
+    //    std::cerr << "Invalid ModelType specified. Assigning default model." << std::endl;
+    //    const ModelData& modelData = ModelMappings.at(ModelType::PLAIN);
+    //    loadFromRawData(modelData.data, modelData.vertexCount, 6);
+    //}
 
     // Apply transformations
     translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
@@ -89,14 +93,16 @@ unsigned int* DrawableObject::generateIndices(int vertexCount) {
 
 void DrawableObject::Draw() {
     if (_shaderProgram) {
-        updateTransformation(16); //get actual chrono
-        updateDrawData();
         _shaderProgram->use();
+        updateTransformation(16); //TODO deprecated
+        updateDrawData();
+        if (_model) {
+            _model->bind();
+            glDrawElements(GL_TRIANGLES, _model->getVertexCount(), GL_UNSIGNED_INT, nullptr);
+            _model->unbind();
+        }
+        _shaderProgram->use(0);
     }
-    
-    glBindVertexArray(_VAO);
-    glDrawElements(GL_TRIANGLES, _vertexCount, GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
 }
 
 void DrawableObject::setShaderProgram(ShaderProgram* shaderProgram) { 
@@ -137,7 +143,7 @@ TransformationData DrawableObject::GetCurrentTransformationData() {
 glm::vec3 DrawableObject::getPosition()
 {
     glm::mat4 matrix = transformationComposite.getMatrix();
-    return glm::vec3(matrix[3][0], matrix[3][1], matrix[3][2]);
+    return glm::vec3(matrix[3][0], matrix[3][1], matrix[3][2]); // TODO posible bug
     //return glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
 }
 

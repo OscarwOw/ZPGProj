@@ -28,7 +28,7 @@ void Application::button_callback(GLFWwindow* window, int button, int action, in
 }
 
 
-void tick(GLFWwindow* window, SceneManager& sceneManager) {
+void tick(GLFWwindow* window, SceneManager& sceneManager, float deltatime) {
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -37,7 +37,7 @@ void tick(GLFWwindow* window, SceneManager& sceneManager) {
     if (currentScene) {
         // Example of scene-specific transformation
         //currentScene->circusTransform();
-        currentScene->drawScene();
+        currentScene->drawScene(deltatime);
     }
     glfwSwapBuffers(window);
 
@@ -102,7 +102,7 @@ int Application::startApplication()
         // Check if 60 milliseconds have passed since the last tick
         if (elapsedTime >= tickInterval) {
             // Execute the tick function
-            tick(_window, _sceneManager);
+            tick(_window, _sceneManager, std::chrono::duration<float>(elapsedTime).count());
 
             // Update the last tick time
             lastTickTime = currentTime;
