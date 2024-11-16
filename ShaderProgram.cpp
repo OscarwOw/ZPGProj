@@ -177,13 +177,32 @@ void ShaderProgram::updateLightSources() {
     use(); // Make sure the shader program is active
 
     // Set the number of light sources as an integer
-    setUniformInt("numLights", static_cast<int>(_lightData.size()));
+    setUniformInt("numLights", static_cast<int>(_lightData.size() + 1));
 
     // Iterate over each light and set its properties in the shader
     for (size_t i = 0; i < _lightData.size(); ++i) {
-        std::string indexStr = std::to_string(i);
+        std::string indexStr = std::to_string(i + 1);
         setUniformVec3("lightSources[" + indexStr + "].position", _lightData[i].position);
         setUniformVec3("lightSources[" + indexStr + "].color", glm::vec3(_lightData[i].color));
+        setUniformInt("lightSources[" + indexStr + "].lightType", _lightData[i].lightType);
+        setUniformVec3("lightSources[" + indexStr + "].direction", _lightData[i].direction);
+        float cosAngle = cos(glm::radians(_lightData[i].angle));
+        setUniformFloat("lightSources[" + indexStr + "].angle", cosAngle);
+    }
+    if (Camera::getInstance().getLight()) {
+        std::string index = std::to_string(0);
+
+
+        glm::vec3 test1 = getCameraPosition();
+        glm::vec3 test2 = glm::normalize(Camera::getInstance().getCameraFront());
+
+
+        setUniformVec3("lightSources[" + index + "].position", test1);
+        setUniformVec3("lightSources[" + index + "].color", glm::vec3(1.0f));
+        setUniformInt("lightSources[" + index + "].lightType", 2);
+        setUniformVec3("lightSources[" + index + "].direction", test2);
+        float cosSpotAngle = cos(glm::radians(7.5f));
+        setUniformFloat("lightSources[" + index + "].angle", cosSpotAngle);
     }
 }
 

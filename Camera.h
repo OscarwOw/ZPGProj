@@ -38,6 +38,11 @@ public:
     void detachObserver(ICameraObserver* observer);
     void setWindowSize(int width, int height);
 
+    bool getLight();
+
+    glm::vec3 getCameraFront();
+
+
 
 private:
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
@@ -64,6 +69,8 @@ private:
     float movementSpeed;
     float mouseSensitivity;
     float zoom;
+
+    bool _lightOn = true;
 
     int _windowHeight;
     int _windowWidth;

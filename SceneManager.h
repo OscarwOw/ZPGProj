@@ -33,7 +33,4 @@ public:
     void switchToNextScene();
     std::string getNextScene();
     Scene* getCurrentScene();
-
-    std::shared_ptr<Model> getModel(ModelType modelType);
-    void loadModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex);
 };
