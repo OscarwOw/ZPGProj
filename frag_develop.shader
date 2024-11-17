@@ -100,6 +100,21 @@ vec3 calculateSpotLight(Light light, vec3 normal, vec3 viewDir) {
     return vec3(0, 0, 0);
 }
 
+vec3 calculateDirectionalLight(Light light, vec3 normal, vec3 viewDir) {
+    vec3 lightDir = normalize(-light.direction);
+
+    vec3 ambient = materialAmbient * light.color;
+
+    float diff = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = diff * materialDiffuse * light.color;
+
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), materialShininess);
+    vec3 specular = materialSpecular * spec * light.color;
+
+    return ambient + diffuse + specular;
+}
+
 
 
 void main() {
@@ -109,22 +124,18 @@ void main() {
 
 
     for(int i=0; i< numLights;i++){
-
-
         if (lightSources[i].lightType == 1) { 
             result += calculatePointLight(lightSources[i], normal, viewDir);
         } 
         else if (lightSources[i].lightType == 2) { // SPOTLIGHT
             result += calculateSpotLight(lightSources[i], normal, viewDir);
+        }
+        else if (lightSources[i].lightType == 3) { // DIRECTIONAL LIGHT
+            result += calculateDirectionalLight(lightSources[i], normal, viewDir);
         } 
     }
 
     result *= fragColor;
     frag_colour = vec4(result, 1.0);  
 };
-
-
-
-
-
 
