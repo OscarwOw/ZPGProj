@@ -163,6 +163,7 @@
     <ClInclude Include="cube.h" />
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="IAnimationObject.h" />
+    <ClInclude Include="LightType.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="NewTransformation.h" />

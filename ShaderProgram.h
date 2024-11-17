@@ -56,7 +56,6 @@ public:
     void setLightsVector(std::vector<LightData> data) override;
 #pragma endregion
 
-    void addLightSource(const glm::vec4& color, float intensity, const glm::vec3& position);
     void updateLightSources();
 
 private:
@@ -66,10 +65,6 @@ private:
     glm::mat4 _viewMatrix;
     glm::mat4 _perspectiveMatrix;
     glm::vec3 _cameraPosition;
-
-    glm::vec4 _lightColor;
-    float _lightIntensity;
-    glm::vec3 _lightPosition;
 
     std::vector<LightData> _lightData;
 

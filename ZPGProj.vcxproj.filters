@@ -290,6 +290,9 @@
     <ClInclude Include="ModelManager.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
+    <ClInclude Include="LightType.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorShader.shader">
