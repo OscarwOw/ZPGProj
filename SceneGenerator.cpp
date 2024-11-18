@@ -43,8 +43,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     scene->getBehavioralManager()->addAnimeObject(dyntrans3);
 
 
-    triangle->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
-    triangle->transformation.setDynamicAngle(60);
+
 
     scene->addObject(triangle);
 
@@ -56,8 +55,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     NewTransformationTranslate* triangle2Translate = new NewTransformationTranslate(glm::vec3(0.0f, 0.0f, -2.0f));
     triangle2->transformationComposite.addTransformation(triangle2Translate);
 
-    triangle2->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
-    triangle2->transformation.setDynamicAngle(60);
+
 
     //add object ///////////////////////////////
     //scene->addObject(triangle2);
@@ -70,8 +68,6 @@ Scene* SceneGenerator::generateDefaultScene() {
     NewTransformationTranslate* triangle3Translate = new NewTransformationTranslate(glm::vec3(0.0f, 0.0f, -22.0f));
     triangle3->transformationComposite.addTransformation(triangle3Translate);
 
-    triangle3->transformation.setDynamicAxis(glm::vec3(1.0f, 1.0f, 0.0f));
-    triangle3->transformation.setDynamicAngle(60);
 
     //scene->addObject(triangle3);
     //add object ///////////////////////////////
@@ -257,8 +253,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
         float randomChance = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
         if (randomChance <= 0.2f) {
-            tree->transformation.setDynamicAngle(60);
-            tree->transformation.setDynamicAxis(glm::vec3(0.0f, 1.0f, 0.0f));
+
         }
 
         forestScene->addObject(tree);

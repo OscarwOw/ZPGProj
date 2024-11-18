@@ -209,7 +209,7 @@ void DrawableObject::updateDrawData() { //update draw data
     MatrixHelper& matrixHelper = MatrixHelper::getInstance();
 
     glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
-    glm::mat4 modelMatrix = transformation.getModelMatrix();
+    //glm::mat4 modelMatrix = transformation.getModelMatrix();
 
     glm::mat4 modelMatrixNew = transformationComposite.getMatrix();
 
@@ -242,7 +242,7 @@ void DrawableObject::updateDrawData() { //update draw data
 
 void DrawableObject::updateTransformation(float deltaTime)
 {
-    transformation.updateTransformations(deltaTime);
+    //transformation.updateTransformations(deltaTime);
     
 }
 
