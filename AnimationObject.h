@@ -85,7 +85,7 @@ public:
         }
 
         //TODO dyn trans
-        _object->transformation.setDynamicTranslate(movementDirection);
+        //_object->transformation.setDynamicTranslate(movementDirection);
     }
 
     void check() {

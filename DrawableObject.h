@@ -9,7 +9,6 @@
 #include "MaterialProperties.h"
 #include "ShaderType.h"
 #include "ModelType.h"
-#include "Transformation.h"
 #include "NewTransformation.h"
 #include "NewTransformationComposite.h"
 #include "Model.h"
@@ -38,11 +37,6 @@ protected:
 
     glm::mat4 _transformationMatrix;
 
-
-    glm::mat4 _translationMatrix;
-    glm::mat4 _scaleMatrix;
-    glm::mat4 _rotationMatrix;
-
     TransformationData transformationData;
     
     float _scaleFactor;
@@ -60,7 +54,7 @@ public:
         MaterialProperties materialProperties = MaterialProperties()
     );
     ~DrawableObject();
-    Transformation transformation;
+    //Transformation transformation;
 
     TransformationComposite transformationComposite;
 
