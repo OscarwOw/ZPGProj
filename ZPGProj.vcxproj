@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DirectionalLightSource.cpp" />
     <ClCompile Include="Drawableobject.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
@@ -161,8 +162,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraMovement.h" />
     <ClInclude Include="cube.h" />
+    <ClInclude Include="DirectionalLightSource.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="DynamicTranslateCubeData.h" />
     <ClInclude Include="IAnimationObject.h" />
+    <ClInclude Include="ILightEmitter.h" />
     <ClInclude Include="LightType.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelManager.h" />
@@ -209,6 +213,7 @@
     <ClInclude Include="tree.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="WhispData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.shader" />

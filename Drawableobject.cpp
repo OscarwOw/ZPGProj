@@ -25,6 +25,8 @@ DrawableObject::DrawableObject(
 )
     : _color(color), _materialProperties(materialProperties) {
 
+
+    //TODO clean up shaders
     auto it = ShaderMappings.find(shaderType); // ShaderType handle
     if (it == ShaderMappings.end()) {
         std::cerr << "Invalid ShaderType specified. Assigning default shader." << std::endl;
@@ -40,21 +42,11 @@ DrawableObject::DrawableObject(
 
     _model = ModelManager::getInstance().getModel(modelType);
 
-    //auto modelIt = ModelMappings.find(modelType); // ModelType handle
-    //if (modelIt != ModelMappings.end()) {
-    //    const ModelData& modelData = modelIt->second;
-    //    loadFromRawData(modelData.data, modelData.vertexCount, 6);
-    //}
-    //else {
-    //    std::cerr << "Invalid ModelType specified. Assigning default model." << std::endl;
-    //    const ModelData& modelData = ModelMappings.at(ModelType::PLAIN);
-    //    loadFromRawData(modelData.data, modelData.vertexCount, 6);
-    //}
-
     // Apply transformations
     translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
     rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
     scale(transformationData.Scale);
+
     updateDrawData();
 }
 
@@ -198,9 +190,6 @@ void DrawableObject::scale(float scaleFactor) {
     
 
     transformationData.Scale = scaleFactor;
-
-    //_isScaleTransformationDirty = true;
-    //_isTransformationDirty = true;
 }
 
 
@@ -208,38 +197,21 @@ void DrawableObject::scale(float scaleFactor) {
 
 
 
-void DrawableObject::updateDrawData() { //update draw data
-    MatrixHelper& matrixHelper = MatrixHelper::getInstance();
+void DrawableObject::updateDrawData() { //TODO update draw data
 
-    glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
-    glm::mat4 modelMatrix = transformation.getModelMatrix();
-
-    glm::mat4 modelMatrixNew = transformationComposite.getMatrix();
-
-    glm::mat4 viewMatrix = glm::mat4(1.0);
-    glm::mat4 perspectiveMatrix = glm::mat4(1.0);
-
-
-    glm::vec3 lightPosition = glm::vec3(10.0f, 5.0f, 5.0f);
-    float lightIntensity = 1.0f;
-    glm::vec4 lightColor = glm::vec4(1.0f);
-     
+    glm::mat4 modelMatrix = transformationComposite.getMatrix();    
 
     if (_shaderProgram) {
         _shaderProgram->use();
-        _shaderProgram->setUniformMat4("modelMatrix", modelMatrixNew);
-        viewMatrix = _shaderProgram->getViewMatrix();
-
-        _shaderProgram->setUniformMat4("viewMatrix", viewMatrix);
-        perspectiveMatrix = _shaderProgram->getPerspectiveMatrix();
-
-        _shaderProgram->setUniformMat4("projectionMatrix", perspectiveMatrix);
-        _shaderProgram->setUniformVec3("lightPosition", lightPosition);
-        _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
+        _shaderProgram->setUniformMat4("modelMatrix", modelMatrix);
         _shaderProgram->setUniformVec3("objectColor", _color);
         _shaderProgram->updateMaterialProperties(_materialProperties);
-        _shaderProgram->updateLightSources();
 
+        _shaderProgram->setUniformMat4("viewMatrix", _shaderProgram->getViewMatrix());
+        _shaderProgram->setUniformMat4("projectionMatrix", _shaderProgram->getPerspectiveMatrix());
+        _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
+
+        _shaderProgram->updateLightSources();
     }
 }
 

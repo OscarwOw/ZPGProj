@@ -49,7 +49,7 @@ int Application::startApplication()
     glfwSetErrorCallback(error_callback);
 
 
-    int width = 1500;
+    int width = 1500; //TODO from settings
     int height = 1200;
 
     _startupManager.initializeProgram(&_window, width, height, "My OpenGL Window");
@@ -61,26 +61,14 @@ int Application::startApplication()
 
     glfwSetWindowSizeCallback(_window, window_size_callback);
 
-    /*Scene* forestScene = new Scene();
-    sceneGenerator.generateForest(forestScene, 50, 25, &_camera);
-
-    sceneManager.addScene("Forest", forestScene);
-    sceneManager.switchScene("Forest");*/
-
-     
-    //Scene* testscene = new Scene();
-    //DrawableObject* treeobj = sceneGenerator.generateTree(0.2f, 0.0f, 0.0f, 0.0f);
-
-
-    //testscene->addObject(treeobj);
-
-
-    //sceneManager.addScene("cirkus", testscene);
-    //sceneManager.switchScene("cirkus");
 
     _sceneManager.generateTraingleScene("triangleScene");
-    _sceneManager.generateTestTreeScene("treeScene");
     _sceneManager.generateForestScene("forestScene");
+
+    _sceneManager.generateNightForestScene("nightForestScene");
+    
+
+
     _sceneManager.generateSphereScene("sphereScene");
     _sceneManager.generateShadersSphereScene("shadersSphereScene");
 
@@ -93,7 +81,6 @@ int Application::startApplication()
 
 
     while (!glfwWindowShouldClose(_window)) {
-
 
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTickTime);

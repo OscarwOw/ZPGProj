@@ -63,7 +63,7 @@ private:
 
     float _perspective = 45.0f;
     glm::mat4 _viewMatrix;
-    glm::mat4 _perspectiveMatrix;
+    glm::mat4 _perspectiveMatrix = glm::mat4(1.0f);
     glm::vec3 _cameraPosition;
 
     std::vector<LightData> _lightData;

@@ -8,9 +8,9 @@ public:
 	}
 
 	void attachObserver(ILightObserver* lightObserver);
-	void attachLightSource(LightSource* lightObserver);
+	void attachLightSource(ILightEmitter* lightObserver);
 	void publish();
 private:
 	std::vector<ILightObserver*> _observers;
-	std::vector<LightSource*> _lightSources;
+	std::vector<ILightEmitter*> _lightEmitters;
 };

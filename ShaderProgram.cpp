@@ -186,6 +186,7 @@ void ShaderProgram::updateLightSources() {
         setUniformVec3("lightSources[" + indexStr + "].color", glm::vec3(_lightData[i].color));
         setUniformInt("lightSources[" + indexStr + "].lightType", _lightData[i].lightType);
         setUniformVec3("lightSources[" + indexStr + "].direction", _lightData[i].direction);
+        setUniformFloat("lightSources[" + indexStr + "].intensity", _lightData[i].intensity);
         float cosAngle = cos(glm::radians(_lightData[i].angle));
         setUniformFloat("lightSources[" + indexStr + "].angle", cosAngle);
     }
@@ -201,6 +202,7 @@ void ShaderProgram::updateLightSources() {
         setUniformVec3("lightSources[" + index + "].color", glm::vec3(1.0f));
         setUniformInt("lightSources[" + index + "].lightType", 2);
         setUniformVec3("lightSources[" + index + "].direction", test2);
+        setUniformFloat("lightSources[" + index + "].intensity", 1.0f);
         float cosSpotAngle = cos(glm::radians(7.5f));
         setUniformFloat("lightSources[" + index + "].angle", cosSpotAngle);
     }
