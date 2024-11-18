@@ -37,11 +37,6 @@ protected:
 
     glm::mat4 _transformationMatrix;
 
-
-    glm::mat4 _translationMatrix;
-    glm::mat4 _scaleMatrix;
-    glm::mat4 _rotationMatrix;
-
     TransformationData transformationData;
     
     float _scaleFactor;
