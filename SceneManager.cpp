@@ -30,6 +30,12 @@ Scene* SceneManager::generateForestScene(std::string name) {
 	return scene;
 }
 
+Scene* SceneManager::generateNightForestScene(std::string name) {
+	Scene* scene = SceneGenerator::getInstance().generateNightForestScene(50, 100.0f, 1.5f);		//.generateForestScene(50, 50);
+	addScene(name, scene);
+	return scene;
+}
+
 Scene* SceneManager::generateSphereScene(std::string name) {
 	Scene* scene = SceneGenerator::getInstance().generateSphereScene();
 	addScene(name, scene);
@@ -63,9 +69,9 @@ void SceneManager::switchScene(const std::string& name) { //TODO debug shows tha
 		{			
 			Camera::getInstance().detachObserver(objects[i]->getSaherProgram());
 		}
-		
+		//TODO cleanup
 		if (scene->second->hasLightSource()) { //wierd looking strcture but its optimized 
-			std::vector<LightSource*> lightSources = scene->second->getLightSources();
+			//std::vector<LightSource*> lightSources = scene->second->getLightSources();
 
 			
 			for (DrawableObject* object : newObjects) {
@@ -76,7 +82,10 @@ void SceneManager::switchScene(const std::string& name) { //TODO debug shows tha
 			for (DrawableObject* object : newObjects) {
 				Camera::getInstance().attachObserver(object->getSaherProgram());
 			}
-		}		
+		}
+		Camera::getInstance().setPosition(scene->second->getCameraPosition());
+		Camera::getInstance().setDirection(scene->second->getCameraDirection());
+
 		currentSceneName = name;
 	}
 }

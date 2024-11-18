@@ -14,6 +14,7 @@ struct Light {
     vec3 direction;
     int lightType;
     float angle;
+    float intensity;
 };
 
 uniform Light lightSources[50];
@@ -106,13 +107,13 @@ vec3 calculateDirectionalLight(Light light, vec3 normal, vec3 viewDir) {
     vec3 ambient = materialAmbient * light.color;
 
     float diff = max(dot(normal, lightDir), 0.0);
-    vec3 diffuse = diff * materialDiffuse * light.color;
+    vec3 diffuse = diff * materialDiffuse * light.color * light.intensity;
 
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), materialShininess);
-    vec3 specular = materialSpecular * spec * light.color;
+    vec3 specular = materialSpecular * spec * light.color * light.intensity;
 
-    return ambient + diffuse + specular;
+    return  ambient + diffuse + specular;
 }
 
 

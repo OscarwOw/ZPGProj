@@ -11,6 +11,8 @@ struct LightData {
     glm::vec4 color;
     glm::vec3 position;
 
+    float intensity;
+
     LightData( const glm::vec4& lightColor, const glm::vec3& lightPosition)
         : color(lightColor), position(lightPosition),
         lightType(POINTLIGHT)
@@ -24,8 +26,8 @@ struct LightData {
     {
     }
 
-    LightData(LightType type, const glm::vec4& lightColor, const glm::vec3& lightDirection)
-        : color(lightColor), direction(lightDirection),
+    LightData(const glm::vec4& lightColor, const glm::vec3& lightDirection, float lightIntensity)
+        : color(lightColor), direction(lightDirection), intensity(lightIntensity),
         lightType(DIRECTIONALLIGHT)
     {
     }

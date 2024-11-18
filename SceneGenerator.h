@@ -10,6 +10,10 @@
 
 #include "ModelMapping.h"
 
+#include "DynamicTranslateCubeData.h"
+#include "WhispData.h"
+#include "ILightEmitter.h"
+#include "DirectionalLightSource.h"
 
 class SceneGenerator {
 public:
@@ -18,6 +22,7 @@ public:
     Scene* generateDefaultScene();
     Scene* generateTestTreeScene();
     Scene* generateForestScene(int numTrees, float areaSize, float minDistance);
+    Scene* generateNightForestScene(int numTrees, float areaSize, float minDistance);
     Scene* generateForestScene(int numTrees, int numBushes);
     Scene* generateSphereScene();
 
@@ -25,6 +30,9 @@ public:
 
     DrawableObject* generateTree();
     DrawableObject* generateTree(float scale, float rotation, float x, float z);
+
+    LightSource* generateWhisp(Scene* scene, WhispData whispData);
+    vector<LightSource*> generateWhisps(Scene* scene, int count);
 
     DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material);
 
@@ -43,3 +51,5 @@ private:
 
     std::map<std::string, int> _namesIndexHolder;
 };
+
+

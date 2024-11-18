@@ -31,16 +31,20 @@ void Scene::publishLights()
     _lightPublisher.publish();
 }
 
-void Scene::addLightSource(LightSource* lightSource) {//TODO multiple light sources
-    addObject(lightSource);
-    _lightPublisher.attachLightSource(lightSource);
+void Scene::addLightSource(ILightEmitter* lightEmitter) {
+    LightSource* lightSource = dynamic_cast<LightSource*>(lightEmitter);
+    if (lightSource != nullptr) {
+        // If dynamic_cast is successful, add it to the scene as a drawable object
+        addObject(lightSource);
+    }
+    _lightPublisher.attachLightSource(lightEmitter);
     _hasLightSource = true;
     publishLights();
 }
 
-std::vector<LightSource*> Scene::getLightSources() {
-    return _lightSources;
-}
+//std::vector<LightSource*> Scene::getLightSources() {
+//    return _lightSources;
+//}
 bool Scene::hasLightSource() {
     return _hasLightSource;
 }
@@ -83,4 +87,24 @@ BehaviorManager* Scene::getBehavioralManager()
 void Scene::setBehavioralManager(BehaviorManager* behaviorManager)
 {
     _behavioralManager = behaviorManager;
+}
+
+void Scene::setCameraDirection(glm::vec3 direction)
+{
+    _cameraDirection = direction;
+}
+
+void Scene::setCameraPosition(glm::vec3 position)
+{
+    _cameraPosition = position;
+}
+
+glm::vec3 Scene::getCameraDirection()
+{
+    return _cameraDirection;
+}
+
+glm::vec3 Scene::getCameraPosition()
+{
+    return _cameraPosition;
 }

@@ -42,6 +42,9 @@ public:
 
     glm::vec3 getCameraFront();
 
+    void setPosition(const glm::vec3& newPosition);
+    void setDirection(const glm::vec3& newDirection);
+
 
 
 private:

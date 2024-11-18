@@ -134,6 +134,30 @@ glm::vec3 Camera::getCameraFront()
 {
     return front;
 }
+
+void Camera::setPosition(const glm::vec3& newPosition) {
+    position = newPosition;
+    updateCameraVectors();
+    notifyObservers();
+}
+
+// Set camera direction
+void Camera::setDirection(const glm::vec3& newDirection) {
+    front = glm::normalize(newDirection);
+
+    pitch = glm::degrees(asin(front.y)); 
+
+    if (front.x == 0.0f && front.z == 0.0f) {
+        yaw = (front.y > 0.0f) ? 90.0f : -90.0f; 
+    }
+    else {
+        yaw = glm::degrees(atan2(front.z, front.x)); 
+    }
+
+    updateCameraVectors();
+    notifyObservers();
+}
+
 //
 //void Camera::getWindowSize(int width, int height)
 //{

@@ -5,7 +5,10 @@
 #include "RandomMovementCube.h"
 #include "IAnimationObject.h"
 #include <glm/gtc/random.hpp>
+#include "DynamicTranslateCubeData.h"
 
+
+//TODO clean up and put to separate files with .cpp and .h
 class NewTransformation {
 public:
     virtual ~NewTransformation() = default;
@@ -109,18 +112,32 @@ public:
         _speed(speed), _cubeSize(cubeSize),
         _maxHeight(maxHeight), _maxWidth(maxWidth), _maxLength(maxLength),
         _minHeight(minHeight), _minWidth(minWidth), _minLength(minLength) {
-    
-        float heightDistance = maxHeight - minHeight;
-        float widthDistance = maxWidth - minWidth;
-        float lengthDistance = maxLength - minLength;
+
+        initialize();
+    }
+
+    NewTransformationDynamicTranslateCube(DynamicTranslateCubeData data) //lenost dela divy
+        : NewTransformationDynamicTranslate(data.initialMatrix),
+        _speed(data.speed), _cubeSize(data.cubeSize),
+        _maxHeight(data.maxHeight), _maxWidth(data.maxWidth), _maxLength(data.maxLength),
+        _minHeight(data.minHeight), _minWidth(data.minWidth), _minLength(data.minLength) {
+
+        initialize();
+    }
+
+    void initialize() {
+        float heightDistance = _maxHeight - _minHeight;
+        float widthDistance = _maxWidth - _minWidth;
+        float lengthDistance = _maxLength - _minLength;
 
         float minDistance = std::min({ heightDistance, widthDistance, lengthDistance });
 
-        if (cubeSize > minDistance / 2.0f) {
-            cubeSize = minDistance / 2.0f;
+        if (_cubeSize > minDistance / 2.0f) {
+            _cubeSize = minDistance / 2.0f;
         }
-        _randomMovementData.cubeSize = cubeSize;
-        _randomMovementData.center = initialMatrix[3];
+
+        _randomMovementData.cubeSize = _cubeSize;
+        _randomMovementData.center = _matrix[3];  
         generateCube();
         generateMovement();
     }
@@ -206,6 +223,48 @@ private:
     void internalUpdate(float deltaTime) override {
         NewTransformationDynamicTranslate::internalUpdate(deltaTime);
         check();
+    }
+};
+
+class NewTransformationDynamicRotate : public NewTransformation, public IAnimationObject {
+protected:
+    glm::mat4 _matrix;
+    glm::vec3 _axis;         
+    float _angleIncrement;   
+
+public:
+    NewTransformationDynamicRotate(glm::mat4& initialMatrix, const glm::vec3& axis)
+        : _matrix(initialMatrix), _axis(axis), _angleIncrement(0.0f) {
+    }
+
+    void setAngleIncrement(float angleIncrement) {
+        _angleIncrement = angleIncrement;
+    }
+
+    float getAngleIncrement() const {
+        return _angleIncrement;
+    }
+
+    void setAxis(const glm::vec3& axis) {
+        _axis = axis;
+    }
+
+    glm::vec3 getAxis() const {
+        return _axis;
+    }
+
+    void update(float deltaTime) override {
+        internalUpdate(deltaTime);
+    }
+
+    virtual void internalUpdate(float deltaTime) {
+        float deltaAngle = _angleIncrement * deltaTime;
+        _matrix = glm::rotate(_matrix, glm::radians(deltaAngle), _axis);
+    }
+
+
+    glm::mat4 getMatrix() override {
+        return _matrix;
     }
 };
 
