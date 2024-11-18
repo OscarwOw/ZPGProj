@@ -9,7 +9,6 @@
 #include "MaterialProperties.h"
 #include "ShaderType.h"
 #include "ModelType.h"
-#include "Transformation.h"
 #include "NewTransformation.h"
 #include "NewTransformationComposite.h"
 #include "Model.h"
@@ -60,7 +59,7 @@ public:
         MaterialProperties materialProperties = MaterialProperties()
     );
     ~DrawableObject();
-    Transformation transformation;
+    //Transformation transformation;
 
     TransformationComposite transformationComposite;
 
