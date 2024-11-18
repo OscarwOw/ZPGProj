@@ -148,10 +148,6 @@
     <ClCompile Include="ShaderProgramManager.cpp" />
     <ClCompile Include="StartupManager.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Transformation.cpp" />
-    <ClCompile Include="transformationRotate.cpp" />
-    <ClCompile Include="TransformationScale.cpp" />
-    <ClCompile Include="TransformationTranslate.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,7 +170,6 @@
     <ClInclude Include="NewTransformationComposite.h" />
     <ClInclude Include="RandomMovementCube.h" />
     <ClInclude Include="square.h" />
-    <ClInclude Include="TransformationDynamicRotate.h" />
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="frag_phong_static.shader" />
     <ClInclude Include="gift.h" />
@@ -198,18 +193,12 @@
     <ClInclude Include="ShaderType.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgramManager.h" />
-    <ClInclude Include="TransformationComponent.h" />
     <ClInclude Include="TransformationData.h" />
-    <ClInclude Include="TransformationDynamicTranslate.h" />
-    <ClInclude Include="TransformationRotate.h" />
-    <ClInclude Include="TransformationScale.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="StartupManager.hpp" />
     <ClInclude Include="suzi_flat.h" />
     <ClInclude Include="suzi_smooth.h" />
-    <ClInclude Include="Transformation.h" />
-    <ClInclude Include="TransformationTranslate.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="VertexBuffer.h" />

@@ -1,7 +1,4 @@
 #include "DrawableObject.h"
-#include "TransformationScale.h"
-#include "TransformationTranslate.h"
-#include "TransformationRotate.h"
 #include <glm/gtc/type_ptr.hpp> 
 #include "SceneGenerator.h"
 #include "ModelManager.h"
@@ -10,9 +7,7 @@
 
 DrawableObject::DrawableObject() : _vertexBuffer(nullptr), _indexBuffer(nullptr) {
     _transformationMatrix = glm::mat4(1.0f);
-    _translationMatrix = glm::mat4(1.0f);
-    _rotationMatrix = glm::mat4(1.0f);
-    _scaleMatrix = glm::mat4(1.0f);
+
 }
 
 DrawableObject::DrawableObject(
@@ -43,10 +38,9 @@ DrawableObject::DrawableObject(
     _model = ModelManager::getInstance().getModel(modelType);
 
     // Apply transformations
-    translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
-    rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
-    scale(transformationData.Scale);
-
+    //translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
+    //rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
+    //scale(transformationData.Scale);
     updateDrawData();
 }
 
@@ -86,7 +80,7 @@ unsigned int* DrawableObject::generateIndices(int vertexCount) {
 void DrawableObject::Draw() {
     if (_shaderProgram) {
         _shaderProgram->use();
-        updateTransformation(16); //TODO deprecated
+        //updateTransformation(16); //TODO deprecated
         updateDrawData();
         if (_model) {
             _model->bind();
@@ -147,11 +141,11 @@ MaterialProperties DrawableObject::getMaterialProperties() const
 
 
 void DrawableObject::translate(float x, float y, float z) {
-    transformation.translate(glm::vec3(x, y, z));
+    //transformation.translate(glm::vec3(x, y, z));
 
 
     //_transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(x, y, z)));
-    _translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
+    //_translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
     
 
     
@@ -169,9 +163,9 @@ void DrawableObject::rotate(float angle, float x, float y, float z) {
         y = 1.0f;
     }
     //_transformationComposite.addTransformation(new TransformationRotate(angle, glm::vec3(x, y, z)));
-    transformation.rotate(angle, glm::vec3(x, y, z));
+    //transformation.rotate(angle, glm::vec3(x, y, z));
     
-    _rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x, y, z));
+    //_rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x, y, z));
 
     transformationData.RotationAngle = angle;
     transformationData.RotationX = x;
@@ -184,9 +178,9 @@ void DrawableObject::rotate(float angle, float x, float y, float z) {
 
 void DrawableObject::scale(float scaleFactor) {    
     //_transformationComposite.addTransformation(new TransformationScale{glm::vec3(scaleFactor)});
-    transformation.scale(scaleFactor);
+    //transformation.scale(scaleFactor);
 
-    _scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+    //_scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
     
 
     transformationData.Scale = scaleFactor;
@@ -197,7 +191,11 @@ void DrawableObject::scale(float scaleFactor) {
 
 
 
-void DrawableObject::updateDrawData() { //TODO update draw data
+void DrawableObject::updateDrawData() { //update draw data
+    MatrixHelper& matrixHelper = MatrixHelper::getInstance();
+
+    //glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
+    //glm::mat4 modelMatrix = transformation.getModelMatrix();
 
     glm::mat4 modelMatrix = transformationComposite.getMatrix();    
 
@@ -217,11 +215,8 @@ void DrawableObject::updateDrawData() { //TODO update draw data
 
 void DrawableObject::updateTransformation(float deltaTime)
 {
-    transformation.updateTransformations(deltaTime);
-    glm::vec3 TranslationVector = transformation.getTranslation();
-    transformationData.TranslationX = TranslationVector.x;
-    transformationData.TranslationY = TranslationVector.y;
-    transformationData.TranslationZ = TranslationVector.z;
+    //transformation.updateTransformations(deltaTime);
+    
 }
 
 
