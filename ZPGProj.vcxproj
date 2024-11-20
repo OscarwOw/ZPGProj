@@ -163,6 +163,7 @@
     <ClInclude Include="DynamicTranslateCubeData.h" />
     <ClInclude Include="IAnimationObject.h" />
     <ClInclude Include="ILightEmitter.h" />
+    <ClInclude Include="IModel.h" />
     <ClInclude Include="LightType.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelManager.h" />
@@ -193,6 +194,8 @@
     <ClInclude Include="ShaderType.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgramManager.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Textures.h" />
     <ClInclude Include="TransformationData.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="sphere.h" />

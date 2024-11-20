@@ -13,7 +13,7 @@
 #include "DynamicTranslateCubeData.h"
 #include "WhispData.h"
 #include "ILightEmitter.h"
-#include "DirectionalLightSource.h"
+#include "DirectionalLightSource.h"`
 
 class SceneGenerator {
 public:

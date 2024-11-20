@@ -20,3 +20,13 @@ bezier
 
 
 normalizacia zmeni velkost vektoru na 1
+
+
+
+
+výpoèet farby s texturou
+
+I = (Ia + Id + Is) * textura // no good
+I = (Ia + Id) * textura + Is//good
+
+
