@@ -6,17 +6,16 @@
 #include "suzi_flat.h"
 #include "gift.h"
 #include "plain.h"
+#include "plainTexture.h"
 #include "sphere.h"
 #include "square.h"
 #include "cube.h"
 #include "triangle.h"
 #include "ModelMapping.h"
 #include "ModelType.h"
+#include "ModelData.h"
 
-struct ModelData {
-    const float* data;
-    int vertexCount;
-};
+
 
 static const std::map<ModelType, ModelData> ModelMappings = {
     { ModelType::TREE, { tree, 92814 } },
@@ -28,5 +27,6 @@ static const std::map<ModelType, ModelData> ModelMappings = {
     { ModelType::SPHERE, { sphere, 2880 } },
     { ModelType::CUBE, { cube, 216 } },
     { ModelType::TRIANGLE, { triangle, 18 } },
+    { ModelType::PLAIN_TEXTURE, {plainTexture, 6}}
     //{ ModelType::SQUARE, { square, 18 } }, // added line
 };
