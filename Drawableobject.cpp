@@ -2,6 +2,7 @@
 #include <glm/gtc/type_ptr.hpp> 
 #include "SceneGenerator.h"
 #include "ModelManager.h"
+#include <SOIL.h>
 
 
 
