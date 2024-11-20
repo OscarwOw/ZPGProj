@@ -166,9 +166,11 @@
     <ClInclude Include="IModel.h" />
     <ClInclude Include="LightType.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelData.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="NewTransformation.h" />
     <ClInclude Include="NewTransformationComposite.h" />
+    <ClInclude Include="plainTexture.h" />
     <ClInclude Include="RandomMovementCube.h" />
     <ClInclude Include="square.h" />
     <ClInclude Include="ErrorHandler.h" />
