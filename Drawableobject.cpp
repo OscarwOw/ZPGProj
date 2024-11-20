@@ -210,6 +210,14 @@ void DrawableObject::updateDrawData() { //update draw data
         _shaderProgram->setUniformMat4("projectionMatrix", _shaderProgram->getPerspectiveMatrix());
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
 
+
+        _shaderProgram->setUniformInt("textureUnitID", 1) //Texture._textureId);
+        
+            
+        //Set texture unit to fragment shader
+        //GLint uniformID = glGetUniformLocation(shaderProgram, "textureUnitID");
+        //glUniform1i(uniformID, 0);
+
         _shaderProgram->updateLightSources();
     }
 }

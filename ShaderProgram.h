@@ -39,6 +39,7 @@ public:
 
     void setUniformInt(const std::string& name, int value);
 
+
     void updateMaterialProperties(const MaterialProperties& material);
 
 

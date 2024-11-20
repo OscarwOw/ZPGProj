@@ -28,6 +28,7 @@ protected:
     int _vertexCount;
     Model* _model;
     
+    
     ShaderProgram* _shaderProgram;
     std::string _shaderProgramManagerString;
 
