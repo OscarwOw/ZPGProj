@@ -17,7 +17,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     MaterialProperties material(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.8f));
 
     // Triangle 1
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material, new Texture("test.png"));
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Texture_phong, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material, new Texture("test.png"));
 
     glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -2.0f));
     NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
@@ -105,7 +105,9 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
     MaterialProperties materialpropertiesforground(glm::vec3(0.2f), glm::vec3(0.55f), glm::vec3(0.002f), 1);
 
-    DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::PLAIN, glm::vec3(0.3f, 0.8f, 0.01f), materialpropertiesforground);
+    Texture* grassTexture = new Texture("grass.png");
+
+    DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Texture_phong, ModelType::PLAIN_TEXTURE, glm::vec3(0.3f, 0.8f, 0.01f), materialpropertiesforground, grassTexture);
 
     // Add new transformations to ground
     NewTransformationScale* groundScale = new NewTransformationScale(glm::vec3(80.0f));
@@ -145,7 +147,10 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
         // Tree using old TransformationData
         TransformationData treeTransformationData;
 
-        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE);
+        float redTreeColor = 0.2f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (0.4f - 0.2f);
+        float greenTreeColor = 0.4f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (0.9f - 0.4f);
+
+        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE, glm::vec3(redTreeColor, greenTreeColor, 0.0f));
 
         // Add new transformations to tree
         NewTransformationTranslate* treeTranslate = new NewTransformationTranslate(position);
@@ -162,7 +167,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
         forestScene->addObject(tree);
 
-        int numBushes = 5 + (rand() % 15);
+        int numBushes = 10 + (rand() % 15);
         float calcdistance = minDistance * 10;
 
         for (int j = 0; j < numBushes; ++j) {
@@ -174,11 +179,16 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
             // Bush using old TransformationData
             TransformationData bushTransformationData;
 
-            DrawableObject* bush = generateDrawableObject(bushTransformationData, ShaderType::Test, ModelType::BUSH);
+            float redBushColor = 0.2f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (0.4f - 0.2f);
+            float greenBushColor = 0.4f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (0.9f - 0.4f);
 
+            DrawableObject* bush = generateDrawableObject(bushTransformationData, ShaderType::Develop, ModelType::BUSH, glm::vec3(redBushColor, greenBushColor,0.0f));
+
+
+            float bushScalef = 1.0f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (2.9f - 1.0f);
             // Add new transformations to bush
             NewTransformationTranslate* bushTranslate = new NewTransformationTranslate(bushPosition);
-            NewTransformationScale* bushScale = new NewTransformationScale(glm::vec3(0.5f));
+            NewTransformationScale* bushScale = new NewTransformationScale(glm::vec3(bushScalef));
             bush->transformationComposite.addTransformation(bushTranslate);
             bush->transformationComposite.addTransformation(bushScale);
 

@@ -223,6 +223,7 @@
     <None Include="frag_lambert.shader" />
     <None Include="frag_light.shader" />
     <None Include="frag_phong.shader" />
+    <None Include="frag_phong_texture.shader" />
     <None Include="frag_texture.shader" />
     <None Include="Readme.md" />
     <None Include="readmePipeline.md" />
@@ -234,6 +235,7 @@
     <None Include="vert_light.shader" />
     <None Include="vert_phong.shader" />
     <None Include="vert_phong_Static.shader" />
+    <None Include="vert_phong_texture.shader" />
     <None Include="vert_texture.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
