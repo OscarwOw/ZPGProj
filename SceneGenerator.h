@@ -28,6 +28,8 @@ public:
 
     Scene* generateShadersSphereScene();
 
+    Scene* generateTextureScene();
+
     //DrawableObject* generateTree();
     //DrawableObject* generateTree(float scale, float rotation, float x, float z);
 

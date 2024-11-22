@@ -19,15 +19,31 @@ Scene* SceneGenerator::generateDefaultScene() {
     // Triangle 1
     DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material, new Texture("test.png"));
 
-    glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
+    glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -2.0f));
     NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
         3.0f, 3.0f, 3.0f, -3.0f, -3.0f, -3.0f
     );
+    NewTransformationDynamicTranslate* translatetransformation = new NewTransformationDynamicTranslate(initialMatrix3);
 
     triangle->transformationComposite.addTransformation(dyntrans3);
-    scene->getBehavioralManager()->addAnimeObject(dyntrans3); //TODO encapsulate into some function so that this does not scare me every time i look at it
+    triangle->transformationComposite.addTransformation(translatetransformation);
+    //scene->getBehavioralManager()->addAnimeObject(dyntrans3); //TODO encapsulate into some function so that this does not scare me every time i look at it
 
     scene->addObject(triangle);
+
+
+    DrawableObject* suzi = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SUZI_SMOOTH, glm::vec3(0.8f, 0.4f, 0.0f), material);
+    //glm::mat4 initialMatrix4 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
+    //glm::mat4 initialMatrix4 = glm::mat4(1.0f);
+    NewTransformationTranslate* translateTrans = new NewTransformationTranslate(glm::vec3(0.0f,0.0f,-2.0f));
+    NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f,1.0f,0.0f), 10.0f);
+    suzi->transformationComposite.addTransformation(translateTrans);
+    suzi->transformationComposite.addTransformation(rotateTrans);
+    
+    
+    scene->getBehavioralManager()->addAnimeObject(rotateTrans);
+    
+    scene->addObject(suzi);
 
     // Light 1
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
@@ -356,40 +372,53 @@ Scene* SceneGenerator::generateShadersSphereScene() {
 
     return scene;
 }
+
+Scene* SceneGenerator::generateTextureScene() {
+    Scene* scene = new Scene();
+    TransformationData transformationData;
+    MaterialProperties material(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.8f));
+
+    Texture* texture = new Texture("test.png");
+    Texture* texture2 = new Texture("grass.png");
+
+    NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f);
+    NewTransformationRotate* rotateDTrans = new NewTransformationRotate(90.0f, glm::vec3(1.0f,0.0f,0.0f));
+
+
+    DrawableObject* texturePlain1 = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.0,0.0,0.0), material, texture);
+    texturePlain1->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
+    texturePlain1->transformationComposite.addTransformation(rotateDTrans);
+    texturePlain1->transformationComposite.addTransformation(rotateTrans);
+
+    DrawableObject* texturePlain2 = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.0, 0.0, 0.0), material, texture2);
+    texturePlain2->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
+    texturePlain2->transformationComposite.addTransformation(rotateDTrans);
+    texturePlain2->transformationComposite.addTransformation(rotateTrans);
+
+
+    LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
+    light->transformationComposite.addTransformation(new NewTransformationScale(glm::vec3(0.1f)));
+
+
+    scene->getBehavioralManager()->addAnimeObject(rotateTrans);
+
+
+    scene->addObject(texturePlain1);
+    scene->addObject(texturePlain2);
+
+    scene->addLightSource(light);
+
+    scene->setCameraDirection(glm::vec3(0.0f, 0.0f, 1.0f));
+    scene->setCameraPosition(glm::vec3(0.0f, 0.0f, -5.0f));
+
+    return scene;
+}
+
+
+
 #pragma endregion
 
 #pragma region object generation
-//DrawableObject* SceneGenerator::generateTree() //deorecated af should be in history museum by now
-//{
-//    //srand(static_cast<unsigned int>(time(0)));
-//    float randomScale = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 0.5f) + 0.5f;
-//    float randomRotation = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 360.0f);
-//    float randomX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 10.0f) - 5.0f;
-//    float randomZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 10.0f) - 5.0f; //TODO make generation only to 0.5f steps so that we have easier 
-//                                                                                              //work deleting trees from scene later down the road 
-//
-//    return generateTree(randomScale, randomRotation, randomX, randomZ);
-//}
-
-//DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float x, float z) {    
-//    std::string accessString = shaderProgramManager.CreateShaderNemec( "VertLight.shader", "FragLight.shader", "tree");
-//    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
-//    DrawableObject* treeObject = new DrawableObject();
-//    treeObject->setShaderProgram(shaderProgram, accessString);
-//
-//
-//    treeObject->loadFromRawData(tree, 92814, 6);
-//
-//
-//    //TODO transformation order
-//    treeObject->translate(x, 0.0f, z);
-//    treeObject->rotate(rotation, 0.0f, 1.0f, 0.0f);
-//    treeObject->scale(scale);
-//
-//    treeObject->updateDrawData();
-//
-//    return treeObject;
-//}
 
 LightSource* SceneGenerator::generateWhisp(Scene* scene, WhispData whispData) {
     TransformationData transformationData; //this is deprecated but yet its necesary to be there will be removed after cleanup

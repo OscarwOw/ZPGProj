@@ -13,7 +13,7 @@
 
 class Texture {
 public:
-    Texture(const std::string& filePath, GLenum textureTarget = GL_TEXTURE_2D, GLint internalFormat = GL_RGBA);
+    Texture(const std::string& filePath, GLenum textureTarget = GL_TEXTURE_2D, GLint internalFormat = GL_RGB);
         //: _filePath(filePath), _textureTarget(textureTarget), _textureId(0) 
     void bind();
     void unbind();

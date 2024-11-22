@@ -233,8 +233,8 @@ protected:
     float _angleIncrement;   
 
 public:
-    NewTransformationDynamicRotate(glm::mat4& initialMatrix, const glm::vec3& axis)
-        : _matrix(initialMatrix), _axis(axis), _angleIncrement(0.0f) {
+    NewTransformationDynamicRotate(glm::mat4 initialMatrix, glm::vec3 axis, float increment)
+        : _matrix(initialMatrix), _axis(axis), _angleIncrement(increment) {
     }
 
     void setAngleIncrement(float angleIncrement) {

@@ -72,6 +72,10 @@ int Application::startApplication()
     _sceneManager.generateSphereScene("sphereScene");
     _sceneManager.generateShadersSphereScene("shadersSphereScene");
 
+    _sceneManager.generateTextureScene("generateTextureScene");
+
+
+
     _sceneManager.switchScene("triangleScene");
 
     auto lastTickTime = std::chrono::steady_clock::now();
