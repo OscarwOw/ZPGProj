@@ -5,24 +5,22 @@
 #include "Model.h"
 #include "ModelType.h"
 #include "ModelMapping.h" // For ModelMappings
+#include "IModel.h"
+#include "TextureModel.h"
 
 class ModelManager {
 public:
-    // Singleton instance of ModelManager
     static ModelManager& getInstance() {
         static ModelManager instance;
         return instance;
     }
 
-    // Method to get or load a model by ModelType
-    Model* getModel(ModelType modelType) {
-        // Search for the model in the cache
+    IModel* getModel(ModelType modelType) {
         auto it = _modelCache.find(modelType);
         if (it != _modelCache.end()) {
             return it->second.get();
         }
 
-        // If not found, load the model from ModelMappings
         auto modelIt = ModelMappings.find(modelType);
         if (modelIt != ModelMappings.end()) {
             const ModelData& modelData = modelIt->second;
@@ -35,15 +33,22 @@ public:
     }
 
 private:
-    // Private constructor for Singleton pattern
     ModelManager() {}
 
-    // Load a model and add it to the cache
     Model* loadModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex) {
         auto newModel = std::make_shared<Model>(modelType, rawData, vertexCount, floatsPerVertex);
         _modelCache[modelType] = newModel;
         return newModel.get();
     }
 
-    std::map<ModelType, std::shared_ptr<Model>> _modelCache;
+    // Method to load a textured model
+    TextureModel* loadTextureModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex, const std::string& texturePath) {
+        auto newTextureModel = std::make_shared<TextureModel>(modelType, rawData, vertexCount, floatsPerVertex, texturePath);
+        _modelCache[modelType] = newTextureModel;
+        return newTextureModel.get();
+    }
+
+    
+
+    std::map<ModelType, std::shared_ptr<IModel>> _modelCache;
 };

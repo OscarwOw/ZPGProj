@@ -167,6 +167,7 @@
     <ClInclude Include="LightType.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelData.h" />
+    <ClInclude Include="ModelKind.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="NewTransformation.h" />
     <ClInclude Include="NewTransformationComposite.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="ShaderProgramManager.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureModel.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TransformationData.h" />
     <ClInclude Include="ShaderProgram.h" />

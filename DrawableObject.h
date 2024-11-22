@@ -26,7 +26,7 @@ protected:
     IndexBuffer* _indexBuffer;
     GLuint _VAO;
     int _vertexCount;
-    Model* _model;
+    IModel* _model;
     
     
     ShaderProgram* _shaderProgram;
@@ -59,7 +59,7 @@ public:
 
     TransformationComposite transformationComposite;
 
-    void loadFromRawData(const float* rawData, int vertexCount, int stride);
+    //void loadFromRawData(const float* rawData, int vertexCount, int stride);
 
     // Draw all the meshes
     void Draw();

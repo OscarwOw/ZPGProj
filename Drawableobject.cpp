@@ -38,10 +38,6 @@ DrawableObject::DrawableObject(
 
     _model = ModelManager::getInstance().getModel(modelType);
 
-    // Apply transformations
-    //translate(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
-    //rotate(transformationData.RotationAngle, transformationData.RotationX, transformationData.RotationY, transformationData.RotationZ);
-    //scale(transformationData.Scale);
     updateDrawData();
 }
 
@@ -51,24 +47,24 @@ DrawableObject::~DrawableObject() {
 
 }
 
-void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int floatsPerVertex) //TODO RawDataLoader
-{
-    _vertexCount = vertexCount;
-
-    glGenVertexArrays(1, &_VAO);
-    glBindVertexArray(_VAO);
-
-    _vertexBuffer = new VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
-    _indexBuffer = new IndexBuffer(generateIndices(vertexCount), vertexCount);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)0);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(3 * sizeof(float)));   
-
-    glBindVertexArray(0);
-}
+//void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int floatsPerVertex) //TODO RawDataLoader
+//{
+//    _vertexCount = vertexCount;
+//
+//    glGenVertexArrays(1, &_VAO);
+//    glBindVertexArray(_VAO);
+//
+//    _vertexBuffer = new VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
+//    _indexBuffer = new IndexBuffer(generateIndices(vertexCount), vertexCount);
+//
+//    glEnableVertexAttribArray(0);
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)0);
+//
+//    glEnableVertexAttribArray(1);
+//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(3 * sizeof(float)));   
+//
+//    glBindVertexArray(0);
+//}
 
 unsigned int* DrawableObject::generateIndices(int vertexCount) {
     unsigned int* indices = new unsigned int[vertexCount];
@@ -211,7 +207,7 @@ void DrawableObject::updateDrawData() { //update draw data
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
 
 
-        _shaderProgram->setUniformInt("textureUnitID", 1) //Texture._textureId);
+        _shaderProgram->setUniformInt("textureUnitID", 1); //Texture._textureId);
         
             
         //Set texture unit to fragment shader
