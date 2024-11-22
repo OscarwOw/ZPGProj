@@ -361,5 +361,11 @@
     <None Include="frag_texture.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
+    <None Include="frag_phong_texture.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
+    </None>
+    <None Include="vert_phong_texture.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
