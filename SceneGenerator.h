@@ -28,11 +28,13 @@ public:
 
     Scene* generateShadersSphereScene();
 
-    DrawableObject* generateTree();
-    DrawableObject* generateTree(float scale, float rotation, float x, float z);
+    //DrawableObject* generateTree();
+    //DrawableObject* generateTree(float scale, float rotation, float x, float z);
 
     LightSource* generateWhisp(Scene* scene, WhispData whispData);
     vector<LightSource*> generateWhisps(Scene* scene, int count);
+
+    DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material, Texture* texture);
 
     DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material);
 

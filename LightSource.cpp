@@ -3,13 +3,13 @@
 LightSource::LightSource(const glm::vec3& position, const glm::vec4& color, float intensity)
     : _lightColor(color), _lightIntensity(intensity), _lightType(POINTLIGHT)
 {
-    translate(position.x, position.y, position.z);
+    //translate(position.x, position.y, position.z);
 }
 
 LightSource::LightSource(const glm::vec3& position, const glm::vec4& color, float intensity, const glm::vec3& direction, float angle)
     : _lightColor(color), _lightIntensity(intensity), _direction(glm::normalize(direction)), _angle(angle), _lightType(SPOTLIGHT)
 {
-    translate(position.x, position.y, position.z);
+    //translate(position.x, position.y, position.z);
 }
 
 //LightSource::LightSource(const glm::vec4& color, float intensity, const glm::vec3& direction)

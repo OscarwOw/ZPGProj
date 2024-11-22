@@ -24,7 +24,14 @@ public:
         auto modelIt = ModelMappings.find(modelType);
         if (modelIt != ModelMappings.end()) {
             const ModelData& modelData = modelIt->second;
-            return loadModel(modelType, modelData.data, modelData.vertexCount, 6);
+            
+            if(modelData.modelKind == ModelKind::BASIC_MODEL){
+                return loadModel(modelType, modelData.data, modelData.vertexCount, 6);
+            }
+            if (modelData.modelKind == ModelKind::TEXTURED_MODEL) {
+                return loadTextureModel(modelType, modelData.data, modelData.vertexCount, 8);
+            }
+
         }
 
         // Default to PLAIN model if the requested type isn't found
@@ -41,9 +48,9 @@ private:
         return newModel.get();
     }
 
-    // Method to load a textured model
-    TextureModel* loadTextureModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex, const std::string& texturePath) {
-        auto newTextureModel = std::make_shared<TextureModel>(modelType, rawData, vertexCount, floatsPerVertex, texturePath);
+
+    TextureModel* loadTextureModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex) {
+        auto newTextureModel = std::make_shared<TextureModel>(modelType, rawData, vertexCount, floatsPerVertex);
         _modelCache[modelType] = newTextureModel;
         return newTextureModel.get();
     }

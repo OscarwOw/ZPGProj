@@ -2,7 +2,6 @@
 #include <glm/gtc/type_ptr.hpp> 
 #include "SceneGenerator.h"
 #include "ModelManager.h"
-#include <SOIL.h>
 
 
 
@@ -16,10 +15,11 @@ DrawableObject::DrawableObject(
     ShaderType shaderType,
     ModelType modelType,
     glm::vec3 color,
-    MaterialProperties materialProperties
+    MaterialProperties materialProperties,
+    Texture* texture
     //later texture
 )
-    : _color(color), _materialProperties(materialProperties) {
+    : _color(color), _materialProperties(materialProperties), _texture(texture) {
 
 
     //TODO clean up shaders
@@ -47,25 +47,6 @@ DrawableObject::~DrawableObject() {
 
 }
 
-//void DrawableObject::loadFromRawData(const float* rawData, int vertexCount, int floatsPerVertex) //TODO RawDataLoader
-//{
-//    _vertexCount = vertexCount;
-//
-//    glGenVertexArrays(1, &_VAO);
-//    glBindVertexArray(_VAO);
-//
-//    _vertexBuffer = new VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
-//    _indexBuffer = new IndexBuffer(generateIndices(vertexCount), vertexCount);
-//
-//    glEnableVertexAttribArray(0);
-//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)0);
-//
-//    glEnableVertexAttribArray(1);
-//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(3 * sizeof(float)));   
-//
-//    glBindVertexArray(0);
-//}
-
 unsigned int* DrawableObject::generateIndices(int vertexCount) {
     unsigned int* indices = new unsigned int[vertexCount];
     for (int i = 0; i < vertexCount; ++i) {
@@ -77,12 +58,19 @@ unsigned int* DrawableObject::generateIndices(int vertexCount) {
 void DrawableObject::Draw() {
     if (_shaderProgram) {
         _shaderProgram->use();
-        //updateTransformation(16); //TODO deprecated
         updateDrawData();
+        if (_texture != nullptr) {
+            _texture->bind();
+            glActiveTexture(GL_TEXTURE0+1);
+        }
+
         if (_model) {
             _model->bind();
             glDrawElements(GL_TRIANGLES, _model->getVertexCount(), GL_UNSIGNED_INT, nullptr);
             _model->unbind();
+        }
+        if (_texture != nullptr) {
+            _texture->unbind();
         }
         _shaderProgram->use(0);
     }
@@ -137,64 +125,17 @@ MaterialProperties DrawableObject::getMaterialProperties() const
 
 
 
-void DrawableObject::translate(float x, float y, float z) {
-    //transformation.translate(glm::vec3(x, y, z));
-
-
-    //_transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(x, y, z)));
-    //_translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
-    
-
-    
-    transformationData.TranslationX = x;
-    transformationData.TranslationY = y;
-    transformationData.TranslationZ = z;
-
-
-    //_isTranslateTransformationDirty = true;
-    //_isTransformationDirty = true;
-}
-
-void DrawableObject::rotate(float angle, float x, float y, float z) {
-    if (x == 0.0f && y == 0.0f && z == 0.0f) {
-        y = 1.0f;
-    }
-    //_transformationComposite.addTransformation(new TransformationRotate(angle, glm::vec3(x, y, z)));
-    //transformation.rotate(angle, glm::vec3(x, y, z));
-    
-    //_rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x, y, z));
-
-    transformationData.RotationAngle = angle;
-    transformationData.RotationX = x;
-    transformationData.RotationY = y;
-    transformationData.RotationZ = z;
-
-    //_isRotationTransformationDirty = true;
-    //_isTransformationDirty = true;
-}
-
-void DrawableObject::scale(float scaleFactor) {    
-    //_transformationComposite.addTransformation(new TransformationScale{glm::vec3(scaleFactor)});
-    //transformation.scale(scaleFactor);
-
-    //_scaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
-    
-
-    transformationData.Scale = scaleFactor;
-}
-
-
-
-
-
-
 void DrawableObject::updateDrawData() { //update draw data
     MatrixHelper& matrixHelper = MatrixHelper::getInstance();
 
     //glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
     //glm::mat4 modelMatrix = transformation.getModelMatrix();
 
-    glm::mat4 modelMatrix = transformationComposite.getMatrix();    
+    glm::mat4 modelMatrix = transformationComposite.getMatrix();
+
+    if (_texture != nullptr) {
+        _shaderProgram->setUniformInt("textureUnitID", _texture->getTextureID());
+    }
 
     if (_shaderProgram) {
         _shaderProgram->use();
@@ -207,7 +148,7 @@ void DrawableObject::updateDrawData() { //update draw data
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
 
 
-        _shaderProgram->setUniformInt("textureUnitID", 1); //Texture._textureId);
+        //_shaderProgram->setUniformInt("textureUnitID", 1); //Texture._textureId);
         
             
         //Set texture unit to fragment shader
