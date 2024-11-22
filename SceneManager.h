@@ -29,6 +29,8 @@ public:
     Scene* generateNightForestScene(std::string name);
     Scene* generateSphereScene(std::string name);
     Scene* generateShadersSphereScene(std::string name);
+    Scene* generateTextureScene(std::string name);
+
     void switchScene(const std::string& name);
     void rotateObjectSimulation();
     void switchToNextScene();

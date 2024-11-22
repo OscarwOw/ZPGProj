@@ -6,30 +6,31 @@
 Texture::Texture(const std::string& filePath, GLenum textureTarget , GLint internalFormat )
     : _filePath(filePath), _textureTarget(textureTarget), _textureId(0){
     int width, height, nrChannels;
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
     if (data) {
         glGenTextures(1, &_textureId);
+        //glActiveTexture(GL_TEXTURE0);
         glBindTexture(_textureTarget, _textureId);
 
-        glTexImage2D(_textureTarget, 0, internalFormat, width, height, 0,
-            nrChannels == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
+        GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
 
-        glGenerateMipmap(_textureTarget);
+        glTexImage2D(_textureTarget, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 
         setDefaultParameters();
 
+        glGenerateMipmap(_textureTarget);
+
         stbi_image_free(data);
+        unbind();
     }
     else {
         printf("Failed to load texture: %s\n", filePath.c_str());
         stbi_image_free(data);
     }
 
-    if (_textureId == 0) {
-        printf("Failed to load texture: \n");
-    }
-
-    setDefaultParameters();
+    //setDefaultParameters();
 }
 
 

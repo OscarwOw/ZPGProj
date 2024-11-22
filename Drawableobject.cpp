@@ -59,10 +59,9 @@ void DrawableObject::Draw() {
     if (_shaderProgram) {
         _shaderProgram->use();
         updateDrawData();
-        if (_texture != nullptr) {
-            _texture->bind();
-            glActiveTexture(GL_TEXTURE0+1);
-        }
+
+            
+        
 
         if (_model) {
             _model->bind();
@@ -134,7 +133,9 @@ void DrawableObject::updateDrawData() { //update draw data
     glm::mat4 modelMatrix = transformationComposite.getMatrix();
 
     if (_texture != nullptr) {
-        _shaderProgram->setUniformInt("textureUnitID", _texture->getTextureID());
+        _shaderProgram->setUniformInt("textureUnitID", 0);
+        _texture->bind();
+        glActiveTexture(GL_TEXTURE0);
     }
 
     if (_shaderProgram) {
