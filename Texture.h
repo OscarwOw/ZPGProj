@@ -9,11 +9,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
+#include <vector>
 
 
 class Texture {
 public:
     Texture(const std::string& filePath, GLenum textureTarget = GL_TEXTURE_2D, GLint internalFormat = GL_RGB);
+    Texture(const std::vector<std::string>& faces);
         //: _filePath(filePath), _textureTarget(textureTarget), _textureId(0) 
     void bind();
     void unbind();
@@ -26,4 +28,5 @@ private:
     GLuint _textureId;
 
     void setDefaultParameters();
+    void setDefaultCubeMapParameters();
 };
