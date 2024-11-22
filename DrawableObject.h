@@ -12,6 +12,7 @@
 #include "NewTransformation.h"
 #include "NewTransformationComposite.h"
 #include "Model.h"
+#include "Texture.h"
 
 
 //TODO this whole class is one big mess... should i call it mastershit?
@@ -27,6 +28,7 @@ protected:
     GLuint _VAO;
     int _vertexCount;
     IModel* _model;
+    Texture* _texture;
     
     
     ShaderProgram* _shaderProgram;
@@ -52,7 +54,8 @@ public:
         ShaderType shaderType,
         ModelType modelType,
         glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f),
-        MaterialProperties materialProperties = MaterialProperties()
+        MaterialProperties materialProperties = MaterialProperties(),
+        Texture* texture = nullptr
     );
     ~DrawableObject();
     //Transformation transformation;
@@ -76,10 +79,6 @@ public:
 
     MaterialProperties getMaterialProperties() const;
 
-    // Optional: Apply transformations to the entire object
-    void translate(float x, float y, float z);
-    void rotate(float angle, float x, float y, float z);
-    void scale(float scale);
     void updateDrawData();
 
     void updateTransformation(float deltaTime);

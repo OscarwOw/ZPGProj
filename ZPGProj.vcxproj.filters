@@ -117,6 +117,9 @@
     <ClCompile Include="DirectionalLightSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderProgram.h">
@@ -351,6 +354,12 @@
     </None>
     <None Include="vert_phong_Static.shader">
       <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="vert_texture.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="frag_texture.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
   </ItemGroup>
 </Project>

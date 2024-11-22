@@ -17,7 +17,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     MaterialProperties material(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.8f));
 
     // Triangle 1
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::TRIANGLE, glm::vec3(0.8f, 0.4f, 0.0f), material);
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material, new Texture("test.png"));
 
     glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -2.0f));
     NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
@@ -359,17 +359,17 @@ Scene* SceneGenerator::generateShadersSphereScene() {
 #pragma endregion
 
 #pragma region object generation
-DrawableObject* SceneGenerator::generateTree() //deorecated af should be in history museum by now
-{
-    //srand(static_cast<unsigned int>(time(0)));
-    float randomScale = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 0.5f) + 0.5f;
-    float randomRotation = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 360.0f);
-    float randomX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 10.0f) - 5.0f;
-    float randomZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 10.0f) - 5.0f; //TODO make generation only to 0.5f steps so that we have easier 
-                                                                                              //work deleting trees from scene later down the road 
-
-    return generateTree(randomScale, randomRotation, randomX, randomZ);
-}
+//DrawableObject* SceneGenerator::generateTree() //deorecated af should be in history museum by now
+//{
+//    //srand(static_cast<unsigned int>(time(0)));
+//    float randomScale = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 0.5f) + 0.5f;
+//    float randomRotation = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 360.0f);
+//    float randomX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 10.0f) - 5.0f;
+//    float randomZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / 10.0f) - 5.0f; //TODO make generation only to 0.5f steps so that we have easier 
+//                                                                                              //work deleting trees from scene later down the road 
+//
+//    return generateTree(randomScale, randomRotation, randomX, randomZ);
+//}
 
 //DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float x, float z) {    
 //    std::string accessString = shaderProgramManager.CreateShaderNemec( "VertLight.shader", "FragLight.shader", "tree");
@@ -452,6 +452,9 @@ vector<LightSource*> SceneGenerator::generateWhisps(Scene* scene, int count) {
     return whisps;
 }
 
+DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material, Texture* texture) {
+    return new DrawableObject(transformationData, shaderType, modelType, color, material, texture);
+}
 
 DrawableObject* SceneGenerator::generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType, glm::vec3 color, MaterialProperties material) {
     return new DrawableObject(transformationData, shaderType, modelType, color, material);
