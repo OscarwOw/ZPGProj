@@ -275,9 +275,6 @@
     <ClInclude Include="DirectionalLightSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -289,6 +286,15 @@
     </ClInclude>
     <ClInclude Include="ModelData.h">
       <Filter>Header Files\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelKind.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="IModel.h">
+      <Filter>Header Files\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureModel.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

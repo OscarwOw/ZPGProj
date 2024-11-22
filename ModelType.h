@@ -1,4 +1,8 @@
 #pragma once
+/*
+    Represents unique model data
+*/
+
 enum class ModelType {
     NONE = -1,
     TREE = 0,

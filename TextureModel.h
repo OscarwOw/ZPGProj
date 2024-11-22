@@ -1,13 +1,9 @@
 #pragma once
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "ModelType.h"
 #include "IModel.h"
 
-
-class Model : public IModel {
+class TextureModel : public IModel {
 public:
-    Model(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex)
+    TextureModel(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex)
         : _modelType(modelType), _vertexCount(vertexCount) {
 
         glGenVertexArrays(1, &_VAO);
@@ -29,10 +25,13 @@ public:
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(3 * sizeof(float)));
 
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(6 * sizeof(float)));
+
         glBindVertexArray(0);
     }
 
-    ~Model() {
+    ~TextureModel() {
         delete _vertexBuffer;
         delete _indexBuffer;
         glDeleteVertexArrays(1, &_VAO);

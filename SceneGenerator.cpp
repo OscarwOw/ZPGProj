@@ -371,25 +371,25 @@ DrawableObject* SceneGenerator::generateTree() //deorecated af should be in hist
     return generateTree(randomScale, randomRotation, randomX, randomZ);
 }
 
-DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float x, float z) {    
-    std::string accessString = shaderProgramManager.CreateShaderNemec( "VertLight.shader", "FragLight.shader", "tree");
-    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
-    DrawableObject* treeObject = new DrawableObject();
-    treeObject->setShaderProgram(shaderProgram, accessString);
-
-
-    treeObject->loadFromRawData(tree, 92814, 6);
-
-
-    //TODO transformation order
-    treeObject->translate(x, 0.0f, z);
-    treeObject->rotate(rotation, 0.0f, 1.0f, 0.0f);
-    treeObject->scale(scale);
-
-    treeObject->updateDrawData();
-
-    return treeObject;
-}
+//DrawableObject* SceneGenerator::generateTree(float scale, float rotation, float x, float z) {    
+//    std::string accessString = shaderProgramManager.CreateShaderNemec( "VertLight.shader", "FragLight.shader", "tree");
+//    ShaderProgram* shaderProgram = shaderProgramManager.getShader(accessString);
+//    DrawableObject* treeObject = new DrawableObject();
+//    treeObject->setShaderProgram(shaderProgram, accessString);
+//
+//
+//    treeObject->loadFromRawData(tree, 92814, 6);
+//
+//
+//    //TODO transformation order
+//    treeObject->translate(x, 0.0f, z);
+//    treeObject->rotate(rotation, 0.0f, 1.0f, 0.0f);
+//    treeObject->scale(scale);
+//
+//    treeObject->updateDrawData();
+//
+//    return treeObject;
+//}
 
 LightSource* SceneGenerator::generateWhisp(Scene* scene, WhispData whispData) {
     TransformationData transformationData; //this is deprecated but yet its necesary to be there will be removed after cleanup
