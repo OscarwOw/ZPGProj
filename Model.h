@@ -9,7 +9,19 @@ class Model : public IModel {
 public:
     Model(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex)
         : _modelType(modelType), _vertexCount(vertexCount) {
+        unsigned int* indices = new unsigned int[vertexCount];
+        for (int i = 0; i < vertexCount; ++i) {
+            indices[i] = i;
+        }
+        IndexBuffer* indexBuffer = new IndexBuffer(indices, vertexCount);
+        delete[] indices;
+        
+        Model(modelType, rawData, vertexCount, floatsPerVertex, indexBuffer);
+    }
 
+    Model(ModelType modelType, const float* rawData, int vertexCount, int floatsPerVertex, IndexBuffer* indexBuffer) 
+        : _modelType(modelType), _vertexCount(vertexCount), _indexBuffer(indexBuffer)
+    {
         glGenVertexArrays(1, &_VAO);
         glBindVertexArray(_VAO);
 
