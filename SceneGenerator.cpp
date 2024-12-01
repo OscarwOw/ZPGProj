@@ -128,6 +128,34 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
     forestScene->addObject(ground);
 
+    DrawableObject* house = generateDrawableObject(ShaderType::Texture_phong, "house.obj", new Texture("house.png"), materialpropertiesforground);
+    NewTransformationTranslate* houseTranslate = new NewTransformationTranslate(glm::vec3(10.0f, 0.0f, 10.0f));
+    NewTransformationScale* houseScale = new NewTransformationScale(glm::vec3(1.0f));
+    house->transformationComposite.addTransformation(houseTranslate);
+    house->transformationComposite.addTransformation(houseScale);
+
+    forestScene->addObject(house);
+
+    DrawableObject* suzi = generateDrawableObject(ShaderType::Texture, "login.obj", new Texture("grass.png"), materialpropertiesforground);
+    //DrawableObject(ShaderType shaderType, char* modelFile, Texture* texture, MaterialProperties material);
+
+
+    NewTransformationTranslate* translateTrans = new NewTransformationTranslate(glm::vec3(10.0f, 10.0f, 10.0f));
+    NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f);
+    NewTransformationTranslate* translateTrans2 = new NewTransformationTranslate(glm::vec3(-2.0f, 0.0f, 0.0f));
+    NewTransformationScale* scaleTrans = new NewTransformationScale(glm::vec3(2.00f));
+
+    suzi->transformationComposite.addTransformation(translateTrans);
+    suzi->transformationComposite.addTransformation(rotateTrans);
+    suzi->transformationComposite.addTransformation(translateTrans2);
+    suzi->transformationComposite.addTransformation(scaleTrans);
+
+
+    forestScene->getBehavioralManager()->addAnimeObject(rotateTrans);
+
+    forestScene->addObject(suzi);
+
+
     std::vector<glm::vec3> treePositions;
 
     for (int i = 0; i < numTrees; ++i) {
