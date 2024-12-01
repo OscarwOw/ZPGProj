@@ -10,6 +10,7 @@ public:
 	virtual void unbind() = 0;
 	virtual ModelType getModelType() = 0;
 	virtual int getVertexCount() = 0;
+	virtual void draw() = 0;
 
 protected:
 	ModelType _modelType;

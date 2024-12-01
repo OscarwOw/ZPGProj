@@ -79,15 +79,16 @@ unsigned int* DrawableObject::generateIndices(int vertexCount) {
 void DrawableObject::Draw() {
     if (_shaderProgram) {
         _shaderProgram->use();
+        
         updateDrawData();
-
             
         
 
         if (_model) {
-            _model->bind();
+            _model->draw();
+           /* _model->bind();
             glDrawElements(GL_TRIANGLES, _model->getVertexCount(), GL_UNSIGNED_INT, nullptr);
-            _model->unbind();
+            _model->unbind();*/
         }
         if (_texture != nullptr) {
             _texture->unbind();
