@@ -44,6 +44,8 @@ public:
 
     DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType);
 
+    DrawableObject* generateDrawableObject(ShaderType shaderType,const char* modelFile, Texture* texture, MaterialProperties material);
+
     //DrawableObject* generateDrawableObject(TransformationData transformationData, ShaderType shaderType, ModelType modelType);
     LightSource* generateLightSource(TransformationData transformationData, ShaderType shaderType, ModelType modelType, const glm::vec4& lightColor, float lightIntensity);
 private:

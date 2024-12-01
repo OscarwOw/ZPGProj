@@ -20,6 +20,7 @@ public:
         if (it != _modelCache.end()) {
             return it->second.get();
         }
+        
 
         auto modelIt = ModelMappings.find(modelType);
         if (modelIt != ModelMappings.end()) {
@@ -39,6 +40,10 @@ public:
         return getModel(ModelType::PLAIN);
     }
 
+    IModel* getModelFromFile(const char* modelFile) {
+        return new TextureModel(modelFile);
+    }
+
 private:
     ModelManager() {}
 
@@ -54,6 +59,9 @@ private:
         _modelCache[modelType] = newTextureModel;
         return newTextureModel.get();
     }
+
+
+
 
     
 

@@ -299,6 +299,9 @@
     <ClInclude Include="TextureModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="building.h">
+      <Filter>Resource Files\models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorShader.shader">

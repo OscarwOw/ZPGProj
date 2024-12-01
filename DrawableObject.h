@@ -57,6 +57,7 @@ public:
         MaterialProperties materialProperties = MaterialProperties(),
         Texture* texture = nullptr
     );
+    DrawableObject(ShaderType shaderType,const char* modelFile, Texture* texture, MaterialProperties material);
     ~DrawableObject();
     //Transformation transformation;
 

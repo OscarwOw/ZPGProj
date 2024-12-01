@@ -1,3 +1,13 @@
+odkaz na video: 
+https://youtu.be/sFl7yAG91GY
+
+
+odkaz na github:
+https://github.com/OscarwOw/ZPGProj
+
+
+
+
 
 
 TODO

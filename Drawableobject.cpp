@@ -41,6 +41,27 @@ DrawableObject::DrawableObject(
     updateDrawData();
 }
 
+DrawableObject::DrawableObject(ShaderType shaderType,const char* modelFile, Texture* texture, MaterialProperties material) 
+    : _materialProperties(material), _texture(texture), _color(glm::vec3(1.0f))
+{
+    auto it = ShaderMappings.find(shaderType); 
+    if (it == ShaderMappings.end()) {
+        std::cerr << "Invalid ShaderType specified. Assigning default shader." << std::endl;
+        it = ShaderMappings.find(ShaderType::Test);
+    }
+    ShaderInfo shaderInfo = it->second;
+    std::string accessString = ShaderProgramManager::getInstance().CreateShaderNemec(shaderInfo.vertexPath.c_str(), shaderInfo.fragmentPath.c_str(), "generatedObject");
+    _shaderProgram = ShaderProgramManager::getInstance().getShader(accessString);
+    if (_shaderProgram) {
+        setShaderProgram(_shaderProgram);
+    }
+
+
+    _model = ModelManager::getInstance().getModelFromFile(modelFile);
+    updateDrawData();
+
+}
+
 DrawableObject::~DrawableObject() {
     delete _vertexBuffer;
     delete _indexBuffer;
