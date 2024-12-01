@@ -14,6 +14,7 @@ enum class ModelType {
     SPHERE = 6,
     CUBE = 7,
     TRIANGLE = 8,
-    PLAIN_TEXTURE = 9
+    PLAIN_TEXTURE = 9,
+    BUILDING_TEXTURE = 10
 };
 

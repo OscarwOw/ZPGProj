@@ -6,6 +6,8 @@
 Texture::Texture(const std::string& filePath, GLenum textureTarget , GLint internalFormat )
     : _filePath(filePath), _textureTarget(textureTarget), _textureId(0){
     int width, height, nrChannels;
+    
+    stbi_set_flip_vertically_on_load(true);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
