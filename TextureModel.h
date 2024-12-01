@@ -24,12 +24,12 @@ public:
         _vertexBuffer = new VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
         _vertexBuffer->Bind();
 
-        unsigned int* indices = new unsigned int[vertexCount];
-        for (int i = 0; i < vertexCount; ++i) {
-            indices[i] = i;
-        }
-        _indexBuffer = new IndexBuffer(indices, vertexCount);
-        delete[] indices;
+        //unsigned int* indices = new unsigned int[vertexCount];
+        //for (int i = 0; i < vertexCount; ++i) {
+        //    indices[i] = i;
+        //}
+        //_indexBuffer = new IndexBuffer(indices, vertexCount);
+        //delete[] indices;
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)0);
@@ -39,6 +39,8 @@ public:
 
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)(6 * sizeof(float)));
+
+        _hasIBO = false;
 
         glBindVertexArray(0);
     }
@@ -53,6 +55,8 @@ public:
         //aiProcess_GenNormals/ai_Process_GenSmoothNormals - Generates flat/Smooth normals
 
         const aiScene* scene = importer.ReadFile(modelFile, importOptions);
+        _hasIBO = true;
+
 
         if (scene) {
             printf("scene->mNumMeshes = %d\n", scene->mNumMeshes);
@@ -154,6 +158,7 @@ public:
                     std::cout << "GL ERROR: " << err << std::endl;
                 }
                 _vertexCount = mesh->mNumFaces * 3;
+                
                 delete[] pVertices;
                 delete[] pIndices;
             }
@@ -164,7 +169,9 @@ public:
 
     ~TextureModel() {
         delete _vertexBuffer;
-        delete _indexBuffer;
+        if (_hasIBO) {
+            delete _indexBuffer;
+        }
         glDeleteVertexArrays(1, &_VAO);
     }
 
@@ -183,6 +190,16 @@ public:
     int getVertexCount() override {
         return _vertexCount;
     }
+    void draw() override {
+        bind();
+        if (_hasIBO) {
+            glDrawElements(GL_TRIANGLES, _vertexCount, GL_UNSIGNED_INT, nullptr);
+        }
+        else {
+            glDrawArrays(GL_TRIANGLES, 0, _vertexCount);
+        }
+        unbind();
+    }
 
 private:
     ModelType _modelType;
@@ -190,4 +207,5 @@ private:
     IndexBuffer* _indexBuffer;
     GLuint _VAO;
     int _vertexCount;
+    bool _hasIBO;
 };
