@@ -17,7 +17,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     MaterialProperties material(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.8f));
 
     // Triangle 1
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Texture_phong, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material, new Texture("test.png"));
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material);//, new Texture("test.png"));
 
     glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -2.0f));
     NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
@@ -73,6 +73,12 @@ Scene* SceneGenerator::generateDefaultScene() {
     light->transformationComposite.addTransformation(lightScale);
 
     scene->addLightSource(light);
+
+
+    DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
+    scene->addLightSource(dirLight);
+
+
 
     scene->setCameraDirection(glm::vec3(0.0f, 0.0f, 1.0f));
     scene->setCameraPosition(glm::vec3(0.0f, 0.0f, -5.0f));
@@ -291,7 +297,10 @@ Scene* SceneGenerator::generateNightForestScene(int numTrees, float areaSize, fl
         // Tree using old TransformationData
         TransformationData treeTransformationData;
 
-        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE);
+        float redTreeColor = 0.2f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (0.4f - 0.2f);
+        float greenTreeColor = 0.4f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (0.9f - 0.4f);
+
+        DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE, glm::vec3(redTreeColor, greenTreeColor, 0.0f));
 
         // Add new transformations to tree
         NewTransformationTranslate* treeTranslate = new NewTransformationTranslate(position);
@@ -311,32 +320,31 @@ Scene* SceneGenerator::generateNightForestScene(int numTrees, float areaSize, fl
         int numBushes = 5 + (rand() % 15);
         float calcdistance = minDistance * 10;
 
-        for (int j = 0; j < numBushes; ++j) {
-            float bushOffsetX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / calcdistance) - (calcdistance / 2);
-            float bushOffsetZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / calcdistance) - (calcdistance / 2);
+        //for (int j = 0; j < numBushes; ++j) {
+        //    float bushOffsetX = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / calcdistance) - (calcdistance / 2);
+        //    float bushOffsetZ = static_cast<float>(rand()) / static_cast<float>(RAND_MAX / calcdistance) - (calcdistance / 2);
 
-            glm::vec3 bushPosition = position + glm::vec3(bushOffsetX, 0.0f, bushOffsetZ);
+        //    glm::vec3 bushPosition = position + glm::vec3(bushOffsetX, 0.0f, bushOffsetZ);
 
-            // Bush using old TransformationData
-            TransformationData bushTransformationData;
+        //    // Bush using old TransformationData
+        //    TransformationData bushTransformationData;
 
-            DrawableObject* bush = generateDrawableObject(bushTransformationData, ShaderType::Test, ModelType::BUSH);
+        //    DrawableObject* bush = generateDrawableObject(bushTransformationData, ShaderType::Test, ModelType::BUSH);
 
-            // Add new transformations to bush
-            NewTransformationTranslate* bushTranslate = new NewTransformationTranslate(bushPosition);
-            NewTransformationScale* bushScale = new NewTransformationScale(glm::vec3(0.5f));
-            bush->transformationComposite.addTransformation(bushTranslate);
-            bush->transformationComposite.addTransformation(bushScale);
+        //    // Add new transformations to bush
+        //    NewTransformationTranslate* bushTranslate = new NewTransformationTranslate(bushPosition);
+        //    NewTransformationScale* bushScale = new NewTransformationScale(glm::vec3(0.5f));
+        //    bush->transformationComposite.addTransformation(bushTranslate);
+        //    bush->transformationComposite.addTransformation(bushScale);
 
-            forestScene->addObject(bush);
-        }
+        //    forestScene->addObject(bush);
+        //}
     }
 
     DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
     forestScene->addLightSource(dirLight);
 
-    //LightData directionalLightData(DIRECTIONALLIGHT, glm::vec4(0.5f), glm::vec3(-0.5f));
-    //LightSource* dirLight = new LightSource(glm::vec4(1.0f), 1.0f, glm::vec3(-0.2f, -1.0f, -0.3f));
+
 
     //forestScene->addLightSource(dirLight);
 

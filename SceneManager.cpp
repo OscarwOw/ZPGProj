@@ -31,7 +31,7 @@ Scene* SceneManager::generateForestScene(std::string name) {
 }
 
 Scene* SceneManager::generateNightForestScene(std::string name) {
-	Scene* scene = SceneGenerator::getInstance().generateNightForestScene(50, 100.0f, 1.5f);		//.generateForestScene(50, 50);
+	Scene* scene = SceneGenerator::getInstance().generateNightForestScene(5, 100.0f, 1.5f);		//.generateForestScene(50, 50);
 	addScene(name, scene);
 	return scene;
 }
