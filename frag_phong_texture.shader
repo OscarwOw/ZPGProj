@@ -108,7 +108,7 @@ vec3 calculateSpotLight(Light light, vec3 normal, vec3 viewDir) {
 vec3 calculateDirectionalLight(Light light, vec3 normal, vec3 viewDir) {
     vec3 lightDir = normalize(-light.direction);
 
-    vec3 ambient = materialAmbient * light.color;
+    vec3 ambient = materialAmbient * light.color * light.intensity;
 
     float diff = max(dot(normal, lightDir), 0.0);
     vec3 diffuse = diff * materialDiffuse * light.color * light.intensity;
@@ -117,7 +117,7 @@ vec3 calculateDirectionalLight(Light light, vec3 normal, vec3 viewDir) {
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), materialShininess);
     vec3 specular = materialSpecular * spec * light.color * light.intensity;
 
-    return  ambient + diffuse + specular;
+    return ambient + diffuse + specular;//ambient + diffuse + specular;
 }
 
 
@@ -145,7 +145,7 @@ void main() {
     vec3 textureColor = vec3(texture(textureUnitID, uv_out));
 
 
-    result = (ambient + diffuse) * textureColor + specular;
+    result = (ambient + diffuse + specular) * textureColor;
 
     frag_colour = vec4(result, 1.0);
 
