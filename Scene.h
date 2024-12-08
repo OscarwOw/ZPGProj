@@ -3,6 +3,8 @@
 #include "LightSource.h"
 #include "LightPublisher.h"
 #include "BehaviorManager.h"
+#include "skycube.h"
+#include "ShaderProgramManager.h"
 
 class Scene {
 private:
@@ -12,7 +14,12 @@ private:
     BehaviorManager* _behavioralManager;
     glm::vec3 _cameraPosition = glm::vec3(0.0f);
     glm::vec3 _cameraDirection = glm::vec3(0.0f,0.0f,1.0f);
+    Texture* _skyboxTexture;
+    ShaderProgram* _skyboxShaderProgram;
+    unsigned int _skyboxVAO;
+    unsigned int _skyboxVBO;
 
+    bool _hasSkyBox = false;
     //LightSource* _lightSource;
     bool _hasLightSource = false;
     void publishLights();
@@ -26,6 +33,8 @@ public:
     void drawScene(float deltatime);
     void clearScene();
     void addLightSource(ILightEmitter* lightSource);
+    void addSkyBox(std::vector<std::string> faces);
+    void drawSkybox();
     //std::vector<LightSource*> getLightSources();
     bool hasLightSource();
     void circusTransform();

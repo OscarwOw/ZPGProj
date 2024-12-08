@@ -175,6 +175,7 @@
     <ClInclude Include="NewTransformationComposite.h" />
     <ClInclude Include="plainTexture.h" />
     <ClInclude Include="RandomMovementCube.h" />
+    <ClInclude Include="skycube.h" />
     <ClInclude Include="square.h" />
     <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="frag_phong_static.shader" />
@@ -220,6 +221,7 @@
     <None Include="frag_blinn.shader" />
     <None Include="frag_constant.shader" />
     <None Include="FragLight.shader" />
+    <None Include="frag_cube_map.shader" />
     <None Include="frag_develop.shader" />
     <None Include="frag_lambert.shader" />
     <None Include="frag_light.shader" />
@@ -231,6 +233,7 @@
     <None Include="VertLight.shader" />
     <None Include="vert_blinn.shader" />
     <None Include="vert_constant.shader" />
+    <None Include="vert_cube_map.shader" />
     <None Include="vert_develop.shader" />
     <None Include="vert_lambert.shader" />
     <None Include="vert_light.shader" />

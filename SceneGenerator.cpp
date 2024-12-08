@@ -17,7 +17,7 @@ Scene* SceneGenerator::generateDefaultScene() {
     MaterialProperties material(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.8f));
 
     // Triangle 1
-    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material);//, new Texture("test.png"));
+    DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material);
 
     glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -2.0f));
     NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
@@ -27,57 +27,47 @@ Scene* SceneGenerator::generateDefaultScene() {
 
     triangle->transformationComposite.addTransformation(dyntrans3);
     triangle->transformationComposite.addTransformation(translatetransformation);
-    //scene->getBehavioralManager()->addAnimeObject(dyntrans3); //TODO encapsulate into some function so that this does not scare me every time i look at it
 
     scene->addObject(triangle);
 
 
-    //DrawableObject* suzi = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SUZI_SMOOTH, glm::vec3(0.8f, 0.4f, 0.0f), material);
-    //DrawableObject* suzi = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::BUILDING_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material, new Texture("house.png"));
+    
     //DrawableObject* suzi = generateDrawableObject(ShaderType::Texture, "house.obj", new Texture("house.png"), material);
-    
-    DrawableObject* suzi = generateDrawableObject(ShaderType::Texture, "house.obj", new Texture("house.png"), material);
-    //DrawableObject(ShaderType shaderType, char* modelFile, Texture* texture, MaterialProperties material);
 
-    
-    
-    
-    
-    NewTransformationTranslate* translateTrans = new NewTransformationTranslate(glm::vec3(0.0f,0.0f,-2.0f));
-    NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f,1.0f,0.0f), 10.0f);
-    NewTransformationScale* scaleTrans = new NewTransformationScale(glm::vec3(0.05f));
-    
-    suzi->transformationComposite.addTransformation(translateTrans);
-    suzi->transformationComposite.addTransformation(rotateTrans);
-    suzi->transformationComposite.addTransformation(scaleTrans);
-    
-    
-    scene->getBehavioralManager()->addAnimeObject(rotateTrans);
-    
-    scene->addObject(suzi);
+    //NewTransformationTranslate* translateTrans = new NewTransformationTranslate(glm::vec3(0.0f,0.0f,-2.0f));
+    //NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f,1.0f,0.0f), 10.0f);
+    //NewTransformationScale* scaleTrans = new NewTransformationScale(glm::vec3(0.05f));
+    //
+    //suzi->transformationComposite.addTransformation(translateTrans);
+    //suzi->transformationComposite.addTransformation(rotateTrans);
+    //suzi->transformationComposite.addTransformation(scaleTrans);
+    //
+    //
+    //scene->getBehavioralManager()->addAnimeObject(rotateTrans);
+    //
+    //scene->addObject(suzi);
 
     // Light 1
+
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
 
-    // Add new transformations to light
-    NewTransformationTranslate* lightTranslate = new NewTransformationTranslate(glm::vec3(-2.0f, 2.0f, 0.0f));
-
-    glm::mat4 initialMatrix2 = glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 2.0f, 0.0f));
-    NewTransformationDynamicTranslateCube* dyntrans2 = new NewTransformationDynamicTranslateCube(2.0f, 2.0f, initialMatrix2,
-        15.0f, 15.0f, 15.0f, -15.0f, -15.0f, -15.0f
-    );
     NewTransformationTranslate* translate = new NewTransformationTranslate(glm::vec3(1.0f, 1.0f, 1.0f));
-
     NewTransformationScale* lightScale = new NewTransformationScale(glm::vec3(0.1f, 0.1f, 0.1f));
-    light->transformationComposite.addTransformation(dyntrans2);
+    light->transformationComposite.addTransformation(translate);
     light->transformationComposite.addTransformation(lightScale);
+
+
+
+
 
     scene->addLightSource(light);
 
 
-    DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
-    scene->addLightSource(dirLight);
+    //DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
+    //scene->addLightSource(dirLight);
 
+    std::vector<std::string> faces = {"posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg", "negz.jpg" };
+    scene->addSkyBox(faces);
 
 
     scene->setCameraDirection(glm::vec3(0.0f, 0.0f, 1.0f));
