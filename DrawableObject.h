@@ -50,7 +50,6 @@ protected:
     float _scaleFactor;
     GLuint _transformationUniformLocation;
 
-    unsigned int* generateIndices(int vertexCount);
 
 public:
     DrawableObject();
@@ -67,9 +66,6 @@ public:
 
     TransformationComposite transformationComposite;
 
-    //void loadFromRawData(const float* rawData, int vertexCount, int stride);
-
-    // Draw all the meshes
     void Draw();
 
     void setShaderProgram(ShaderProgram* shaderProgram);
@@ -85,7 +81,4 @@ public:
     MaterialProperties getMaterialProperties() const;
 
     void updateDrawData();
-
-    void updateTransformation(float deltaTime);
-    //void printMatrix(const glm::mat4& matrix);
 };
