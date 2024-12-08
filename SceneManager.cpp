@@ -67,6 +67,8 @@ void SceneManager::switchScene(const std::string& name) { //TODO debug shows tha
 				Camera::getInstance().attachObserver(object->getSaherProgram());
 			}
 			currentSceneName = name;
+			Camera::getInstance().setPosition(scene->second->getCameraPosition());
+			Camera::getInstance().setDirection(scene->second->getCameraDirection());
 			return;
 		}
 
@@ -76,10 +78,7 @@ void SceneManager::switchScene(const std::string& name) { //TODO debug shows tha
 		{			
 			Camera::getInstance().detachObserver(objects[i]->getSaherProgram());
 		}
-		//TODO cleanup
-		if (scene->second->hasLightSource()) { //wierd looking strcture but its optimized 
-			//std::vector<LightSource*> lightSources = scene->second->getLightSources();
-
+		if (scene->second->hasLightSource()) { 
 			
 			for (DrawableObject* object : newObjects) {
 				Camera::getInstance().attachObserver(object->getSaherProgram());					

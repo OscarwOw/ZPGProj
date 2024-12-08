@@ -32,6 +32,8 @@ Scene* SceneGenerator::generateDefaultScene() {
 
 
     
+
+    
     //DrawableObject* suzi = generateDrawableObject(ShaderType::Texture, "house.obj", new Texture("house.png"), material);
 
     //NewTransformationTranslate* translateTrans = new NewTransformationTranslate(glm::vec3(0.0f,0.0f,-2.0f));
@@ -57,8 +59,12 @@ Scene* SceneGenerator::generateDefaultScene() {
     light->transformationComposite.addTransformation(lightScale);
 
 
+    std::vector<glm::vec3> bezpointvec = { glm::vec3(0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(20.0f, 20.0f, 0.0f), glm::vec3(20.0f, 40.0f, 0.0f) };
 
-
+    NewTransformationBezier* bezier = new NewTransformationBezier(glm::mat4(1.0f), bezpointvec, 1.0f);
+    light->transformationComposite.addTransformation(bezier);
+    
+    scene->getBehavioralManager()->addAnimeObject(bezier);
 
     scene->addLightSource(light);
 
@@ -71,7 +77,7 @@ Scene* SceneGenerator::generateDefaultScene() {
 
 
     scene->setCameraDirection(glm::vec3(0.0f, 0.0f, 1.0f));
-    scene->setCameraPosition(glm::vec3(0.0f, 0.0f, -5.0f));
+    scene->setCameraPosition(glm::vec3(0.0f, 5.0f, -5.0f));
     return scene;
 }
 

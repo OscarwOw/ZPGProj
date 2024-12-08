@@ -24,13 +24,6 @@ public:
         _vertexBuffer = new VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
         _vertexBuffer->Bind();
 
-        //unsigned int* indices = new unsigned int[vertexCount];
-        //for (int i = 0; i < vertexCount; ++i) {
-        //    indices[i] = i;
-        //}
-        //_indexBuffer = new IndexBuffer(indices, vertexCount);
-        //delete[] indices;
-
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, floatsPerVertex * sizeof(float), (void*)0);
 
@@ -47,12 +40,10 @@ public:
 
     TextureModel(const char* modelFile) {
         Assimp::Importer importer;
-        unsigned int importOptions = aiProcess_Triangulate //Converts polygons to triangles
-            | aiProcess_OptimizeMeshes              // Reduces the number of submeshes
-            | aiProcess_JoinIdenticalVertices       // Removes duplicate vertices
-            | aiProcess_CalcTangentSpace;           // Computes tangents and bitangents
-
-        //aiProcess_GenNormals/ai_Process_GenSmoothNormals - Generates flat/Smooth normals
+        unsigned int importOptions = aiProcess_Triangulate 
+            | aiProcess_OptimizeMeshes              
+            | aiProcess_JoinIdenticalVertices       
+            | aiProcess_CalcTangentSpace;           
 
         const aiScene* scene = importer.ReadFile(modelFile, importOptions);
         _hasIBO = true;
@@ -117,9 +108,6 @@ public:
 
                 glGenVertexArrays(1, &_VAO);
 
-                //GLuint VBO = 0;
-                //glGenBuffers(1, &VBO);
-
                 GLuint IBO = 0;
                 glGenBuffers(1, &IBO);
 
@@ -127,10 +115,6 @@ public:
 
 
                 _vertexBuffer = new VertexBuffer(pVertices, sizeof(Vertex) * mesh->mNumVertices);
-                //VertexBuffer(rawData, vertexCount * floatsPerVertex * sizeof(float));
-
-                //glBindBuffer(GL_ARRAY_BUFFER, VBO);
-                //glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * mesh->mNumVertices, pVertices, GL_STATIC_DRAW);
 
                 glEnableVertexAttribArray(0);
                 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(0));
@@ -144,12 +128,8 @@ public:
                 glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(8 * sizeof(GLfloat)));
 
 
-                //Index Buffer
                 _indexBuffer = new IndexBuffer(pIndices, sizeof(GLuint) * mesh->mNumFaces * 3);
-                //_indexBuffer = new IndexBuffer(indices, vertexCount);
 
-                //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-                //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * mesh->mNumFaces * 3, pIndices, GL_STATIC_DRAW);
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
                 glBindVertexArray(_VAO);
 

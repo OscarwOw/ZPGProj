@@ -4,16 +4,16 @@
 #include <algorithm>
 #include "NewTransformation.h"
 
-class TransformationComposite : public NewTransformation {
+class TransformationComposite : public Transformation {
 private:
-    std::vector<std::shared_ptr<NewTransformation>> transformations;
+    std::vector<std::shared_ptr<Transformation>> transformations;
 
     //bool isDirty = true;
     glm::mat4 cachedMatrix = glm::mat4(1.0f);
 
 public:
-    void addTransformation(NewTransformation* transformation) {
-        std::shared_ptr<NewTransformation> transformationShared(transformation);
+    void addTransformation(Transformation* transformation) {
+        std::shared_ptr<Transformation> transformationShared(transformation);
         transformations.push_back(transformationShared);
         //isDirty = true;
     }
@@ -25,9 +25,9 @@ public:
         }
     }
 
-    void updateTransformation(int index, NewTransformation* newTransformation) {
+    void updateTransformation(int index, Transformation* newTransformation) {
         if (index >= 0 && index < transformations.size()) {
-            transformations[index] = std::shared_ptr<NewTransformation>(newTransformation);
+            transformations[index] = std::shared_ptr<Transformation>(newTransformation);
             //isDirty = true;
         }
     }
@@ -47,7 +47,7 @@ public:
         //isDirty = true;
     }
 
-    NewTransformation* getTransformation(int index) {
+    Transformation* getTransformation(int index) {
         if (index >= 0 && index < transformations.size()) {
             return transformations[index].get();
         }
