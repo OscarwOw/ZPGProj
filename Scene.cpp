@@ -9,11 +9,15 @@ void Scene::drawScene(float time) {
     if (_hasSkyBox) {
         drawSkybox();
     }
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
     _behavioralManager->update(time);
     publishLights();
+    int i = 0;
 
     for (auto& object : objects) {
+        glStencilFunc(GL_ALWAYS, i + 1, 0xFF);
         object->Draw(); 
+        i++;
     }
 }
 
@@ -65,25 +69,10 @@ void Scene::addSkyBox(std::vector<std::string> faces) {
 
     std::string shaderstring = ShaderProgramManager::getInstance().CreateShaderNemec("vert_cube_map.shader", "frag_cube_map.shader", "cubemap");
     _skyboxShaderProgram = ShaderProgramManager::getInstance().getShader(shaderstring);
-
-
-    
-
-
-    //glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTexture->getTextureID());
-    //glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-
-    //_skyboxShaderProgram->use();
-    //GLint idTexUnit = glGetUniformLocation(_skyboxShaderProgram->getProgramID(), "skybox");
-    //glUniform1i(idTexUnit, 0);
-
-    /*Camera::getInstance().attachObserver(_skyboxShaderProgram);*/
-
-    /*ShaderProgramManager::getInstance().CreateShaderNemec()*/
 }
 void Scene::drawSkybox() {
     glDepthFunc(GL_LEQUAL);
-    //glDepthMask(GL_FALSE);
+    glDepthMask(GL_FALSE);
 
     // Bind the skybox shader
     glUseProgram(_skyboxShaderProgram->getProgramID());
@@ -100,15 +89,10 @@ void Scene::drawSkybox() {
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
 
-    glDepthFunc(GL_LESS);
-
-
-    
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LESS);  
 }
 
-//std::vector<LightSource*> Scene::getLightSources() {
-//    return _lightSources;
-//}
 bool Scene::hasLightSource() {
     return _hasLightSource;
 }

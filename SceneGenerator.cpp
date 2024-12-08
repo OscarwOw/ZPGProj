@@ -66,8 +66,8 @@ Scene* SceneGenerator::generateDefaultScene() {
     //DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
     //scene->addLightSource(dirLight);
 
-    std::vector<std::string> faces = {"posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg", "negz.jpg" };
-    scene->addSkyBox(faces);
+    //std::vector<std::string> faces = ;
+    scene->addSkyBox({ "resources/posx.jpg", "resources/negx.jpg", "resources/posy.jpg", "resources/negy.jpg", "resources/posz.jpg", "resources/negz.jpg" });
 
 
     scene->setCameraDirection(glm::vec3(0.0f, 0.0f, 1.0f));
@@ -106,6 +106,10 @@ Scene* SceneGenerator::generateTestTreeScene()
 
 Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float minDistance) {
     Scene* forestScene = new Scene();
+
+
+
+    forestScene->addSkyBox({ "resources/posx.jpg", "resources/negx.jpg", "resources/posy.jpg", "resources/negy.jpg", "resources/posz.jpg", "resources/negz.jpg" });
 
     // Ground using old TransformationData
     TransformationData groundTransformationData;
@@ -234,6 +238,8 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     forestScene->setCameraPosition(glm::vec3(0.0f, 5.0f, -2.0f));
 
     generateWhisps(forestScene, 4);
+
+    
 
     return forestScene;
 }

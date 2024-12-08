@@ -39,10 +39,11 @@ Texture::Texture(const std::vector<std::string>& faces)
     glGenTextures(1, &_textureId);
     glBindTexture(_textureTarget, _textureId);
     setDefaultCubeMapParameters();
-
+    
 
     int width, height, nrChannels;
     for (unsigned int i = 0; i < faces.size(); i++) {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
         if (data) {
             //GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;

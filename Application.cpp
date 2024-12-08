@@ -30,8 +30,8 @@ void Application::button_callback(GLFWwindow* window, int button, int action, in
 
 void tick(GLFWwindow* window, SceneManager& sceneManager, float deltatime) {
     // Clear the screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     // Get and draw the current scene
     Scene* currentScene = sceneManager.getCurrentScene();
     if (currentScene) {

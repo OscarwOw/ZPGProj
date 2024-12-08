@@ -102,6 +102,54 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
         printf("mouse released\n");
         inputManager._mousePressed = false;
     }
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        int x = inputManager._lastMouseX;
+        int y = inputManager._lastMouseY;
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+        GLbyte color[4];
+        GLfloat depth;
+        GLuint index; // identifikace tìlesa
+        int newy = height - y - 10;
+
+
+        glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+        glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+        glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+        printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+
+        if (index > 0 && index <= 254) {
+            // Now you know which object was clicked.
+            //auto& clickedObject = objects[index - 1];
+            float nx = (2.0f * x) / width - 1.0f;
+            float ny = 1.0f - (2.0f * y) / height;
+            float nz = 2.0f * depth - 1.0f; // If your depth buffer is in [0, 1]
+
+
+
+            printf("something\n");
+            glm::mat4 view = Camera::getInstance().getViewMatrix();
+            glm::mat4 perspective = Camera::getInstance().getPerspectiveMatrix();
+
+            glm::mat4 invProj = glm::inverse(perspective);
+            glm::vec4 clipPos = glm::vec4(nx, ny, nz, 1.0f);
+            glm::vec4 viewPos = invProj * clipPos;
+
+            // Perspective divide:
+            viewPos /= viewPos.w;
+
+            glm::mat4 invView = glm::inverse(view);
+            glm::vec4 worldPos = invView * viewPos;
+
+            printf("world coor = X: %f\n Y: %f\n Z:%f\n", worldPos.x, worldPos.y, worldPos.z);
+
+            // You can unproject the screen coordinates (x, newy, depth) to world coordinates if you have the view and projection matrices.
+            // Example pseudo-code:
+            // glm::vec3 worldPos = unprojectScreenToWorld(x, newy, depth, viewMatrix, projectionMatrix, width, height);
+            // printf("World coordinates: (%f, %f, %f)\n", worldPos.x, worldPos.y, worldPos.z);
+        }
+    }
 }
 
 int InputManager::initializeEvents() {
