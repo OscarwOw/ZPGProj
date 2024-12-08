@@ -331,7 +331,6 @@
     <None Include="ColorShader.shader">
       <Filter>Resource Files\shaders</Filter>
     </None>
-    <None Include="readmePipeline.md" />
     <None Include="Readme.md" />
     <None Include="Basic.shader">
       <Filter>Resource Files\shaders\mixedShaders</Filter>
