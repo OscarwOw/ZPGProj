@@ -57,36 +57,21 @@ DrawableObject::DrawableObject(ShaderType shaderType,const char* modelFile, Text
 
     _model = ModelManager::getInstance().getModelFromFile(modelFile);
     updateDrawData();
-
 }
 
 DrawableObject::~DrawableObject() {
     delete _vertexBuffer;
     delete _indexBuffer;
-
-}
-
-unsigned int* DrawableObject::generateIndices(int vertexCount) {
-    unsigned int* indices = new unsigned int[vertexCount];
-    for (int i = 0; i < vertexCount; ++i) {
-        indices[i] = i;
-    }
-    return indices;
 }
 
 void DrawableObject::Draw() {
     if (_shaderProgram) {
         _shaderProgram->use();
         
-        updateDrawData();
-            
-        
+        updateDrawData();        
 
         if (_model) {
             _model->draw();
-           /* _model->bind();
-            glDrawElements(GL_TRIANGLES, _model->getVertexCount(), GL_UNSIGNED_INT, nullptr);
-            _model->unbind();*/
         }
         if (_texture != nullptr) {
             _texture->unbind();
@@ -133,8 +118,7 @@ TransformationData DrawableObject::GetCurrentTransformationData() {
 glm::vec3 DrawableObject::getPosition()
 {
     glm::mat4 matrix = transformationComposite.getMatrix();
-    return glm::vec3(matrix[3][0], matrix[3][1], matrix[3][2]); // TODO posible bug
-    //return glm::vec3(transformationData.TranslationX, transformationData.TranslationY, transformationData.TranslationZ);
+    return glm::vec3(matrix[3][0], matrix[3][1], matrix[3][2]); 
 }
 
 MaterialProperties DrawableObject::getMaterialProperties() const
@@ -146,9 +130,6 @@ MaterialProperties DrawableObject::getMaterialProperties() const
 
 void DrawableObject::updateDrawData() { //update draw data
     MatrixHelper& matrixHelper = MatrixHelper::getInstance();
-
-    //glm::mat4 modelMatrix2 = _translationMatrix * _rotationMatrix * _scaleMatrix;
-    //glm::mat4 modelMatrix = transformation.getModelMatrix();
 
     glm::mat4 modelMatrix = transformationComposite.getMatrix();
 
@@ -168,23 +149,11 @@ void DrawableObject::updateDrawData() { //update draw data
         _shaderProgram->setUniformMat4("projectionMatrix", _shaderProgram->getPerspectiveMatrix());
         _shaderProgram->setUniformVec3("cameraPosition", _shaderProgram->getCameraPosition());
 
-
-        //_shaderProgram->setUniformInt("textureUnitID", 1); //Texture._textureId);
-        
-            
-        //Set texture unit to fragment shader
-        //GLint uniformID = glGetUniformLocation(shaderProgram, "textureUnitID");
-        //glUniform1i(uniformID, 0);
-
         _shaderProgram->updateLightSources();
     }
 }
 
-void DrawableObject::updateTransformation(float deltaTime)
-{
-    //transformation.updateTransformations(deltaTime);
-    
-}
+
 
 
 
