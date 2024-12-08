@@ -120,13 +120,10 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
         printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth % f, stencil index % u\n", x, y, color[0], color[1], color[2], color[3], depth, index);
 
         if (index > 0 && index <= 254) {
-            // Now you know which object was clicked.
-            //auto& clickedObject = objects[index - 1];
+
             float nx = (2.0f * x) / width - 1.0f;
             float ny = 1.0f - (2.0f * y) / height;
-            float nz = 2.0f * depth - 1.0f; // If your depth buffer is in [0, 1]
-
-
+            float nz = 2.0f * depth - 1.0f; 
 
             printf("something\n");
             glm::mat4 view = Camera::getInstance().getViewMatrix();
@@ -136,18 +133,30 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
             glm::vec4 clipPos = glm::vec4(nx, ny, nz, 1.0f);
             glm::vec4 viewPos = invProj * clipPos;
 
-            // Perspective divide:
             viewPos /= viewPos.w;
 
             glm::mat4 invView = glm::inverse(view);
             glm::vec4 worldPos = invView * viewPos;
-
+            
             printf("world coor = X: %f\n Y: %f\n Z:%f\n", worldPos.x, worldPos.y, worldPos.z);
 
-            // You can unproject the screen coordinates (x, newy, depth) to world coordinates if you have the view and projection matrices.
-            // Example pseudo-code:
-            // glm::vec3 worldPos = unprojectScreenToWorld(x, newy, depth, viewMatrix, projectionMatrix, width, height);
-            // printf("World coordinates: (%f, %f, %f)\n", worldPos.x, worldPos.y, worldPos.z);
+            TransformationData tdata;
+            MaterialProperties material;
+            material.ambientReflectivity = glm::vec3(0.4f);
+            material.diffuseReflectivity = glm::vec3(0.8f);
+            material.specularReflectivity = glm::vec3(0.5f);
+            material.shininess = 4;
+
+            DrawableObject* tree = new DrawableObject(tdata, ShaderType::Develop, ModelType::TREE, glm::vec3(0.0f, 0.0f, 1.0f), material);            
+
+            NewTransformationTranslate* translate = new NewTransformationTranslate(glm::vec3(worldPos.x, worldPos.y, worldPos.z));
+            NewTransformationScale* scale = new NewTransformationScale(glm::vec3(1.0f));
+
+            tree->transformationComposite.addTransformation(translate);
+            tree->transformationComposite.addTransformation(scale);
+
+            SceneManager::getInstance().getCurrentScene()->addObject(tree);
+            Camera::getInstance().attachObserver(tree->getSaherProgram());
         }
     }
 }
