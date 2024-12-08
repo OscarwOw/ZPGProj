@@ -16,7 +16,7 @@ public:
     ShaderProgram* getShader(const std::string& name);
 
     void useShader(const std::string& name);
-    ShaderProgram* activeShader;
+    
 
 private:
 
@@ -31,5 +31,6 @@ private:
 
     std::string CreateShader(ShaderProgramSourceStrings source, ShaderProgram* shaderProgram, const std::string& name);
     std::string CreateShaderID(std::string shaderType);
+    ShaderProgram* _activeShader;
 
 };

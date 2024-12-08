@@ -236,7 +236,6 @@
     <None Include="frag_phong_texture.shader" />
     <None Include="frag_texture.shader" />
     <None Include="Readme.md" />
-    <None Include="readmePipeline.md" />
     <None Include="VertLight.shader" />
     <None Include="vert_blinn.shader" />
     <None Include="vert_constant.shader" />

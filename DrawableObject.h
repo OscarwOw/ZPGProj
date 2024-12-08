@@ -19,7 +19,6 @@
 #include "TransformationDynamicTranslateCube.h"
 #include "TransformationBezier.h"
 
-
 #include "TransformationComposite.h"
 #include "Model.h"
 #include "Texture.h"
@@ -65,7 +64,6 @@ public:
     );
     DrawableObject(ShaderType shaderType,const char* modelFile, Texture* texture, MaterialProperties material);
     ~DrawableObject();
-    //Transformation transformation;
 
     TransformationComposite transformationComposite;
 

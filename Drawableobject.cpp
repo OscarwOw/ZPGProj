@@ -7,7 +7,6 @@
 
 DrawableObject::DrawableObject() : _vertexBuffer(nullptr), _indexBuffer(nullptr) {
     _transformationMatrix = glm::mat4(1.0f);
-
 }
 
 DrawableObject::DrawableObject(
@@ -17,7 +16,6 @@ DrawableObject::DrawableObject(
     glm::vec3 color,
     MaterialProperties materialProperties,
     Texture* texture
-    //later texture
 )
     : _color(color), _materialProperties(materialProperties), _texture(texture) {
 

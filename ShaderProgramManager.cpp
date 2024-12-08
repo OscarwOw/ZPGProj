@@ -8,9 +8,8 @@ ShaderProgramManager& ShaderProgramManager::getInstance() {
     return instance;
 }
 
-//TODO Code Organization consistency
 #pragma region Create Shader
-std::string ShaderProgramManager::CreateShader( const std::string& vertexPath, const std::string& fragmentPath, const std::string& name ) //TODO changed sequence
+std::string ShaderProgramManager::CreateShader( const std::string& vertexPath, const std::string& fragmentPath, const std::string& name )
 {
     ShaderProgram* shaderProgram = new ShaderProgram();
     ShaderProgramSourceStrings source = {
@@ -20,7 +19,7 @@ std::string ShaderProgramManager::CreateShader( const std::string& vertexPath, c
     return CreateShader(source, shaderProgram, name);
 }
 
-std::string ShaderProgramManager::CreateShader( const std::string& shaderPath, const std::string& name ) //TODO changed sequence
+std::string ShaderProgramManager::CreateShader( const std::string& shaderPath, const std::string& name )
 {
     ShaderProgram* shaderProgram = new ShaderProgram();
     ShaderProgramSourceStrings source = shaderProgram->parseShaders(shaderPath);
@@ -68,9 +67,9 @@ ShaderProgram* ShaderProgramManager::getShader(const std::string& name)
 
 void ShaderProgramManager::useShader(const std::string& name) {
     ShaderProgram* shader = getShader(name);
-    if (shader && shader != activeShader) {
+    if (shader && shader != _activeShader) {
         shader->use();
-        activeShader = shader;
+        _activeShader = shader;
     }
 }
 
