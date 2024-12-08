@@ -6,7 +6,6 @@
 
 class ShaderProgramManager {
 public:
-
     static ShaderProgramManager& getInstance();
 
     std::string CreateShader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& name);
@@ -17,9 +16,7 @@ public:
 
     void useShader(const std::string& name);
     
-
 private:
-
     ShaderProgramManager() {}
     ShaderProgramManager(const ShaderProgramManager&) = delete;
     ShaderProgramManager& operator=(const ShaderProgramManager&) = delete;
@@ -32,5 +29,4 @@ private:
     std::string CreateShader(ShaderProgramSourceStrings source, ShaderProgram* shaderProgram, const std::string& name);
     std::string CreateShaderID(std::string shaderType);
     ShaderProgram* _activeShader;
-
 };

@@ -34,11 +34,8 @@ public:
     
     void setUniformMat4(const std::string& name, const glm::mat4& matrix);
     void setUniformVec3(const std::string& name, const glm::vec3& vector);
-
     void setUniformFloat(const std::string& name, const float& vector);
-
     void setUniformInt(const std::string& name, int value);
-
 
     void updateMaterialProperties(const MaterialProperties& material);
 

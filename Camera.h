@@ -2,43 +2,35 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include "ICameraObserver.h"
 #include "CameraMovement.h"
 
-
-// Camera class definition
 class Camera {
 public:
     static Camera& getInstance() {
-        static Camera instance; // Guaranteed to be destroyed and instantiated on first use
+        static Camera instance; 
         return instance;
     }
 
-    // Delete copy constructor and assignment operator to prevent copies
     Camera(const Camera&) = delete;
     Camera& operator=(const Camera&) = delete;
 
-
-    // Constructor with vectors
-
-
-    // Get the view matrix
     glm::mat4 getViewMatrix() const;
 
     glm::mat4 getPerspectiveMatrix() const;
 
     void processKeyboard(CameraMovement direction, float deltaTime);
-    void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
+    void processMouseMovement(float xoffset, float yoffset);
     void processMouseScroll(float yoffset);
     void attachObserver(ICameraObserver* observer);
     void detachObserver(ICameraObserver* observer);
     void setWindowSize(int width, int height);
 
     bool getLight();
+    void setLight(bool light);
 
     glm::vec3 getCameraFront();
 

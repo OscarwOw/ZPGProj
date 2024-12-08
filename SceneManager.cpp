@@ -25,13 +25,13 @@ Scene* SceneManager::generateTestTreeScene(std::string name)
 }
 
 Scene* SceneManager::generateForestScene(std::string name) {
-	Scene* scene = SceneGenerator::getInstance().generateForestScene(50, 100.0f, 1.5f);		//.generateForestScene(50, 50);
+	Scene* scene = SceneGenerator::getInstance().generateForestScene(50, 100.0f, 1.5f);	
 	addScene(name, scene);
 	return scene;
 }
 
 Scene* SceneManager::generateNightForestScene(std::string name) {
-	Scene* scene = SceneGenerator::getInstance().generateNightForestScene(5, 100.0f, 1.5f);		//.generateForestScene(50, 50);
+	Scene* scene = SceneGenerator::getInstance().generateNightForestScene(5, 100.0f, 1.5f);
 	addScene(name, scene);
 	return scene;
 }

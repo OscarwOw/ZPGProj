@@ -174,12 +174,10 @@ void ShaderProgram::setLightsVector(std::vector<LightData> data)
 }
 
 void ShaderProgram::updateLightSources() {
-    use(); // Make sure the shader program is active
+    use(); 
 
-    // Set the number of light sources as an integer
     setUniformInt("numLights", static_cast<int>(_lightData.size() + 1));
 
-    // Iterate over each light and set its properties in the shader
     for (size_t i = 0; i < _lightData.size(); ++i) {
         std::string indexStr = std::to_string(i + 1);
         setUniformVec3("lightSources[" + indexStr + "].position", _lightData[i].position);

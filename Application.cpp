@@ -29,14 +29,9 @@ void Application::button_callback(GLFWwindow* window, int button, int action, in
 
 
 void tick(GLFWwindow* window, SceneManager& sceneManager, float deltatime) {
-    // Clear the screen
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    // Get and draw the current scene
     Scene* currentScene = sceneManager.getCurrentScene();
     if (currentScene) {
-        // Example of scene-specific transformation
-        //currentScene->circusTransform();
         currentScene->drawScene(deltatime);
     }
     glfwSwapBuffers(window);
@@ -49,7 +44,7 @@ int Application::startApplication()
     glfwSetErrorCallback(error_callback);
 
 
-    int width = 1500; //TODO from settings
+    int width = 1500;
     int height = 1200;
 
     _startupManager.initializeProgram(&_window, width, height, "My OpenGL Window");
@@ -63,17 +58,15 @@ int Application::startApplication()
 
 
     _sceneManager.generateTraingleScene("triangleScene");
-    _sceneManager.generateForestScene("forestScene");
 
     _sceneManager.generateNightForestScene("nightForestScene");
-    
+    _sceneManager.generateForestScene("forestScene");
 
 
     _sceneManager.generateSphereScene("sphereScene");
     _sceneManager.generateShadersSphereScene("shadersSphereScene");
 
     _sceneManager.generateTextureScene("generateTextureScene");
-
 
 
     _sceneManager.switchScene("triangleScene");
@@ -83,19 +76,13 @@ int Application::startApplication()
    /* const std::chrono::milliseconds tickInterval(100);*/
     auto movementCallbackTime = std::chrono::steady_clock::now();
 
-
     while (!glfwWindowShouldClose(_window)) {
-
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTickTime);
 
-
-        // Check if 60 milliseconds have passed since the last tick
         if (elapsedTime >= tickInterval) {
-            // Execute the tick function
             tick(_window, _sceneManager, std::chrono::duration<float>(elapsedTime).count());
 
-            // Update the last tick time
             lastTickTime = currentTime;
         }
         currentTime = std::chrono::steady_clock::now();

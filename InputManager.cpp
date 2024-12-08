@@ -78,6 +78,10 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
         SceneManager::getInstance().switchToNextScene();
     }
 
+    if (key == GLFW_KEY_F && (action == GLFW_PRESS)) {
+        Camera::getInstance().setLight(!Camera::getInstance().getLight());
+    }
+
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
     printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
@@ -86,7 +90,7 @@ void InputManager::key_callback(GLFWwindow* window, int key, int scancode, int a
 void InputManager::cursor_pos_callback(GLFWwindow* window, double mouseX, double mouseY) {
     InputManager& inputManager = InputManager::getInstance();
     if (inputManager._mousePressed) {
-        Camera::getInstance().processMouseMovement(mouseX - inputManager._lastMouseX, mouseY - inputManager._lastMouseY, false);
+        Camera::getInstance().processMouseMovement(mouseX - inputManager._lastMouseX, mouseY - inputManager._lastMouseY);
     }
     inputManager._lastMouseX = mouseX;
     inputManager._lastMouseY = mouseY;
@@ -111,7 +115,6 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
         GLfloat depth;
         GLuint index; // identifikace tìlesa
         int newy = height - y - 10;
-
 
         glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
         glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
@@ -161,11 +164,21 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
     }
 }
 
+
+void InputManager::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    printf("scroll: x: %f y: %f", xoffset, yoffset);
+
+    Camera::getInstance().processMouseScroll(static_cast<float>(yoffset));
+}
+
+
+
 int InputManager::initializeEvents() {
 
     glfwSetCursorPosCallback(StartupManager::getInstance().getWindow(), cursor_pos_callback);
     glfwSetMouseButtonCallback(StartupManager::getInstance().getWindow(), mouse_button_pressed_callback);
     glfwSetKeyCallback(StartupManager::getInstance().getWindow(), key_callback);
+    glfwSetScrollCallback(StartupManager::getInstance().getWindow(), scroll_callback);
     return 0;
 }
 
