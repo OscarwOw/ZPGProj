@@ -22,6 +22,9 @@ int StartupManager::initializeProgram(GLFWwindow** window, int width, int height
     ViewPortSetup(*window);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_STENCIL_TEST);
+    glEnable(GL_STENCIL_TEST);
+    
     glDepthFunc(GL_LESS);
     return 0;
 }
