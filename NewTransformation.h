@@ -9,14 +9,14 @@
 
 
 //TODO clean up and put to separate files with .cpp and .h
-class NewTransformation {
+class Transformation {
 public:
-    virtual ~NewTransformation() = default;
+    virtual ~Transformation() = default;
     virtual glm::mat4 getMatrix() = 0; 
 };
 
 
-class NewTransformationTranslate : public NewTransformation {
+class NewTransformationTranslate : public Transformation {
 private:
     glm::vec3 translation;
 public:
@@ -32,7 +32,7 @@ public:
 };
 
 
-class NewTransformationRotate : public NewTransformation {
+class NewTransformationRotate : public Transformation {
 private:
     glm::vec3 axis;
     float angle; 
@@ -49,7 +49,7 @@ public:
     }
 };
 
-class NewTransformationScale : public NewTransformation {
+class NewTransformationScale : public Transformation {
 private:
     glm::vec3 scale;
 public:
@@ -64,38 +64,33 @@ public:
     }
 };
 
-class NewTransformationDynamicTranslate : public NewTransformation, public IAnimationObject {
+class NewTransformationDynamicTranslate : public Transformation, public IAnimationObject {
 protected:
     glm::mat4 _matrix;
-    glm::vec3 _increment;  // Increment speed (units per second)
+    glm::vec3 _increment;  
 
 public:
-    // Constructor initializing with a given matrix
     NewTransformationDynamicTranslate( glm::mat4& initialMatrix)
         : _matrix(initialMatrix), _increment(glm::vec3(0.0f)) {
     }
 
-    // Set increment vector
     void setIncrement( glm::vec3& increment) {
         _increment = increment;
     }
 
-    // Get increment vector
     glm::vec3 getIncrement() {
         return _increment;
     }
 
-    // Update transformation based on deltaTime
     void update(float deltaTime) override {
         internalUpdate(deltaTime);
     }
 
     virtual void internalUpdate(float deltaTime) {
-        glm::vec3 deltaTranslate = _increment *  deltaTime;  // Convert ms to seconds
+        glm::vec3 deltaTranslate = _increment *  deltaTime; 
         _matrix = glm::translate(_matrix, deltaTranslate);
     }
 
-    // Get current transformation matrix
     glm::mat4 getMatrix() override {
         return _matrix;
     }
@@ -226,7 +221,7 @@ private:
     }
 };
 
-class NewTransformationDynamicRotate : public NewTransformation, public IAnimationObject {
+class NewTransformationDynamicRotate : public Transformation, public IAnimationObject {
 protected:
     glm::mat4 _matrix;
     glm::vec3 _axis;         
@@ -265,6 +260,70 @@ public:
 
     glm::mat4 getMatrix() override {
         return _matrix;
+    }
+};
+
+
+
+class NewTransformationBezier : public Transformation, public IAnimationObject {
+private:
+    glm::mat4 _matrix;
+    std::vector<glm::vec3> _controlPoints;
+    float t;       
+    float speed;     
+
+public:
+    NewTransformationBezier(
+        const glm::mat4& initialMatrix,
+        const std::vector<glm::vec3>& points,
+        float speed = 0.5f
+    )
+        : _matrix(initialMatrix), _controlPoints(points), t(0.0f), speed(speed)
+    {
+    }
+
+    void update(float deltaTime) override {
+        t += speed * deltaTime;
+
+        while (t > 1.0f) {
+            t -= 1.0f;
+        }   
+
+        internalUpdate();
+    }
+
+    glm::mat4 getMatrix() override {
+        return _matrix;
+    }
+
+private:
+    void internalUpdate() {
+        glm::vec3 position = generalBezierPoint(t);
+        _matrix = glm::translate(glm::mat4(1.0f), position);
+    }
+
+    unsigned int binomialCoefficient(unsigned int n, unsigned int k) {
+        if (k > n) return 0;
+        if (k == 0 || k == n) return 1;
+        unsigned int result = 1;
+        for (unsigned int i = 1; i <= k; ++i) {
+            result = result * (n - (k - i)) / i;
+        }
+        return result;
+    }
+
+    glm::vec3 generalBezierPoint(float t) {
+        glm::vec3 result(0.0f);
+        size_t n = _controlPoints.size();
+        if (n == 0) return result;
+
+        for (size_t i = 0; i < n; ++i) {
+            unsigned int c = binomialCoefficient(static_cast<unsigned int>(n - 1), static_cast<unsigned int>(i));
+            float blend = c * std::pow(1.0f - t, (float)(n - 1 - i)) * std::pow(t, (float)i);
+            result += blend * _controlPoints[i];
+        }
+
+        return result;
     }
 };
 
