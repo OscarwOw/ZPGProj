@@ -302,6 +302,9 @@
     <ClInclude Include="building.h">
       <Filter>Resource Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="skycube.h">
+      <Filter>Resource Files\models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorShader.shader">
@@ -369,6 +372,12 @@
     </None>
     <None Include="vert_phong_texture.shader">
       <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="vert_cube_map.shader">
+      <Filter>Resource Files\shaders\vertexShaders</Filter>
+    </None>
+    <None Include="frag_cube_map.shader">
+      <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
   </ItemGroup>
 </Project>

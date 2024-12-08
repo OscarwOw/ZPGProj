@@ -11,7 +11,8 @@ enum class ShaderType {
     Light,
     Develop,
     Texture,
-    Texture_phong
+    Texture_phong,
+    Cube_map_shader
 };
 
 struct ShaderInfo {
@@ -28,5 +29,6 @@ const std::unordered_map<ShaderType, ShaderInfo> ShaderMappings = {
     { ShaderType::Light, { "Vert_light.shader", "Frag_light.shader" } },
     { ShaderType::Develop, { "vert_develop.shader", "frag_develop.shader" } },
     { ShaderType::Texture, { "vert_texture.shader", "frag_texture.shader" } },
-    { ShaderType::Texture_phong, { "vert_phong_texture.shader", "frag_phong_texture.shader" } }
+    { ShaderType::Texture_phong, { "vert_phong_texture.shader", "frag_phong_texture.shader" } },
+    { ShaderType::Cube_map_shader, { "vert_cube_map.shader", "frag_cube_map.shader" } }
 };

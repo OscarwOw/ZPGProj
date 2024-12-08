@@ -6,8 +6,12 @@ void Scene::addObject(DrawableObject* object) {
 }
 
 void Scene::drawScene(float time) {
+    if (_hasSkyBox) {
+        drawSkybox();
+    }
     _behavioralManager->update(time);
     publishLights();
+
     for (auto& object : objects) {
         object->Draw(); 
     }
@@ -40,6 +44,66 @@ void Scene::addLightSource(ILightEmitter* lightEmitter) {
     _lightPublisher.attachLightSource(lightEmitter);
     _hasLightSource = true;
     publishLights();
+}
+
+void Scene::addSkyBox(std::vector<std::string> faces) {
+    glGenBuffers(1, &_skyboxVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, _skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skycube), &skycube, GL_STATIC_DRAW);
+
+
+    glGenVertexArrays(1, &_skyboxVAO);
+    glBindVertexArray(_skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, _skyboxVBO);
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (GLvoid*)0);
+    glEnableVertexAttribArray(0);
+
+
+    _skyboxTexture = new Texture(faces);
+    _hasSkyBox = true;
+
+    std::string shaderstring = ShaderProgramManager::getInstance().CreateShaderNemec("vert_cube_map.shader", "frag_cube_map.shader", "cubemap");
+    _skyboxShaderProgram = ShaderProgramManager::getInstance().getShader(shaderstring);
+
+
+    
+
+
+    //glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTexture->getTextureID());
+    //glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
+    //_skyboxShaderProgram->use();
+    //GLint idTexUnit = glGetUniformLocation(_skyboxShaderProgram->getProgramID(), "skybox");
+    //glUniform1i(idTexUnit, 0);
+
+    /*Camera::getInstance().attachObserver(_skyboxShaderProgram);*/
+
+    /*ShaderProgramManager::getInstance().CreateShaderNemec()*/
+}
+void Scene::drawSkybox() {
+    glDepthFunc(GL_LEQUAL);
+    //glDepthMask(GL_FALSE);
+
+    // Bind the skybox shader
+    glUseProgram(_skyboxShaderProgram->getProgramID());
+    glm::mat4 pojection = Camera::getInstance().getPerspectiveMatrix();
+    glm::mat4 view = Camera::getInstance().getViewMatrix();
+    view = glm::mat4(glm::mat3(view));
+    glUniform1i(glGetUniformLocation(_skyboxShaderProgram->getProgramID(), "skybox"), 0);
+    glUniformMatrix4fv(glGetUniformLocation(_skyboxShaderProgram->getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(_skyboxShaderProgram->getProgramID(), "projection"), 1, GL_FALSE, glm::value_ptr(pojection));
+
+    glBindVertexArray(_skyboxVAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _skyboxTexture->getTextureID());
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+
+    glDepthFunc(GL_LESS);
+
+
+    
 }
 
 //std::vector<LightSource*> Scene::getLightSources() {
