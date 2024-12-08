@@ -127,8 +127,8 @@ public:
                 glEnableVertexAttribArray(3);
                 glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(8 * sizeof(GLfloat)));
 
-
-                _indexBuffer = new IndexBuffer(pIndices, sizeof(GLuint) * mesh->mNumFaces * 3);
+                //IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
+                _indexBuffer = new IndexBuffer(pIndices, mesh->mNumFaces * 3);
 
                 glBindBuffer(GL_ARRAY_BUFFER, 0);
                 glBindVertexArray(_VAO);

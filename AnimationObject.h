@@ -9,20 +9,16 @@ public:
         float maxHeight, float maxWidth, float maxLength,
         float minHeight, float minWidth, float minLength) {
 
-        // Calculate the distances for each dimension
         float heightDistance = maxHeight - minHeight;
         float widthDistance = maxWidth - minWidth;
         float lengthDistance = maxLength - minLength;
 
-        // Find the smallest distance among height, width, and length
         float minDistance = std::min({ heightDistance, widthDistance, lengthDistance });
 
-        // Ensure cubeSize is at least 2 times smaller than the smallest distance
         if (cubeSize > minDistance / 2.0f) {
             cubeSize = minDistance / 2.0f;
         }
 
-        // Initialize member variables
         _speed = speed;
         _cubeSize = cubeSize;
         _object = object;
@@ -33,7 +29,6 @@ public:
         _minWidth = minWidth;
         _minLength = minLength;
 
-        // Generate the cube with adjusted parameters
         generateCube();
         generateMovement();
     }

@@ -143,17 +143,14 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
             
             printf("world coor = X: %f\n Y: %f\n Z:%f\n", worldPos.x, worldPos.y, worldPos.z);
 
-            TransformationData tdata;
             MaterialProperties material;
-            material.ambientReflectivity = glm::vec3(0.4f);
-            material.diffuseReflectivity = glm::vec3(0.8f);
-            material.specularReflectivity = glm::vec3(0.5f);
-            material.shininess = 4;
+          
+            DrawableObject* tree = new DrawableObject(ShaderType::Texture_phong, "resources/tree.obj", new Texture("resources/tree.png"), material);
 
-            DrawableObject* tree = new DrawableObject(tdata, ShaderType::Develop, ModelType::TREE, glm::vec3(0.0f, 0.0f, 1.0f), material);            
+
 
             TransformationTranslate* translate = new TransformationTranslate(glm::vec3(worldPos.x, worldPos.y, worldPos.z));
-            TransformationScale* scale = new TransformationScale(glm::vec3(1.0f));
+            TransformationScale* scale = new TransformationScale(glm::vec3(0.1f));
 
             tree->transformationComposite.addTransformation(translate);
             tree->transformationComposite.addTransformation(scale);

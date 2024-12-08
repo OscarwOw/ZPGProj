@@ -63,7 +63,6 @@ private:
     float pitch;
     float movementSpeed;
     float mouseSensitivity;
-    float zoom;
 
     bool _lightOn = true;
 
