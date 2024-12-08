@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
-#include "NewTransformation.h"
+#include "Transformation.h"
 
 class TransformationComposite : public Transformation {
 private:

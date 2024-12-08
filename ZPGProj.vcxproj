@@ -171,8 +171,9 @@
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="ModelKind.h" />
     <ClInclude Include="ModelManager.h" />
-    <ClInclude Include="NewTransformation.h" />
-    <ClInclude Include="NewTransformationComposite.h" />
+    <ClInclude Include="Transformation.h" />
+    <ClInclude Include="TransformationBezier.h" />
+    <ClInclude Include="TransformationComposite.h" />
     <ClInclude Include="plainTexture.h" />
     <ClInclude Include="RandomMovementCube.h" />
     <ClInclude Include="skycube.h" />
@@ -209,6 +210,12 @@
     <ClInclude Include="StartupManager.hpp" />
     <ClInclude Include="suzi_flat.h" />
     <ClInclude Include="suzi_smooth.h" />
+    <ClInclude Include="TransformationDynamicRotate.h" />
+    <ClInclude Include="TransformationDynamicTranslate.h" />
+    <ClInclude Include="TransformationDynamicTranslateCube.h" />
+    <ClInclude Include="TransformationRotate.h" />
+    <ClInclude Include="TransformationScale.h" />
+    <ClInclude Include="TransformationTranslate.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="triangle.h" />
     <ClInclude Include="VertexBuffer.h" />
