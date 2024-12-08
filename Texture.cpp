@@ -18,6 +18,10 @@ Texture::Texture(const std::string& filePath, GLenum textureTarget , GLint inter
 
         GLenum format = (nrChannels == 4) ? GL_RGBA : GL_RGB;
 
+        if (filePath == "resources/tree.png") {
+            format = GL_RGBA;
+        }
+
         glTexImage2D(_textureTarget, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 
         setDefaultParameters();

@@ -1,6 +1,8 @@
 #include "StartupManager.hpp"
 #include <iostream>
 
+//AUTOR BEL0130
+
 StartupManager& StartupManager::getInstance()
 {
     static StartupManager instance;

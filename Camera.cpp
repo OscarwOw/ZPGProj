@@ -1,14 +1,13 @@
 #include "Camera.h"
 #include "MatrixHelper.h"
 
-const float YAW = -90.0f;
-const float PITCH = 0.0f;
+//AUTOR BEL0130
+
 const float SPEED = 2.5f;
 const float SENSITIVITY = 0.06f;
-const float ZOOM = 45.0f;
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-    : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM) {
+    : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY) {
     this->position = position;
     this->worldUp = up;
     this->yaw = yaw;
@@ -16,14 +15,14 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     updateCameraVectors();
 }
 
-Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-    : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY), zoom(ZOOM) {
-    position = glm::vec3(posX, posY, posZ);
-    worldUp = glm::vec3(upX, upY, upZ);
-    this->yaw = yaw;
-    this->pitch = pitch;
-    updateCameraVectors();
-}
+//Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
+//    : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSensitivity(SENSITIVITY) {
+//    position = glm::vec3(posX, posY, posZ);
+//    worldUp = glm::vec3(upX, upY, upZ);
+//    this->yaw = yaw;
+//    this->pitch = pitch;
+//    updateCameraVectors();
+//}
 
 glm::mat4 Camera::getViewMatrix() const {
     return glm::lookAt(position, position + front, up);

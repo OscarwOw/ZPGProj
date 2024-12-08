@@ -1,7 +1,7 @@
 #pragma once
 #include "SceneGenerator.h"
 
-
+//AUTOR BEL0130
 
 
 SceneGenerator& SceneGenerator::getInstance()
@@ -11,6 +11,10 @@ SceneGenerator& SceneGenerator::getInstance()
 }
 
 #pragma region scene generation functions 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//DEFAULT SCENE
 Scene* SceneGenerator::generateDefaultScene() {
     Scene* scene = new Scene();
     TransformationData transformationData;
@@ -29,9 +33,6 @@ Scene* SceneGenerator::generateDefaultScene() {
     triangle->transformationComposite.addTransformation(translatetransformation);
 
     scene->addObject(triangle);
-
-
-    
 
     
     //DrawableObject* suzi = generateDrawableObject(ShaderType::Texture, "house.obj", new Texture("house.png"), material);
@@ -69,8 +70,8 @@ Scene* SceneGenerator::generateDefaultScene() {
     scene->addLightSource(light);
 
 
-    //DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
-    //scene->addLightSource(dirLight);
+    DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.4f);
+    scene->addLightSource(dirLight);
 
     //std::vector<std::string> faces = ;
     scene->addSkyBox({ "resources/posx.jpg", "resources/negx.jpg", "resources/posy.jpg", "resources/negy.jpg", "resources/posz.jpg", "resources/negz.jpg" });
@@ -110,11 +111,19 @@ Scene* SceneGenerator::generateTestTreeScene()
     return scene;
 }
 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//FOREST SCENE
 Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float minDistance) {
     Scene* forestScene = new Scene();
 
 
 
+    DirectionalLightSource* dirLight = new DirectionalLightSource(glm::vec3(0.0f, -1.0f, -1.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.1f);
+    forestScene->addLightSource(dirLight);
     
 
     // Ground using old TransformationData
@@ -250,7 +259,8 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     return forestScene;
 }
 
-//TODO make it so that my eyes does not bleed blood
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//NIGHT FOREST SCENE
 Scene* SceneGenerator::generateNightForestScene(int numTrees, float areaSize, float minDistance) {
     Scene* forestScene = new Scene();
 

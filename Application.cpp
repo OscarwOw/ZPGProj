@@ -2,6 +2,9 @@
 #include <GLFW/glfw3.h>
 #include <cstdio>
 #include <chrono>
+
+//AUTOR BEL0130
+
 Application& Application::getInstance()
 {
     static Application instance;
