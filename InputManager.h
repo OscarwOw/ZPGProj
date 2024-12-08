@@ -19,15 +19,14 @@ class InputManager {
 
         InputManager(const InputManager&) = delete;
         InputManager& operator=(const InputManager&) = delete;
-        int initializeEvents();
-    
-    
+        int initializeEvents();    
     
         void handleMovement(float time);
 
         static void cursor_pos_callback(GLFWwindow* window, double mouseX, double mouseY);
         static void mouse_button_pressed_callback(GLFWwindow* window, int button, int action, int mods);
-   
+
+        static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
         static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
     private:

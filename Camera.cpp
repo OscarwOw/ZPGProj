@@ -29,7 +29,7 @@ glm::mat4 Camera::getViewMatrix() const {
     return glm::lookAt(position, position + front, up);
 }
 glm::mat4 Camera::getPerspectiveMatrix() const {
-    return glm::perspective(glm::radians(45.0f), (float)(_windowWidth / _windowHeight), 0.1f, 100.0f);
+    return glm::perspective(glm::radians(45.0f), (float)(_windowWidth / _windowHeight), 0.1f, 500.0f);
 }
 
 void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
@@ -66,27 +66,23 @@ void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
     notifyObservers();
 }
 
-void Camera::processMouseMovement(float xoffset, float yoffset, bool constrainPitch) {
+void Camera::processMouseMovement(float xoffset, float yoffset) {
     xoffset *= mouseSensitivity;
     yoffset *= mouseSensitivity;
 
     yaw -= xoffset;
     pitch += yoffset;
 
-    if (constrainPitch) {
-        if (pitch > 89.0f) pitch = 89.0f;
-        if (pitch < -89.0f) pitch = -89.0f;
-    }
+    if (pitch > 89.0f) pitch = 89.0f;
+    if (pitch < -89.0f) pitch = -89.0f;
 
     updateCameraVectors();
     notifyObservers();
 }
 
 void Camera::processMouseScroll(float yoffset) {
-    zoom -= yoffset;
-    if (zoom < 1.0f) zoom = 1.0f;
-    if (zoom > 45.0f) zoom = 45.0f;
-    notifyObservers();
+    movementSpeed += yoffset/2;
+    //notifyObservers();
 }
 
 void Camera::updateCameraVectors() {
@@ -130,6 +126,11 @@ bool Camera::getLight()
 {
     return _lightOn;
 }
+void Camera::setLight(bool light)
+{
+    _lightOn = light;
+}
+
 glm::vec3 Camera::getCameraFront()
 {
     return front;

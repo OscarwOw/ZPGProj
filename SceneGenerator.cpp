@@ -115,7 +115,7 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
 
 
-    forestScene->addSkyBox({ "resources/posx.jpg", "resources/negx.jpg", "resources/posy.jpg", "resources/negy.jpg", "resources/posz.jpg", "resources/negz.jpg" });
+    
 
     // Ground using old TransformationData
     TransformationData groundTransformationData;
@@ -253,6 +253,9 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 //TODO make it so that my eyes does not bleed blood
 Scene* SceneGenerator::generateNightForestScene(int numTrees, float areaSize, float minDistance) {
     Scene* forestScene = new Scene();
+
+
+    forestScene->addSkyBox({ "resources/posx.jpg", "resources/negx.jpg", "resources/posy.jpg", "resources/negy.jpg", "resources/posz.jpg", "resources/negz.jpg" });
 
     // Ground using old TransformationData
     TransformationData groundTransformationData;
