@@ -248,10 +248,10 @@
     <ClInclude Include="square.h">
       <Filter>Resource Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="NewTransformation.h">
+    <ClInclude Include="Transformation.h">
       <Filter>Header Files\Transformations</Filter>
     </ClInclude>
-    <ClInclude Include="NewTransformationComposite.h">
+    <ClInclude Include="TransformationComposite.h">
       <Filter>Header Files\Transformations</Filter>
     </ClInclude>
     <ClInclude Include="IAnimationObject.h">
@@ -304,6 +304,27 @@
     </ClInclude>
     <ClInclude Include="skycube.h">
       <Filter>Resource Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationTranslate.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationRotate.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationScale.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationDynamicTranslate.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationDynamicTranslateCube.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationDynamicRotate.h">
+      <Filter>Header Files\Transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformationBezier.h">
+      <Filter>Header Files\Transformations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

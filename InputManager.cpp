@@ -149,8 +149,8 @@ void InputManager::mouse_button_pressed_callback(GLFWwindow* window, int button,
 
             DrawableObject* tree = new DrawableObject(tdata, ShaderType::Develop, ModelType::TREE, glm::vec3(0.0f, 0.0f, 1.0f), material);            
 
-            NewTransformationTranslate* translate = new NewTransformationTranslate(glm::vec3(worldPos.x, worldPos.y, worldPos.z));
-            NewTransformationScale* scale = new NewTransformationScale(glm::vec3(1.0f));
+            TransformationTranslate* translate = new TransformationTranslate(glm::vec3(worldPos.x, worldPos.y, worldPos.z));
+            TransformationScale* scale = new TransformationScale(glm::vec3(1.0f));
 
             tree->transformationComposite.addTransformation(translate);
             tree->transformationComposite.addTransformation(scale);

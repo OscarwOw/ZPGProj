@@ -9,18 +9,24 @@
 #include "MaterialProperties.h"
 #include "ShaderType.h"
 #include "ModelType.h"
-#include "NewTransformation.h"
-#include "NewTransformationComposite.h"
+
+#include "Transformation.h"
+#include "TransformationTranslate.h"
+#include "TransformationScale.h"
+#include "TransformationRotate.h"
+#include "TransformationDynamicRotate.h"
+#include "TransformationDynamicTranslate.h"
+#include "TransformationDynamicTranslateCube.h"
+#include "TransformationBezier.h"
+
+
+#include "TransformationComposite.h"
 #include "Model.h"
 #include "Texture.h"
 
 
 //TODO this whole class is one big mess... should i call it mastershit?
 class DrawableObject {
-//TODO Transformation approach completly skip the composite patern and change it so that Transformation class is property of drawableObject
-// so that we access it throught drawableObject.TransformationScale we gona have 3
-// and we inherit 3 classes into Transformation.
-// and then we have   
 
 protected:
     VertexBuffer* _vertexBuffer;

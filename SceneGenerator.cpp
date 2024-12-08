@@ -20,10 +20,10 @@ Scene* SceneGenerator::generateDefaultScene() {
     DrawableObject* triangle = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::PLAIN_TEXTURE, glm::vec3(0.8f, 0.4f, 0.0f), material);
 
     glm::mat4 initialMatrix3 = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, -2.0f));
-    NewTransformationDynamicTranslateCube* dyntrans3 = new NewTransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
+    TransformationDynamicTranslateCube* dyntrans3 = new TransformationDynamicTranslateCube(0.5f, 0.8f, initialMatrix3,
         3.0f, 3.0f, 3.0f, -3.0f, -3.0f, -3.0f
     );
-    NewTransformationDynamicTranslate* translatetransformation = new NewTransformationDynamicTranslate(initialMatrix3);
+    TransformationDynamicTranslate* translatetransformation = new TransformationDynamicTranslate(initialMatrix3);
 
     triangle->transformationComposite.addTransformation(dyntrans3);
     triangle->transformationComposite.addTransformation(translatetransformation);
@@ -53,15 +53,15 @@ Scene* SceneGenerator::generateDefaultScene() {
 
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
 
-    NewTransformationTranslate* translate = new NewTransformationTranslate(glm::vec3(1.0f, 1.0f, 1.0f));
-    NewTransformationScale* lightScale = new NewTransformationScale(glm::vec3(0.1f, 0.1f, 0.1f));
+    TransformationTranslate* translate = new TransformationTranslate(glm::vec3(1.0f, 1.0f, 1.0f));
+    TransformationScale* lightScale = new TransformationScale(glm::vec3(0.1f, 0.1f, 0.1f));
     light->transformationComposite.addTransformation(translate);
     light->transformationComposite.addTransformation(lightScale);
 
 
     std::vector<glm::vec3> bezpointvec = { glm::vec3(0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(20.0f, 20.0f, 0.0f), glm::vec3(20.0f, 40.0f, 0.0f) };
 
-    NewTransformationBezier* bezier = new NewTransformationBezier(glm::mat4(1.0f), bezpointvec, 1.0f);
+    TransformationBezier* bezier = new TransformationBezier(glm::mat4(1.0f), bezpointvec, 1.0f);
     light->transformationComposite.addTransformation(bezier);
     
     scene->getBehavioralManager()->addAnimeObject(bezier);
@@ -127,16 +127,16 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Texture_phong, ModelType::PLAIN_TEXTURE, glm::vec3(0.3f, 0.8f, 0.01f), materialpropertiesforground, grassTexture);
 
     // Add new transformations to ground
-    NewTransformationScale* groundScale = new NewTransformationScale(glm::vec3(80.0f));
-    NewTransformationRotate* groundRotate = new NewTransformationRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    TransformationScale* groundScale = new TransformationScale(glm::vec3(80.0f));
+    TransformationRotate* groundRotate = new TransformationRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
     ground->transformationComposite.addTransformation(groundScale);
     ground->transformationComposite.addTransformation(groundRotate);
 
     forestScene->addObject(ground);
 
     DrawableObject* house = generateDrawableObject(ShaderType::Texture_phong, "house.obj", new Texture("house.png"), materialpropertiesforground);
-    NewTransformationTranslate* houseTranslate = new NewTransformationTranslate(glm::vec3(10.0f, 0.0f, 10.0f));
-    NewTransformationScale* houseScale = new NewTransformationScale(glm::vec3(1.0f));
+    TransformationTranslate* houseTranslate = new TransformationTranslate(glm::vec3(10.0f, 0.0f, 10.0f));
+    TransformationScale* houseScale = new TransformationScale(glm::vec3(1.0f));
     house->transformationComposite.addTransformation(houseTranslate);
     house->transformationComposite.addTransformation(houseScale);
 
@@ -146,10 +146,10 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
     //DrawableObject(ShaderType shaderType, char* modelFile, Texture* texture, MaterialProperties material);
 
 
-    NewTransformationTranslate* translateTrans = new NewTransformationTranslate(glm::vec3(10.0f, 10.0f, 10.0f));
-    NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f);
-    NewTransformationTranslate* translateTrans2 = new NewTransformationTranslate(glm::vec3(-2.0f, 0.0f, 0.0f));
-    NewTransformationScale* scaleTrans = new NewTransformationScale(glm::vec3(2.00f));
+    TransformationTranslate* translateTrans = new TransformationTranslate(glm::vec3(10.0f, 10.0f, 10.0f));
+    TransformationDynamicRotate* rotateTrans = new TransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f);
+    TransformationTranslate* translateTrans2 = new TransformationTranslate(glm::vec3(-2.0f, 0.0f, 0.0f));
+    TransformationScale* scaleTrans = new TransformationScale(glm::vec3(2.00f));
 
     suzi->transformationComposite.addTransformation(translateTrans);
     suzi->transformationComposite.addTransformation(rotateTrans);
@@ -198,8 +198,8 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
         DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE, glm::vec3(redTreeColor, greenTreeColor, 0.0f));
 
         // Add new transformations to tree
-        NewTransformationTranslate* treeTranslate = new NewTransformationTranslate(position);
-        NewTransformationScale* treeScale = new NewTransformationScale(glm::vec3(1.0f));
+        TransformationTranslate* treeTranslate = new TransformationTranslate(position);
+        TransformationScale* treeScale = new TransformationScale(glm::vec3(1.0f));
         tree->transformationComposite.addTransformation(treeTranslate);
         tree->transformationComposite.addTransformation(treeScale);
 
@@ -232,8 +232,8 @@ Scene* SceneGenerator::generateForestScene(int numTrees, float areaSize, float m
 
             float bushScalef = 1.0f + static_cast<float>(rand()) / static_cast<float>(RAND_MAX) * (2.9f - 1.0f);
             // Add new transformations to bush
-            NewTransformationTranslate* bushTranslate = new NewTransformationTranslate(bushPosition);
-            NewTransformationScale* bushScale = new NewTransformationScale(glm::vec3(bushScalef));
+            TransformationTranslate* bushTranslate = new TransformationTranslate(bushPosition);
+            TransformationScale* bushScale = new TransformationScale(glm::vec3(bushScalef));
             bush->transformationComposite.addTransformation(bushTranslate);
             bush->transformationComposite.addTransformation(bushScale);
 
@@ -262,8 +262,8 @@ Scene* SceneGenerator::generateNightForestScene(int numTrees, float areaSize, fl
     DrawableObject* ground = generateDrawableObject(groundTransformationData, ShaderType::Develop, ModelType::PLAIN, glm::vec3(0.3f, 0.8f, 0.01f), materialpropertiesforground);
 
     // Add new transformations to ground
-    NewTransformationScale* groundScale = new NewTransformationScale(glm::vec3(80.0f));
-    NewTransformationRotate* groundRotate = new NewTransformationRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    TransformationScale* groundScale = new TransformationScale(glm::vec3(80.0f));
+    TransformationRotate* groundRotate = new TransformationRotate(90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
     ground->transformationComposite.addTransformation(groundScale);
     ground->transformationComposite.addTransformation(groundRotate);
 
@@ -305,8 +305,8 @@ Scene* SceneGenerator::generateNightForestScene(int numTrees, float areaSize, fl
         DrawableObject* tree = generateDrawableObject(treeTransformationData, ShaderType::Develop, ModelType::TREE, glm::vec3(redTreeColor, greenTreeColor, 0.0f));
 
         // Add new transformations to tree
-        NewTransformationTranslate* treeTranslate = new NewTransformationTranslate(position);
-        NewTransformationScale* treeScale = new NewTransformationScale(glm::vec3(1.0f));
+        TransformationTranslate* treeTranslate = new TransformationTranslate(position);
+        TransformationScale* treeScale = new TransformationScale(glm::vec3(1.0f));
         tree->transformationComposite.addTransformation(treeTranslate);
         tree->transformationComposite.addTransformation(treeScale);
 
@@ -372,19 +372,19 @@ Scene* SceneGenerator::generateSphereScene() {
 
 
     DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, color, material);
-    sphere1->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
+    sphere1->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
 
     DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, color, material2);
-    sphere2->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
+    sphere2->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
 
     DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, color, material3);
-    sphere3->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(1.5f, -1.5f, 0.0f)));
+    sphere3->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(1.5f, -1.5f, 0.0f)));
 
     DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Develop, ModelType::SPHERE, color, material4);
-    sphere4->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(-1.5f, -1.5f, 0.0f)));
+    sphere4->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(-1.5f, -1.5f, 0.0f)));
 
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
-    light->transformationComposite.addTransformation(new NewTransformationScale(glm::vec3(0.1f)));
+    light->transformationComposite.addTransformation(new TransformationScale(glm::vec3(0.1f)));
     
 
     scene->addObject(sphere1);
@@ -405,19 +405,19 @@ Scene* SceneGenerator::generateShadersSphereScene() {
     TransformationData transformationData;
 
     DrawableObject* sphere1 = generateDrawableObject(transformationData, ShaderType::CONSTANT, ModelType::SPHERE);
-    sphere1->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
+    sphere1->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
 
     DrawableObject* sphere2 = generateDrawableObject(transformationData, ShaderType::Blinn, ModelType::SPHERE);
-    sphere2->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
+    sphere2->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
 
     DrawableObject* sphere3 = generateDrawableObject(transformationData, ShaderType::Phong, ModelType::SPHERE);
-    sphere3->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(1.5f, -1.5f, 0.0f)));
+    sphere3->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(1.5f, -1.5f, 0.0f)));
 
     DrawableObject* sphere4 = generateDrawableObject(transformationData, ShaderType::Lambert, ModelType::SPHERE);
-    sphere4->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(-1.5f, -1.5f, 0.0f)));
+    sphere4->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(-1.5f, -1.5f, 0.0f)));
 
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
-    light->transformationComposite.addTransformation(new NewTransformationScale(glm::vec3(0.1f)));
+    light->transformationComposite.addTransformation(new TransformationScale(glm::vec3(0.1f)));
 
 
     scene->addObject(sphere1);
@@ -440,23 +440,23 @@ Scene* SceneGenerator::generateTextureScene() {
     Texture* texture = new Texture("test.png");
     Texture* texture2 = new Texture("grass.png");
 
-    NewTransformationDynamicRotate* rotateTrans = new NewTransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f);
-    NewTransformationRotate* rotateDTrans = new NewTransformationRotate(90.0f, glm::vec3(1.0f,0.0f,0.0f));
+    TransformationDynamicRotate* rotateTrans = new TransformationDynamicRotate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f);
+    TransformationRotate* rotateDTrans = new TransformationRotate(90.0f, glm::vec3(1.0f,0.0f,0.0f));
 
 
     DrawableObject* texturePlain1 = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.0,0.0,0.0), material, texture);
-    texturePlain1->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
+    texturePlain1->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(1.5f, 1.5f, 0.0f)));
     texturePlain1->transformationComposite.addTransformation(rotateDTrans);
     texturePlain1->transformationComposite.addTransformation(rotateTrans);
 
     DrawableObject* texturePlain2 = generateDrawableObject(transformationData, ShaderType::Texture, ModelType::PLAIN_TEXTURE, glm::vec3(0.0, 0.0, 0.0), material, texture2);
-    texturePlain2->transformationComposite.addTransformation(new NewTransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
+    texturePlain2->transformationComposite.addTransformation(new TransformationTranslate(glm::vec3(-1.5f, 1.5f, 0.0f)));
     texturePlain2->transformationComposite.addTransformation(rotateDTrans);
     texturePlain2->transformationComposite.addTransformation(rotateTrans);
 
 
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, glm::vec4(1.0f), 1.0f);
-    light->transformationComposite.addTransformation(new NewTransformationScale(glm::vec3(0.1f)));
+    light->transformationComposite.addTransformation(new TransformationScale(glm::vec3(0.1f)));
 
 
     scene->getBehavioralManager()->addAnimeObject(rotateTrans);
@@ -484,9 +484,9 @@ LightSource* SceneGenerator::generateWhisp(Scene* scene, WhispData whispData) {
     LightSource* light = generateLightSource(transformationData, ShaderType::Light, ModelType::SPHERE, whispData.lightData.color, 1.0f);
 
     glm::mat4 initialMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(whispData.transformationData.TranslationX, whispData.transformationData.TranslationY, whispData.transformationData.TranslationZ));
-    NewTransformationDynamicTranslateCube* dyntrans = new NewTransformationDynamicTranslateCube(whispData.dynamicTranslateCubeData);
+    TransformationDynamicTranslateCube* dyntrans = new TransformationDynamicTranslateCube(whispData.dynamicTranslateCubeData);
 
-    NewTransformationScale* lightScale = new NewTransformationScale(glm::vec3(whispData.transformationData.Scale));
+    TransformationScale* lightScale = new TransformationScale(glm::vec3(whispData.transformationData.Scale));
     light->transformationComposite.addTransformation(dyntrans);
     light->transformationComposite.addTransformation(lightScale);
 
