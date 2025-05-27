@@ -1,7 +1,4 @@
-TODO
-
-
-NIEKTORE KNIZNICE SA STRATILI PRI ZMENE GITIGNORU JE TREBA ICH RESTORNUT Z NOTEBOOKU!!
+strata kniznic fixnuta.. 
 
 
 odkaz na video: 
