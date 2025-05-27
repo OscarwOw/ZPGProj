@@ -222,6 +222,8 @@
     <ClInclude Include="WhispData.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
     <None Include="Basic.shader" />
     <None Include="ColorShader.shader" />
     <None Include="form.md" />

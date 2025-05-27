@@ -399,5 +399,7 @@
     <None Include="frag_cube_map.shader">
       <Filter>Resource Files\shaders\fragmentShaders</Filter>
     </None>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>

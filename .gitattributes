@@ -3,6 +3,19 @@
 ###############################################################################
 * text=auto
 
+building.h linguist-generated
+bushes.h linguist-generated
+cube.h linguist-generated
+gift.h linguist-generated
+plain.h linguist-generated
+plainTexture.h linguist-generated
+skycube.h linguist-generated
+square.h linguist-generated
+suzi_flat.h linguist-generated
+suzi_smooth.h linguist-generated
+tree.h linguist-generated
+triangle.h linguist-generated
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
